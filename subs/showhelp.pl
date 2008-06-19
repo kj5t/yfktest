@@ -23,15 +23,14 @@ F1..7       Mensagens CW como no CT. Podem ser alteradas com Alt-M,
 INS         sao escritas no ficheiro do log e respostas quando comeca o
 ESC         programa.
 
-10M..160M   Faz com que o YFKtest mude para a banda desejada no campo do 
-	    indicativo.
+10M..160M   Faz com que o YFKtest mude para a banda desejada no campo do
+            indicativo.
 
-SSB, CW     Muda o modo de operacao escrevendo SSB/CW no campo do 
-	    indicativo.
+SSB, CW     Muda para SSB ou CW no campo do indicativo.
 
-WRITELOG    Escreve o log nos formatos Cabrillo e ADIF- para enviar para o 
-	    responsavel do contest e / ou importar para o seu programa de 
-	    logbook/LOTW etc. Tambem um ficheiro de sumario e escrito.
+WRITELOG    Escreve o log nos formatos Cabrillo e ADIF- para enviar para o
+            responsavel do contest e / ou importar para o seu programa de
+            logbook/LOTW etc. Tambem um ficheiro de sumario e escrito.
 ';
 	}
 	elsif ($1 eq 'es') {
@@ -51,14 +50,13 @@ INS         son escritas en el fichero del log y respuestas quando empienza el
 ESC         contest.
 
 10M..160M   Hace que el YFKtest cambie para la banda deseada en el campo del 
-	    indicativo.
+            indicativo.
 
-SSB, CW     Cambia el modo de operacion escribindo SSB/CW en el campo del 
-	    indicativo.
+SSB, CW     Cambia la operacion para SSB o CW en el campo del indicativo.
 
 WRITELOG    Escribe el log en formatos Cabrillo y ADIF- para enviar para el 
-	    responsable del contest y / o importar hasta su programa de 
-	    logbook/LOTW etc. Tambien un fichero de sumario es escrito.
+            responsable del contest y / o importar hasta su programa de 
+            logbook/LOTW etc. Tambien un fichero de sumario es escrito.
 ';
 	}
 	else {
