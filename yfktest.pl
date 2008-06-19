@@ -36,7 +36,7 @@ foreach (@INC) {
 	}
 }
 if ($hashamlib) {
-#	require Hamlib; import Hamlib;
+	require Hamlib; import Hamlib;
 }
 
 our $cwspeed=32;
