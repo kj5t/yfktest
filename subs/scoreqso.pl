@@ -87,16 +87,25 @@ sub scoreqso {
 				$s_qsopts->{$qso{'band'}} += $ownpts;
 			}
 	}	#dx,cont,own,regex
-#	elsif($main::defqsopts eq 'nra' ) {
-#			if ($qso{'band'} > 20) {
-#				$dxpts = 6;
-#				$contpts = 2;
-#			}
-#			if ($qso{'band'} < 40) {
-#				$dxpts = 8;
-#				$contpts = 4;
-#			}
-#	}
+	elsif($main::defqsopts eq 'nra' ) {
+		my $cqzone = $qso{'exc2'};
+		if ($cqzone eq $main::exc2s) {		# same CQ zone
+			if ($qso{band} < 40) {			# 20-10m
+				$s_qsopts->{$qso{'band'}} += 4;
+			}
+			else {							# 40-80m
+				$s_qsopts->{$qso{'band'}} += 2;
+			}
+		}
+		else {								# other zone
+			if ($qso{band} < 40) {			# 20-10m
+				$s_qsopts->{$qso{'band'}} += 8;
+			}
+			else {							# 40-80m
+				$s_qsopts->{$qso{'band'}} += 6;
+			}
+		}
+	}
 	elsif($main::defqsopts=~/dx=(\d+)~cont=(\d+)~own=(\d+)~(\w+)=(.+?)=(\d+)/) {
 			my $dxpts = $1;
 			my $contpts = $2;
@@ -619,7 +628,6 @@ sub scoreqso {
 	elsif ($main::defmult1 eq 'none') {	
 		$s_mult1->{All} = ' 1 ';
 	}
-
 
 	# Exchange guessing stuff.. should be in its own file?
 	
