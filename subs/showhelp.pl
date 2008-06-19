@@ -8,34 +8,34 @@ sub showhelp {
 	$ENV{LANG} =~ /^([a-z]{2})/;
 
 	if ($1 eq 'pt') {
-		$help1 = 'Referência rápida ao YFKtest - Premir qualquer tecla para retornar.';
+		$help1 = 'Referencia rapida ao YFKtest - Premir qualquer tecla para retornar.';
 		$help2 = 'Alt-W, F11  Wipe QSO. Apaga indicativo- e muda campos
 
-Alt-X       Pára o CW imediatamente (como com o ESC) 
+Alt-X       Para o CW imediatamente (como com o ESC) 
 
 Alt-K       Modo teclado em CW
 
-Alt-R       Rate Graph
+Alt-R       Grafico de Rate
 
 Alt-M       Editar mensagens CW
 
-F1..7       Mensagens CW como como no CT. Podem ser alteradas com Alt-M,
-INS         são escritas no ficheiro do log e respostas quando começa o
+F1..7       Mensagens CW como no CT. Podem ser alteradas com Alt-M,
+INS         sao escritas no ficheiro do log e respostas quando comeca o
 ESC         programa.
 
 10M..160M   Faz com que o YFKtest mude para a banda desejada no campo do 
 	    indicativo.
 
-SSB, CW     Muda o modo de operação escrivendo SSB/CW no campo do 
+SSB, CW     Muda o modo de operacao escrevendo SSB/CW no campo do 
 	    indicativo.
 
 WRITELOG    Escreve o log nos formatos Cabrillo e ADIF- para enviar para o 
-	    responsável do contest e / ou importar para o seu programa de 
-	    logbook/LOTW etc. Também um ficheiro de sumário é escrito.
+	    responsavel do contest e / ou importar para o seu programa de 
+	    logbook/LOTW etc. Tambem um ficheiro de sumario e escrito.
 ';
 	}
 	elsif ($1 eq 'es') {
-		$help1 = 'Referencia rápida al YFKtest - Pulsar qualquier letra para retornar.';
+		$help1 = 'Referencia rapida al YFKtest - Pulsar qualquier letra para retornar.';
 		$help2 = 'Alt-W, F11  Wipe QSO. Borra indicativo- y cambia campos
 
 Alt-X       Para el CW immediatamiente (como con ESC) 
@@ -58,7 +58,7 @@ SSB, CW     Cambia el modo de operacion escribindo SSB/CW en el campo del
 
 WRITELOG    Escribe el log en formatos Cabrillo y ADIF- para enviar para el 
 	    responsable del contest y / o importar hasta su programa de 
-	    logbook/LOTW etc. También un fichero de sumário es escrito.
+	    logbook/LOTW etc. Tambien un fichero de sumario es escrito.
 ';
 	}
 	else {
