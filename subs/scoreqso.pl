@@ -202,7 +202,7 @@ sub scoreqso {
 
 		my ($myportable, $otherportable) = (0,0);
 		if ($qso{'call'} =~ /\/(P|M|MM|AM)/i) { $otherportable = 1; }
-		if ($mycall =~ /\/(P|M|MM|AM)/i) { $myportable = 1; }
+		if ($main::mycall =~ /\/(P|M|MM|AM)/i) { $myportable = 1; }
 
 		if (($myportable + $otherportable) == 0) {		# fixed<->fixed
 			$s_qsopts->{$qso{'band'}} += 0;
@@ -237,7 +237,7 @@ sub scoreqso {
 	}
 	elsif ($main::defqsopts eq 'cncw') {
 		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
-		if ($dxcc =~ /(AM|AN|AO|EA|EB|EC|ED|EE|EF|EG|EH)/) {
+		if ($dxcc =~ /^EA/) {
 				$s_qsopts->{$qso{'band'}} += 1;
 		}		
 	}
@@ -503,17 +503,29 @@ sub scoreqso {
 		}
 	}
 	elsif ($main::defmult1 eq 'cncw') {		# Concurso nacional de CW
-		my $dxcc = (&dxcc($qso{'call'}))[3,7];
-		if ($dxcc =~ /(AM|AN|AO|EA|EB|EC|ED|EE|EF|EG|EH)/) {
-			my $mult = $1;
-			$qso{'call'} =~ /([1-9\/])/;		# first number or /
-			if ($1 eq '/') {
-				$mult = $mult.'0';
+		my ($mydistrict, $mult);
+
+		unless ($main::mycall =~ /([1-9\/])/) {
+			$mydistrict = '0';						# should not happen!
+		}
+		else {
+			if ($1 eq '/') { $mydistrict = 0; }
+			else { $mydistrict = $1; }
+		}
+
+		if ($qso{'call'} =~ /^(AM|AN|AO|EA|EB|EC|ED|EE|EF|EG|EH)/) {
+			
+			if ($qso{'call'} =~ /([1-9\/])/) {		# first nr or /
+			
+				if ($1 eq '/') { $mult = '0'; }
+				else { $mult = $1; }
 			}
 			else {
-				$mult = $mult.$1;
+				$mult = 0;							# shouldn't happen!
 			}
-			unless ($s_mult1->{$qso{'band'}} =~ / $mult /) {
+
+			unless ($mult eq $mydistrict || 
+					$s_mult1->{$qso{'band'}} =~ / $mult /) {
 				$s_mult1->{$qso{'band'}} .= " $mult ";
 			}
 		}
