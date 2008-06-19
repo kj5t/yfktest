@@ -1,0 +1,29 @@
+NCCC Sprint
+exc3-band-mode		# multiplier 1 -> exchange 2 by band and by mode
+dx=1~cont=1~own=1~exc1=blabla=1		# score
+-					# multiplier 2
+3					# exchange fields
+3					# length of exchange field 1
+6					# length of exchange field 2
+3					# length of exchange field 3
+4					# length of exchange field 4
+[0-9]				# regex for every single character in exchange field 1
+[0-9]+				# regex for complete valid exchange field 1
+[A-Za-z]			# regex for every single character in exchange field 2
+[A-Z]+				# regex for complete valid exchange field 2
+[A-Za-z]			# regex for every single character in exchange field 3
+[A-Z]+				# regex for complete valid exchange field 3
+[0-9]				# regex for every single character in exchange field 4
+					# regex for complete valid exchange field 4
+QSO: %5d %s %s %s %-13s %4s %15s  %-13s  %3s %-10s %2s 		# cabrillo def
+band mode date utc mycall 599 nr exc1s call exc1 exc2 exc3		# cabrillo def
+NCCC-SPRINT														# CBR name
+exc1s															# fixed exc
+Name/State:                   (e.g. FAB/TX)
+CQ TEST MYCALL MYCALL TEST			# F1
+5NN NR EXC1S						# F2
+TU MYCALL							# F3
+MYCALL								# F4
+HISCALL								# F5
+NR?									# F6
+?									# F7

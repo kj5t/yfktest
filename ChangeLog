@@ -1,0 +1,54 @@
+0.0.9 / 2008-06-16   Fabian Kurz   <mail@fkurz.net>
+	* Added a few contests, including ARRL-Fieldday, All-Asian, King of
+	  Spain, NRA, CNCW. Thanks to CT1DRB for his help!
+	* Added a crude file browser to select a file to load, if not specified
+	  as command line argument.
+	* Alt-H shows a little help screen
+	* Mycall can be read from a config file (~/.yfktest) now.
+	* Alt-R shows a rate graph of the current contest
+
+0.0.8 / 2008-02-14   Fabian Kurz   <mail@fkurz.net>
+	* Added ARRL-DX contest (DX- and US-side, with exchange guessing)
+	* Empty mode when polling hamlib while logging a QSO should not occur
+	anymore.
+
+0.0.7 / 2008-01-28   Fabian Kurz   <mail@fkurz.net>
+
+	* Added the FOC Marathon
+	* Minor cosmetic enhancements.
+	* Documentation updated.
+
+0.0.6 / 2008-01-23   Fabian Kurz   <mail@fkurz.net>
+
+	* Added some more contests.
+
+0.0.5 / 2007-10-22   Fabian Kurz   <mail@fkurz.net>
+
+	* Fixed bug in adif export, field for received serial number now properly
+	formatted.
+
+	* Changed linebreaks in output files (Cabrillo, ADIF, SUM) to DOS.
+	
+	* "Check Call" window extended, now shows 2nd exchange (if any)
+
+	* Added contests: DTC, WAG, EU-Sprint, CQWW, OK-OM-DX (DX side)
+
+	* Added possibility to edit CW messages (Alt-M)
+
+	* Pressing tab now jumps back to the callsign
+
+0.0.4 / 2007-08-20   Fabian Kurz   <mail@fkurz.net>
+
+	* Rig control now done via hamlib's Perl bindings.
+	
+	* Added contests: YO-DX, IARU Region 1 Fieldday, SAC
+
+0.0.3 / 2007-08-01   Fabian Kurz   <mail@fkurz.net>
+
+	* Improved keyboard handling; Alt-key-combinations should work on all
+	terminals now.
+
+	* Added NAQP, EUHFC and RDA-Contest (RU/DX-Side)
+
+	* Fixed IOTA definition to allow logging AF-IOTAs.
+

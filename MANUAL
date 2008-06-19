@@ -1,0 +1,96 @@
+YFKtest Version 0.0.9 Manual
+----------------------------
+
+1. Getting started
+------------------
+
+To start a new contest, just invoke YFKtest without any arguments on the command
+line: ./yfktest.pl. You'll be asked to select a contest definition and enter
+the neccesary details, like a filename for the contest, your callsign, category
+etc. After completing this form, the contest operation starts.
+
+You may add a file ~/.yfktest to your home directory, currently the only
+possible value to set there is your own call, syntax:   mycall=CALL
+
+
+2. Loading an existing log
+--------------------------
+
+To load an existing contest log, invoke YFKtest with the filename as the
+command like argument:  ./yfktest.pl CQWW07.yfk
+The contest log will be read, user settings from the last contest are restored
+and the score will be calculated. 
+
+Alternatively, as of version 0.0.9, a crude file browser can be used to select
+a log from the file system, if yfktest was started without any command line
+arguments.
+
+
+3. Keys and functions
+---------------------
+
+Alt-W, F11  Wipe QSO. Delete callsign- and exchange fields
+
+Alt-X       Stops CW sending immediately (like ESC) 
+
+Alt-H       Quick help screen
+
+Alt-K       Keyboard-Mode in CW
+
+Alt-R       Rate Graph
+
+Alt-M       Edit CW messages
+
+F1..7       CW messages like in CT. They can be modified by Alt-M, and
+INS         are written to the log file and restored when restarting the
+ESC         contest.
+
+10M..160M   Entering the desired band in the callsign-field causes YFKtest to
+            QSY.
+
+SSB, CW     Change the mode my entering SSB/CW in the callsign field.
+
+WRITELOG    Writes the log in Cabrillo- and ADIF-Format for submission to the
+            log-checker and / or import to your main logbook/LOTW etc.
+            Also a summary file of the contest score is written to a file.
+
+4. Hamlib
+---------
+
+As of version 0.0.4, CAT control of the transceiver is supported via Hamlib's
+Perl bindings.
+
+When starting a new contest, you'll be asked wheter you want to use rig
+control. If so, you can select one of the transceivers supported by hamlib and
+a device to which the RIG is connected. All available transceivers are saved in
+the file 'hamlibrigs'. You can delete all transceivers which you are not using
+from this file to reduce the number of RIGs to scroll through.
+
+During operation, YFKtest will query the rig freqency and mode every second or
+so, and update the values in the logbook. The other direction also works: If
+you change the band in YFKtest (by typing for example 15M), your radio will
+jump to the 15m band. You can also enter a frequency in the callsign field,
+like 14025, and the radio will QSY to 14025kHz.
+
+FYI: Debian's hamlib Perl package is still broken. YFKtest will crash if you
+try to use it; either compile it yourself from the source, or uncomment the
+lines which import Hamlib.pm  in yfktest.pl.
+
+5. CW Functions
+---------------
+
+CW is realized via cwdaemon by PG4I. Cwdaemon must be up and running and set up
+in order to be used by YFKtest. The F-keys are set similarly to CT by default:
+
+F1: CQ
+F2: RST + Exchange
+F3: TU $MYCALL
+F4: MYCALL
+F5: HISCALL
+F6: NR?
+F7: ?
+
+Alt-M opens a dialog to change these messages.
+
+Alt-K activates the Keyboard-Mode, meaning everything you type in is
+immediately sent via cwdaemon. Alt-K again or ESC stops it.
