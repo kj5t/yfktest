@@ -1,4 +1,4 @@
-VERSION=0.0.9
+VERSION=0.0.10
 
 clean:
 	rm -f *~ *.yfk *.yfk~ *.yfk.cbr* *.yfk.adi* *.sum
