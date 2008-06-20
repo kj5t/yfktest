@@ -133,7 +133,7 @@ addstr($wdialog , 10, 3 , "CAT control:");
 refresh($wdialog);
 
 $filename = &readw(\$wdialog, 1, 20, '[\-\w]', "$filename");
-$mycall = &readw(\$wdialog, 2, 20, 'call', "$mycall");
+$mycall = &readw(\$wdialog, 2, 20, 'call', $mycall);
 
 $assisted = &chose(\$wdialog, 3, 20, 'ASSISTED NON-ASSISTED', $assisted);
 $bands = &chose(\$wdialog, 4, 20, 'ALL 160M 80M 40M 20M 15M 10M 6M 2M 222 432 902 1.2G', $bands);
@@ -235,6 +235,7 @@ sub readw {
 		my $pos = 0;								# relative cursor x pos
 		my $toupper = 0;
 		my $ch;
+		$text ||= "";  # avoids perl warnings about empty data
 
 		if ($regex eq 'call') {
 				$toupper = 1;

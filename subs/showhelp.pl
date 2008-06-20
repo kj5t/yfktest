@@ -6,8 +6,10 @@ sub showhelp {
 	my ($ch, $help1, $help2) = ('','','');
 
 	$ENV{LANG} =~ /^([a-z]{2})/;
+	my $lang = $1;
+	$lang ||= 'en';  # avoids empty string perl warnings
 
-	if ($1 eq 'pt') {
+	if ($lang eq 'pt') {
 		$help1 = 'Referencia rapida ao YFKtest - Premir qualquer tecla para retornar.';
 		$help2 = 'Alt-W, F11  Wipe QSO. Apaga indicativo- e muda campos
 
@@ -33,7 +35,7 @@ WRITELOG    Escreve o log nos formatos Cabrillo e ADIF- para enviar para o
             logbook/LOTW etc. Tambem um ficheiro de sumario e escrito.
 ';
 	}
-	elsif ($1 eq 'es') {
+	elsif ($lang eq 'es') {
 		$help1 = 'Referencia rapida al YFKtest - Pulsar qualquier letra para retornar.';
 		$help2 = 'Alt-W, F11  Wipe QSO. Borra indicativo- y cambia campos
 
