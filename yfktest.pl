@@ -26,6 +26,8 @@ use Curses;
 #use threads::shared;
 use IO::Socket::INET;
 
+our $VERSION="0.0.10";
+
 # Since Hamlib may be unavailable, 'use Hamlib' might crash the program. So we
 # search in @INC for hamlib.pm and (if available) we 'manually' use it.
 
