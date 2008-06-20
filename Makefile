@@ -15,7 +15,7 @@ dist:
 	mkdir yfktest-$(VERSION)
 	mkdir yfktest-$(VERSION)/defs/
 	mkdir yfktest-$(VERSION)/subs/
-	cp ChangeLog yfktest.pl hamlibrigs friend.ini master.scp cty.dat README COPYING MANUAL INSTALL \
+	cp ChangeLog yfktest.pl hamlibrigs friend.ini master.scp cty.dat README README_ES COPYING MANUAL INSTALL INSTALL_ES \
 			yfktest-$(VERSION)
 	cp defs/*.def yfktest-$(VERSION)/defs/
 	cp subs/*.pl yfktest-$(VERSION)/subs/
