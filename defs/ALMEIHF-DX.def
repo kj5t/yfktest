@@ -1,7 +1,7 @@
 Almeirim City HF Contest - DX side
 dxcc-band-all		# multiplier 1 = DXCCs by band but not by mode
 almeihf			# scoring
-almeihf			# multiplier 2 EA provinces
+almeihf			# multiplier 2 CT provinces
 1					# exchange fields
 4					# length of exchange field 1
 4					# length of exchange field 2
