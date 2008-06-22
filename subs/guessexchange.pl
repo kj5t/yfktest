@@ -80,6 +80,19 @@ sub guessexchange {
 				return (split(/\//, $main::guesshash{$main::qso{call}}))[1];
 			}
 		}
+		if ($main::contest eq 'NRA') {
+		if ($main::lastguessed eq $main::qso{call}) {		# only guess once!
+			return '';
+		}
+		my $zone = (&dxcc($main::qso{call}))[1];
+		if ($zone) {
+			$main::lastguessed = $main::qso{call};
+			return $zone;
+		}
+		else {				# invalid call?
+			return '';
+		}
+	}
 
 
 	}
