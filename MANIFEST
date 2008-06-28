@@ -46,7 +46,7 @@ INSTALL
 INSTALL_ES
 livescores/y.pl
 Makefile.PL
-MANIFEST			This list of files
+MANIFEST
 MANIFEST.SKIP
 MANUAL
 master.scp
@@ -82,5 +82,5 @@ subs/showhelp.pl
 subs/showscore.pl
 subs/wipeqso.pl
 subs/writelog.pl
+TODO
 yfktest
-yfktest-0.0.10.tar.gz
