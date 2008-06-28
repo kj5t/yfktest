@@ -28,10 +28,11 @@ install:: installstuff installfixpaths
 
 installstuff:
 	@for dir in livescores defs subs ; do 		\\
+		echo makeing path: $(YFKTESTDIR)/$$dir ; 		\\
         	$(MKPATH) $(YFKTESTDIR)/$$dir ; 		\\
-		for i in defs/* ; do  			\\
-			$(INSTALL) $$i $(YFKTESTDIR)/$$dir/$$i	; \\
-			echo installing $$I in $(YFKTESTDIR)/$$dir/$$i ; \\
+		for i in $$dir/* ; do  			\\
+			$(INSTALL) $$i $(YFKTESTDIR)/$$i	; \\
+			echo installing $$i in $(YFKTESTDIR)/$$i ; \\
 		done				;	\\
 	done
 
