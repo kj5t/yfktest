@@ -1,6 +1,6 @@
 
 sub scoreqso {
-	require "subs/dxcc.pl";
+	load_subs("subs/dxcc.pl");
 	
 	my %qso = %{$_[0]};
 	my $qsoref = $_[1];		# ref to QSO AoH

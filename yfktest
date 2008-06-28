@@ -52,34 +52,34 @@ print $cwsocket chr(27)."2 $cwspeed";
 
 our $netname = "STN1";
 
-require "subs/newcontest.pl";
-require "subs/filebrowser.pl";
-require "subs/checkmulti1.pl";
-require "subs/checkcall.pl";
-require "subs/showscore.pl";
-require "subs/partialcheck.pl";
-require "subs/readakey.pl";
-require "subs/wipeqso.pl";
-require "subs/qsy.pl";
-require "subs/logqso.pl";
-require "subs/displaylog.pl";
-require "subs/scoreqso.pl";
-require "subs/readlog.pl";
-require "subs/dupecheck.pl";
-require "subs/rate.pl";
-require "subs/readrules.pl";
-require "subs/writelog.pl";
-require "subs/sendcw.pl";
-require "subs/dxcc.pl";
-require "subs/callinfo.pl";
-require "subs/rigctl.pl";
-require "subs/keyboardmode.pl";
-require "subs/editcwmessages.pl";
-require "subs/guessexchange.pl";
-require "subs/readconfigfile.pl";
-require "subs/showhelp.pl";
-require "subs/rategraph.pl";
-#require "subs/net_receiveqso.pl";
+load_subs("newcontest.pl");
+load_subs("filebrowser.pl");
+load_subs("checkmulti1.pl");
+load_subs("checkcall.pl");
+load_subs("showscore.pl");
+load_subs("partialcheck.pl");
+load_subs("readakey.pl");
+load_subs("wipeqso.pl");
+load_subs("qsy.pl");
+load_subs("logqso.pl");
+load_subs("displaylog.pl");
+load_subs("scoreqso.pl");
+load_subs("readlog.pl");
+load_subs("dupecheck.pl");
+load_subs("rate.pl");
+load_subs("readrules.pl");
+load_subs("writelog.pl");
+load_subs("sendcw.pl");
+load_subs("dxcc.pl");
+load_subs("callinfo.pl");
+load_subs("rigctl.pl");
+load_subs("keyboardmode.pl");
+load_subs("editcwmessages.pl");
+load_subs("guessexchange.pl");
+load_subs("readconfigfile.pl");
+load_subs("showhelp.pl");
+load_subs("rategraph.pl");
+#load_subs("subs/net_receiveqso.pl");
 
 our $version = "0.0.9";
 
@@ -489,14 +489,24 @@ while (1) {
 
 }	# main loop
 
-
-
-
-
-
-
 endwin();
 
+
+
+sub load_subs {
+	my $file = shift;
+	print "trying $file\n";
+	if (-f "subs/$file") {
+		# if it's in our local path, then use that
+		require "subs/$file";
+	} elsif (-f "/usr/local/share/yfktest/subs/$file") {
+		# else use the global installed version
+		require "/usr/local/share/yfktest/subs/$file";
+	} else {
+		print STDERR "Failed to find the needed file: '$file'\n";
+		exit(1);
+	}
+}
 
 # Local Variables:
 # tab-width:4

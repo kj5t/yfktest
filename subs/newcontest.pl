@@ -2,7 +2,7 @@
 
 use strict;
 
-require "subs/readrules.pl";
+load_subs("readrules.pl");
 
 sub newcontest {
 

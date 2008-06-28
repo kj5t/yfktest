@@ -1,5 +1,5 @@
-require "subs/gettime.pl";
-require "subs/getdate.pl";
+load_subs("gettime.pl");
+load_subs("getdate.pl");
 
 sub logqso {
 	my %qso = %{$_[0]};

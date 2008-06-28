@@ -1,4 +1,4 @@
-require "subs/gettime.pl";
+load_subs("gettime.pl");
 
 sub readakey {
 	my $window = $_[0];
