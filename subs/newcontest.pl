@@ -329,7 +329,7 @@ return $opts[$nr];
 sub readhamlibrigs {
 	my $line;
 	my %hash;
-	open RIG, "hamlibrigs";
+	open RIG, find_file("hamlibrigs");
 	while ($line = <RIG>) {
 		chomp($line);
 		my @a = split(/\s+/, $line);

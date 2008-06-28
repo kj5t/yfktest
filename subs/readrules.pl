@@ -2,7 +2,7 @@ sub readrules {
 
 	my $contest = shift;
 
-	open RULES, $main::contestpath."$contest.def";
+	open RULES, find_file("defs/$contest.def");
 		@rules = <RULES>;
 		chomp(@rules);
 	close RULES;

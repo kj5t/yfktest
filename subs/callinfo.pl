@@ -3,7 +3,7 @@ use strict;
 my %friends;
 my %foc;
 
-open FRIEND, 'friend.ini';
+open FRIEND, find_file('friend.ini');
 my $line;
 while ($line = <FRIEND>) {
 		chomp($line);
@@ -17,7 +17,7 @@ close FRIEND;
 
 if (-e 'call_no_name.txt') {
 
-open FOC, 'call_no_name.txt';
+open FOC, find_file('call_no_name.txt');
 my $line;
 while ($line = <FOC>) {
 	map {s/\r//g;} ($line);

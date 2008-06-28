@@ -3,7 +3,7 @@
 my %foc;
 if (-e 'call_no_name.txt') {
 
-open FOC, 'call_no_name.txt';
+open FOC, find_file('call_no_name.txt');
 my $line;
 while ($line = <FOC>) {
 	map {s/\r//g;} ($line);

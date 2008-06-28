@@ -3,7 +3,7 @@ use POSIX;				# needed for acos in distance/direction calculation
 
 # Now we read cty.dat from K1EA, or exit when it's not found.
 
-open CTY, "cty.dat";
+open CTY, find_file("cty.dat");
 
 my %prefixes;			# hash of arrays  main prefix -> (all, prefixes,..)
 my %dxcc;				# hash of arrays  main prefix -> (CQZ, ITUZ, ...)

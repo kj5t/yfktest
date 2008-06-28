@@ -165,7 +165,7 @@ our @qsos;			# Array of hashes with single QSOs.
 our @cwmessages  = ('');
 
 
-open SCP, "master.scp";
+open SCP, find_file("master.scp");
 our @scp = <SCP>;
 $scp[1] = $scp[2] = '';
 close SCP;
@@ -497,12 +497,18 @@ endwin();
 
 sub load_subs {
 	my $file = shift;
-	if (-f "subs/$file") {
+	$file = find_file("subs/$file");
+	require $file;
+}
+
+sub find_file {
+	my $file = shift;
+	if (-f "$file") {
 		# if it's in our local path, then use that
-		require "subs/$file";
-	} elsif (-f "/usr/local/share/yfktest/subs/$file") {
+		return $file;
+	} elsif (-f "/usr/local/share/yfktest/$file") {
 		# else use the global installed version
-		require "/usr/local/share/yfktest/subs/$file";
+		return "/usr/local/share/yfktest/$file";
 	} else {
 		print STDERR "Failed to find the needed file: '$file'\n";
 		exit(1);

@@ -36,6 +36,10 @@ installstuff:
 			echo installing $$i in $(YFKTESTDIR)/$$i ; \\
 		done				;	\\
 	done
+	@for file in master.scp cty.dat friend.ini call_no_name.txt hamlibrigs ; do \\
+		$(INSTALL) $$file $(YFKTESTDIR)/$$file ; \\
+		echo installing $$file in $(YFKTESTDIR)/$$file ; \\
+	done
 
 installfixpaths:
 	$(PERL) -p -i -e "s|/usr/local|$(PREFIX)|" $(DISTDIR)$(PREFIX)/bin/yfktest
