@@ -28,17 +28,14 @@ use IO::Socket::INET;
 
 our $VERSION="0.0.10";
 
-# Since Hamlib may be unavailable, 'use Hamlib' might crash the program. So we
-# search in @INC for hamlib.pm and (if available) we 'manually' use it.
+# Since Hamlib may be unavailable, 'use Hamlib' might cause the
+# program to fail to lead, so we eval a require instead to test for
+# it's existance and loadability.
 
-our $hashamlib = 0;
-foreach (@INC) {
-	if (-e $_."/Hamlib.pm") {
-		$hashamlib = 1;
-	}
-}
+our $hashamlib = eval { require Hamlib };
 if ($hashamlib) {
-	require Hamlib; import Hamlib;
+	# Import the needed symbols if we loaded it ok.
+	import Hamlib;
 }
 
 our $cwspeed=32;
