@@ -111,3 +111,7 @@ WRITELOG    Writes the log in Cabrillo- and ADIF-Format for submission to the
 
 
 return 1;
+
+# Local Variables:
+# tab-width:4
+# End: **

@@ -23,3 +23,7 @@ $_[0]->{'stn'} = $main::netname;
 
 
 return 1;
+
+# Local Variables:
+# tab-width:4
+# End: **
