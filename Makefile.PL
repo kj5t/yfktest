@@ -32,11 +32,12 @@ installstuff:
         	$(MKPATH) $(YFKTESTDIR)/$$dir ; 		\\
 		for i in $$dir/* ; do  			\\
 			$(INSTALL) $$i $(YFKTESTDIR)/$$i	; \\
+                        $(PERL) -p -i -e "s|/usr/local|$(PREFIX)|" $(YFKTESTDIR)/$$i ; \\
 			echo installing $$i in $(YFKTESTDIR)/$$i ; \\
 		done				;	\\
 	done
 
 installfixpaths:
-	$(PERL) -p -i -e "s|/usr/local|$(PREFIX)|" $(DISTDIR)$(PREFIX)/bin/yfk
+	$(PERL) -p -i -e "s|/usr/local|$(PREFIX)|" $(DISTDIR)$(PREFIX)/bin/yfktest
 ';
 }
