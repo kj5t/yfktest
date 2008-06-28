@@ -21,7 +21,16 @@ my $ch;
 
 
 
-my @contests = <defs/*.def>;			# all definition files
+my @contests;			# all definition files
+if (-d "defs") {
+	# load defs from local directory
+	$main::contestpath = "defs/";
+	@contests = <defs/*.def>;
+} else {
+	# load them from the installed paths
+	$main::contestpath = "/usr/local/share/yfktest/defs/";
+	@contests = </usr/local/share/yfktest/defs/*.def>;
+}
 
 foreach (@contests) {
 	open FH, $_;
@@ -31,7 +40,7 @@ foreach (@contests) {
 }
 
 @contests = ("Open File...", @contests);
-$names{'defs/Open File....def'} = "Open existing YFKtest contest log.";
+$names{$main::contestpath.'Open File....def'} = "Open existing YFKtest contest log.";
 
 my $wmain = newwin(24,80,0,0);
 attron($wmain, COLOR_PAIR(4));
@@ -64,7 +73,7 @@ do {
 			$x += 1;
 		}
 	
-		$test =~ s#^defs/([\w\-_]+)[.]def$#$1#g;
+		$test =~ s#^(/usr/local/share/yfktest/|)defs/([\w\-_]+)[.]def$#$2#g;
 
 		if ($nr == $activeentry) {
 			attron($wdialog, COLOR_PAIR(1));
@@ -78,7 +87,7 @@ do {
 	}
 	refresh($wdialog);
 	
-	my $tmp = 'defs/'.$contests[$activeentry-1].'.def';
+	my $tmp = $main::contestpath.$contests[$activeentry-1].'.def';
 
 	addstr($wmain, 23, 0, "Contest: $names{$tmp}                               ");
 	refresh($wmain);

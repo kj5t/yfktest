@@ -51,6 +51,8 @@ print $cwsocket chr(27)."2 $cwspeed";
 #or die "Cannot open socket for Network.\n";
 
 our $netname = "STN1";
+# will be overridden later by found path
+our $contestpath = "defs/";
 
 load_subs("newcontest.pl");
 load_subs("filebrowser.pl");
@@ -495,7 +497,6 @@ endwin();
 
 sub load_subs {
 	my $file = shift;
-	print "trying $file\n";
 	if (-f "subs/$file") {
 		# if it's in our local path, then use that
 		require "subs/$file";
