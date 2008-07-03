@@ -9,7 +9,7 @@ sub newcontest {
 my $contest;
 my %names;
 my $filename;
-my $mycall = $_[0];
+my $mycall = $_[0] || "";
 my $assisted;
 my $bands;
 my $modes;
