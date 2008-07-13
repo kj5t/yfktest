@@ -36,6 +36,19 @@ sub guessexchange {
 			return '';
 		}
 	} # CQWW
+	if ($main::contest eq 'IARU') {
+		if ($main::lastguessed eq $main::qso{call}) {		# only guess once!
+			return '';
+		}
+		my $itu = (&dxcc($main::qso{call}))[2];
+		if ($itu) {
+			$main::lastguessed = $main::qso{call};
+			return $itu;
+		}
+		else {				# invalid call?
+			return '';
+		}
+	} # IARU
 	elsif ($main::contest eq 'FOC') {
 		if ($main::lastguessed eq $main::qso{call}) {
 			return '';
