@@ -94,24 +94,36 @@ sub guessexchange {
 			}
 		}
 		if ($main::contest eq 'NRA') {
-		if ($main::lastguessed eq $main::qso{call}) {		# only guess once!
-			return '';
+			if ($main::lastguessed eq $main::qso{call}) {		# only guess once!
+				return '';
+			}
+			my $zone = (&dxcc($main::qso{call}))[1];
+			if ($zone) {
+				$main::lastguessed = $main::qso{call};
+				return $zone;
+			}
+			else {				# invalid call?
+				return '';
+			}
 		}
-		my $zone = (&dxcc($main::qso{call}))[1];
-		if ($zone) {
-			$main::lastguessed = $main::qso{call};
-			return $zone;
-		}
-		else {				# invalid call?
-			return '';
-		}
+#		if ($main::contest eq 'IOTA') {
+#			if ($main::lastguessed eq $main::qso{call}) {		# only guess once!
+#				return '';
+#			}
+#			my $iota = (&dxcc($main::iota{$call}))[1];
+#			if ($iota) {
+#				$main::lastguessed = $main::iota{$call};
+#				return $zone;
+#			}
+#			else {				# invalid call?
+#				return '';
+#			}
+#		}
 	}
 
 
 	}
 
-}	
-	
 return 1;
 
 # Local Variables:

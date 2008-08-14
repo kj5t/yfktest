@@ -36,7 +36,7 @@ installstuff:
 			echo installing $$i in $(YFKTESTDIR)/$$i ; \\
 		done				;	\\
 	done
-	@for file in master.scp cty.dat friend.ini call_no_name.txt hamlibrigs ; do \\
+	@for file in master.scp cty.dat friend.ini call_no_name.txt iota.txt hamlibrigs ; do \\
 		$(INSTALL) $$file $(YFKTESTDIR)/$$file ; \\
 		echo installing $$file in $(YFKTESTDIR)/$$file ; \\
 	done

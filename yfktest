@@ -46,9 +46,10 @@ or die "Cannot open socket for CWdaemon.\n";
 
 print $cwsocket chr(27)."2 $cwspeed";
 
-#our $netsocket = IO::Socket::INET->new(PeerAddr => "192.168.0.74",
-#PeerPort => "9871", Proto   => "udp", Type => SOCK_DGRAM,)
-#or die "Cannot open socket for Network.\n";
+
+our $sock = IO::Socket::INET->new(PeerAddr => "localhost",
+PeerPort => "4532", Proto   => "tcp", Type => SOCK_STREAM,);
+#or die "Cannot open socket for Rigctld.\n";
 
 our $netname = "STN1";
 # will be overridden later by found path
@@ -75,6 +76,7 @@ load_subs("sendcw.pl");
 load_subs("dxcc.pl");
 load_subs("callinfo.pl");
 load_subs("rigctl.pl");
+load_subs("rigctld.pl");
 load_subs("keyboardmode.pl");
 load_subs("editcwmessages.pl");
 load_subs("guessexchange.pl");
@@ -114,6 +116,7 @@ our $exc2s = '';
 our $tmp='';
 
 our $counter=0;
+our $counter1=0;
 my $curpos = 0;
 
 # For guessexchange, only consider every callsign once, save in $lastguessed
@@ -142,6 +145,7 @@ my $oldeditnr = 0;			# we have to check if it changes now and then
 our $rigmodel = ''; 			# New: Hamlib.
 our $rigpath = '';			
 our $rigctl=0;
+our $rigctld=1;
 
 our %s_qsos = ("160" =>0,"80" => 0, "40" => 0, "30" => 0, "20" => 0,
 				"17" => 0, "15" => 0, "12" => 0, "10" => 0, "6" => 0);
@@ -317,6 +321,13 @@ if ($rigctl) {
 	$rig->open();
 }
 
+if ($rigctld) {
+#	Hamlib::rig_set_debug(0);
+#	our $sock = new Hamlib::Rig($rigmodel);
+#	$sock->set_conf("rig_pathname", $rigpath);	# Set path/device
+#	$rig->open();
+}
+
 ##############################################################################
 # Actual logging starts here
 ##############################################################################
@@ -333,7 +344,7 @@ our $winfo = newwin(($contest eq 'DXPED' ? 3 : 6), 35,
 		($contest eq 'DXPED' ?  11 : 8),0);
 attron($winfo, COLOR_PAIR(4));
 addstr($winfo, 0,0, ' 'x(6*35));
-refresh($winfo);
+refresh($winfo); 
 
 our $wshowscore = newwin(10,21,14,59);
 our $wpartialcheck = newwin(9,40,0,39);
@@ -386,6 +397,9 @@ while (1) {
 
 		&rigctl('get') unless ($editnr || ($counter % 20) || (!$rigctl));
 		$counter++;
+		
+		&rigctld('get1') unless ($editnr || ($counter1 % 20) || (!$rigctld));
+		$counter1++;
 
 		my $ch = &readakey(\$wmain, \%qso, $entryfields, \$activefield,
 				\$curpos, \@validchars, \@validentry);	

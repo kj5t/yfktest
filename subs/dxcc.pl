@@ -272,7 +272,7 @@ if ($goodzone) {
 
 # cty.dat has special entries for WAE countries which are not separate DXCC
 # countries. Those start with a "*", for example *TA1. Those have to be changed
-# to the proper DXCC. Since there are opnly a few of them, it is hardcoded in
+# to the proper DXCC. Since there are only a few of them, it is hardcoded in
 # here.
 
 unless ($wae) {

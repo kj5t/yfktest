@@ -15,16 +15,24 @@ sub qsy {
 		else {				# Number entered is not a freqency in a ham band
 			return 0;
 		}
+		&rigctld($value) if $main::rigctld;
+		$_[0]->{'call'} = '';
+		${$_[1]} = 0;				# cursor position
+		
 		&rigctl($value) if $main::rigctl;
 		$_[0]->{'call'} = '';
 		${$_[1]} = 0;				# cursor position
 	}
 	elsif ($_[0]->{'call'} =~ /^(CW|SSB|RTTY|P31|P63)$/) {
 		$_[0]->{'mode'} = $1;
-		&rigctl($1) if $main::rigctl;
+		&rigctld($1) if $main::rigctld;
 		$_[0]->{'call'} = '';
 		${$_[1]} = 0;				# cursor position
-
+		$_[0]->{'mode'} = $1;
+		&rigctl($1) if $main::rigctl;
+		$_[0]->{'call'} = '';
+		${$_[1]} = 0;
+		
 		if ($1 eq 'SSB') {
 			$_[0]->{'rst'} = '59';
 		}
@@ -33,6 +41,20 @@ sub qsy {
 		}
 
 	}
+#	elsif ($_[0]->{'call'} =~ /^(CW|SSB|RTTY|P31|P63)$/) {
+#		$_[0]->{'mode'} = $1;
+#		&rigctld($1) if $main::rigctld;
+#		$_[0]->{'call'} = '';
+#		${$_[1]} = 0;				# cursor position
+
+#		if ($1 eq 'SSB') {
+#			$_[0]->{'rst'} = '59';
+#		}
+#		else {
+#			$_[0]->{'rst'} = '599';
+#		}
+
+#	}
 
 
 }

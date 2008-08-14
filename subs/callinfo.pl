@@ -1,6 +1,7 @@
 use strict;
 
 my %friends;
+my %iota;
 my %foc;
 
 open FRIEND, find_file('friend.ini');
@@ -12,6 +13,14 @@ while ($line = <FRIEND>) {
 }
 close FRIEND;
 
+open IOTA, find_file('iota.txt');
+my $line1;
+while ($line1 = <IOTA>) {
+		chomp($line1);
+	my @a = split(/=/, $line1);
+	$iota{$a[0]} =  $a[1];
+}
+close IOTA;
 
 # FOC marathon
 
@@ -211,6 +220,7 @@ sub callinfo {
 			attron($win, COLOR_PAIR(4));
 			addstr($win, " ") unless ($d =~ /PG/);
 		}
+#		addstr($win, 3, 0, "Iota: $iota{$call}".' 'x20) if defined ($iota{$call});
 		addstr($win, 4, 0, "Name: $friends{$call}".' 'x20) if defined ($friends{$call});
 		refresh($win);
 	}
@@ -234,6 +244,17 @@ sub callinfo {
 
 		refresh($win);
 	} 
+	elsif ($contest eq 'IOTA') {	# IOTA
+		my @info = &dxcc($call);
+		if ($call eq '') { return 0; }
+
+
+		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
+		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
+		addstr($win, 2, 0, "Iota: ".' 'x80);
+		addstr($win, 2, 6, "$iota{$call}".' 'x80) if defined ($iota{$call});
+		refresh($win);
+	}
 	elsif ($contest eq 'ARRLDX-DX') {		# ARRLDX, DX side: Show Mults
 		my $band = $main::qso{'band'};
 		my $mults = $main::s_mult1{$band};
@@ -253,7 +274,7 @@ sub callinfo {
 			addstr($win, " ") if ($d =~ /LB|DC|SV/);
 		}
 
-	refresh($win);
+		refresh($win);
 	}
 	else {							# Show generic callsign info.
 		my @info = &dxcc($call);
@@ -261,6 +282,7 @@ sub callinfo {
 		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
 		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
 		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
+		addstr($win, 3, 0, "Iota: $iota{$call}".' 'x80) if defined ($iota{$call});
 	refresh($win);
 	return 0;
 

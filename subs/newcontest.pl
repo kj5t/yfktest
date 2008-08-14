@@ -20,7 +20,6 @@ my $fix='';
 my $ch;
 
 
-
 my @contests;			# all definition files
 if (-d "defs") {
 	# load defs from local directory
@@ -164,20 +163,28 @@ elsif ($main::fixexchange eq 'exc2s') {
 	$fix = $main::exc2s;
 }
 
-my $hamlibchoice='NO YES';
+my $hamlibchoice='NO YES RIGCTLD';
 if (!$main::hashamlib) {
 	$hamlibchoice = 'NO_(Hamlib.pm_not_found)';	
 }
 
-$main::rigctl = &chose(\$wdialog, 10, 20, $hamlibchoice, '');
+$main::rigctl = $main::rigctld = &chose(\$wdialog, 10, 20, $hamlibchoice, '');
 
-if ($main::rigctl =~ /NO/) {
+if ($main::rigctld =~ /(NO|YES)/){
+	$main::rigctld = 0;
+}
+else {
+	$main::rigctld = 1;
+	refresh($wdialog);
+}
+
+if ($main::rigctl =~ /(NO|RIGCTLD)/){
 	$main::rigctl = 0;
 }
 else {
 	$main::rigctl = 1;
 	
-	my %hamlibrigs = &readhamlibrigs();			# from file 'hamlibrigs'
+	my %hamlibrigs = &readhamlibrigs();
 	
 	addstr($wdialog , 14, 3 , "Hamlib rig:");
 	addstr($wdialog , 15, 3 , "Hamlib port:");
@@ -186,7 +193,7 @@ else {
 	my @a = sort keys(%hamlibrigs);
 	my $tmp = "@a";
 	$tmp = &chose(\$wdialog, 14, 20, $tmp);
-
+	
 	$main::rigmodel = $hamlibrigs{$tmp};	
 	$tmp = &chose(\$wdialog, 15, 20, '/dev/ttyS0 /dev/ttyS1 /dev/ttyUSB0
 			/dev/ttyUSB1 /dev/cuaa0 /dev/cuaa1 localhost');
@@ -194,8 +201,6 @@ else {
 
 	refresh($wdialog);
 }
-
-
 # All ok?
 
 addstr($wdialog, 18, 5, "Press Enter to continue, 'e' to edit the settings above.");
@@ -338,8 +343,6 @@ sub readhamlibrigs {
 	close RIG;
 	return %hash;
 }
-
-
 
 
 return 1;
