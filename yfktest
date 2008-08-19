@@ -46,10 +46,7 @@ or die "Cannot open socket for CWdaemon.\n";
 
 print $cwsocket chr(27)."2 $cwspeed";
 
-
-our $sock = IO::Socket::INET->new(PeerAddr => "localhost",
-PeerPort => "4532", Proto   => "tcp", Type => SOCK_STREAM,);
-#or die "Cannot open socket for Rigctld.\n";
+our $hamlibsock; 			# initialized later, if needed.
 
 our $netname = "STN1";
 # will be overridden later by found path
@@ -76,7 +73,7 @@ load_subs("sendcw.pl");
 load_subs("dxcc.pl");
 load_subs("callinfo.pl");
 load_subs("rigctl.pl");
-load_subs("rigctld.pl");
+#load_subs("rigctld.pl");
 load_subs("keyboardmode.pl");
 load_subs("editcwmessages.pl");
 load_subs("guessexchange.pl");
@@ -85,7 +82,7 @@ load_subs("showhelp.pl");
 load_subs("rategraph.pl");
 #load_subs("subs/net_receiveqso.pl");
 
-our $version = "0.0.9";
+our $version = "0.0.10";
 
 our ($contest,			# definition file: defs/$contest.def
 	$filename,			# of this current contest log
@@ -128,12 +125,12 @@ our %guesshash = ();
 # Valid characters for the 4 entry fields  (will be read from def file)
 our @validchars = ('[0-9A-Za-z]', '', '', '');
 
-# Valid complete entries that can be logged (example: IOTA) (will be read fm
+# Valid complete entries that can be logged (will be read fm
 # def file)
 our @validentry = ('.+', '', '', '');
 
 
-my $oldcall=''; 			# check if call was changed. otherwise no PC/SPC
+my $oldcall=''; 			# check if call was changed. otherwise no PC/SCP
 
 
 our $editnr=0;				# the QSO which is currently being edited (if any),
@@ -142,7 +139,7 @@ our $editnr=0;				# the QSO which is currently being edited (if any),
 my $oldeditnr = 0;			# we have to check if it changes now and then
 
 
-our $rigmodel = ''; 			# New: Hamlib.
+our $rigmodel = ''; 
 our $rigpath = '';			
 our $rigctl=0;
 our $rigctld=1;
@@ -314,18 +311,15 @@ if ($modes eq 'SSB') {
 
 # Activate Hamlib if needed.
 
-if ($rigctl) {
+if ($rigctl eq 'Hamlib.pm') {
 	Hamlib::rig_set_debug(0);
 	our $rig = new Hamlib::Rig($rigmodel);
 	$rig->set_conf("rig_pathname", $rigpath);	# Set path/device
 	$rig->open();
 }
-
-if ($rigctld) {
-#	Hamlib::rig_set_debug(0);
-#	our $sock = new Hamlib::Rig($rigmodel);
-#	$sock->set_conf("rig_pathname", $rigpath);	# Set path/device
-#	$rig->open();
+elsif ($rigctl eq 'rigctld') {
+	$hamlibsock = new IO::Socket::INET ( PeerAddr => 'localhost',
+		            PeerPort => 4532, Proto => 'tcp');
 }
 
 ##############################################################################
@@ -397,9 +391,6 @@ while (1) {
 
 		&rigctl('get') unless ($editnr || ($counter % 20) || (!$rigctl));
 		$counter++;
-		
-		&rigctld('get1') unless ($editnr || ($counter1 % 20) || (!$rigctld));
-		$counter1++;
 
 		my $ch = &readakey(\$wmain, \%qso, $entryfields, \$activefield,
 				\$curpos, \@validchars, \@validentry);	

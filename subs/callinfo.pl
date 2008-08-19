@@ -13,14 +13,14 @@ while ($line = <FRIEND>) {
 }
 close FRIEND;
 
-open IOTA, find_file('iota.txt');
-my $line1;
-while ($line1 = <IOTA>) {
-		chomp($line1);
-	my @a = split(/=/, $line1);
-	$iota{$a[0]} =  $a[1];
-}
-close IOTA;
+#open IOTA, find_file('iota.txt');
+#my $line1;
+#while ($line1 = <IOTA>) {
+#		chomp($line1);
+#	my @a = split(/=/, $line1);
+#	$iota{$a[0]} =  $a[1];
+#}
+#close IOTA;
 
 # FOC marathon
 
@@ -282,7 +282,7 @@ sub callinfo {
 		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
 		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
 		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
-		addstr($win, 3, 0, "Iota: $iota{$call}".' 'x80) if defined ($iota{$call});
+#		addstr($win, 3, 0, "Iota: $iota{$call}".' 'x80) if defined ($iota{$call});
 	refresh($win);
 	return 0;
 

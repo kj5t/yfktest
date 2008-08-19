@@ -163,26 +163,24 @@ elsif ($main::fixexchange eq 'exc2s') {
 	$fix = $main::exc2s;
 }
 
-my $hamlibchoice='NO YES RIGCTLD';
+my $hamlibchoice;
+
 if (!$main::hashamlib) {
-	$hamlibchoice = 'NO_(Hamlib.pm_not_found)';	
-}
-
-$main::rigctl = $main::rigctld = &chose(\$wdialog, 10, 20, $hamlibchoice, '');
-
-if ($main::rigctld =~ /(NO|YES)/){
-	$main::rigctld = 0;
+	$hamlibchoice = 'rigctld NO';
 }
 else {
-	$main::rigctld = 1;
-	refresh($wdialog);
+	$hamlibchoice='rigctld Hamlib.pm NO';
 }
 
-if ($main::rigctl =~ /(NO|RIGCTLD)/){
+$main::rigctl = &chose(\$wdialog, 10, 20, $hamlibchoice, '');
+
+if ($main::rigctl eq 'NO') {
 	$main::rigctl = 0;
 }
-else {
-	$main::rigctl = 1;
+
+refresh($wdialog);
+
+if ($main::rigctl eq 'Hamlib.pm') {
 	
 	my %hamlibrigs = &readhamlibrigs();
 	
@@ -200,6 +198,9 @@ else {
 	$main::rigpath = $tmp;
 
 	refresh($wdialog);
+}
+elsif ($main::rigctl eq 'rigctld') {
+	$main::rigmodel = 'rigctld';
 }
 # All ok?
 

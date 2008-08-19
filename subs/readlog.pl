@@ -36,8 +36,14 @@ sub readlog {
 		$main::cwmessages[6] = <LOG>;
 
 		my $tmp = <LOG>;
-		$main::rigctl = 1 if ($tmp =~ /[0-9]+/);
-		($main::rigmodel, $main::rigpath, $main::rigspeed) = split(/\s+/, $tmp);
+		if ($tmp =~ /rigctld/) {
+			$main::rigctl = 'rigctld';
+		}
+		elsif ($tmp =~ /[a-z]/) {
+			($main::rigmodel, $main::rigpath, $main::rigspeed) = split(/\s+/,
+				$tmp);
+			$main::rigctl = 'Hamlib.pm';
+		}
 
 
 		chomp(@main::cwmessages);
