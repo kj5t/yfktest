@@ -68,15 +68,21 @@ sub rigctl {
 		}
 			
 		$main::qso{'band'} = $freq if $freq;
-		$main::qso{'mode'} = $mode unless ($main::qso{'mode'} eq 'RTTY');
+		$main::qso{'mode'} = $mode;# unless ($main::qso{'mode'} eq 'RTTY');
 	} #get
 	else {	# set band or mode
-		if ($band =~ /SSB|CW/) {
+		if ($band =~ /SSB|CW|RTTY/) {
 
 			$mode = '';
 
-			if ($band eq 'RTTY') { return 1; }
-			
+			if ($band eq 'RTTY') { #return 1; }
+				if ($main::rigctl eq 'Hamlib.pm') {
+					$main::rig->set_mode($Hamlib::RIG_MODE_RTTY);
+				}
+				else {
+					print $main::hamlibsock "M RTTY 0\n";
+				}
+			}
 			elsif ($band eq 'CW') {
 				if ($main::rigctl eq 'Hamlib.pm') {
 					$main::rig->set_mode($Hamlib::RIG_MODE_CW);
