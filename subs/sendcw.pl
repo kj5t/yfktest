@@ -1,7 +1,7 @@
 sub sendcw {
 	my $c = shift;
 
-	# Just to make sure the speed is right. ould be wrong if user aborted
+	# Just to make sure the speed is right. Could be wrong if user aborted
 	# sending after "++".
 	print $main::cwsocket chr(27)."2 $main::cwspeed";
 	
@@ -23,7 +23,7 @@ sub sendcw {
 
 	}
 	elsif ($c eq 'pgdwn') {
-		$main::cwspeed-=2 unless $main::cwspeed < 5;
+		$main::cwspeed-=2 unless $main::cwspeed < 11;
 		print $main::cwsocket chr(27)."2 $main::cwspeed";
 		addstr($main::wrate, 3,0, "  CW-Speed: $main::cwspeed");
 		refresh($main::wrate);
