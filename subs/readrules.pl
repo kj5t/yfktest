@@ -32,6 +32,25 @@ sub readrules {
 
 		@main::cwmessages = @rules[22..28] unless $#main::cwmessages;
 
+	#
+	# Everything beyond here should be tagged with one of:
+	#   BEGIN (SCORE|MULT1|MULT2)
+	# And each section is stored as a code reference which is evaled later
+	# to help calculate scores.  Right now, just remember the lines.
+
+	if ($#rules > 28) {
+		my $deftype = "";
+		for (my $i = 29; $i <= $#rules; $i++) {
+			if ($rules[$i] =~ /^\s*BEGIN\s+(.*)/) {
+				$deftype = $1;
+				open(WW,">>log");
+				print WW "reading $deftype\n";
+				close(WW);
+			} else {
+				$main::coderefs{$contest}{$deftype} .= $rules[$i];
+			}
+		}
+	}
 }
 
 return 1;

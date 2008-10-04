@@ -14,7 +14,6 @@ sub scoreqso {
 #	$defqsopts = 'dx=5~cont=3~own=1~exc2=((AF|AS|NA|SA|EU|AN)\d{3,3})=15';
 #	$defqsopts = 'dx=6~cont=3~own=1~exc2=((AF|AS|NA|SA|EU|AN)\d{3,3})=15';
 
-	
 # Check for dupe
 
 	unless ($main::contest eq 'NCCC-SPRINT') {
@@ -29,6 +28,18 @@ sub scoreqso {
 		}	
 	}
 
+	# handy vars to use
+	#  Although there is no need to spell these out specifically, it
+	#  makes less knowledgeable perl users have an easier and simpiler
+	#  time writing rulls in the .def files.
+	my $band = $qso{'band'};
+	my $call = $qso{'call'};
+	my $mode = $qso{'mode'};
+	my $exc1 = $qso{'exc1'};
+	my $exc2 = $qso{'exc2'};
+	my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
+	my $score = 1;
+	
 	# Not a dupe if here, so do scoring
 	
 	$s_qsos->{$qso{'band'}}++;
@@ -37,7 +48,14 @@ sub scoreqso {
 	# * Nothing; fixed
 	# * DX=x, same Cont=y, same DXCC=z, $field matching $regex = p
 
-	if ($main::defqsopts eq 'iaru') {
+	if (exists($main::coderefs{$main::contest}{'SCORE'})) {
+
+		# eval the code, which should:
+		#  - set $score to the score value for the QSO (defaults to 1)
+		eval $main::coderefs{$main::contest}{'SCORE'} or die $@;
+
+		$s_qsopts->{$qso{'band'}} += $score;
+	} elsif ($main::defqsopts eq 'iaru') {
 		(undef, undef, undef, my $cont, undef, undef, undef, undef, undef) 
 						= &dxcc($qso{'call'});
 
@@ -360,7 +378,19 @@ sub scoreqso {
 	#  * exch1..4
 	#  * DXCC
 
-	if ($main::defmult1 =~ /prefix-(.+)/) {
+	if (exists($main::coderefs{$main::contest}{'MULT1'})) {
+
+		my $mult = '';
+
+		# eval the code, which should:
+		#  - set $mult to the unique multiplier keyword (eg, country code)
+		eval $main::coderefs{$main::contest}{'MULT1'} or die $@;
+
+		# remember the multiplier keyword if not seen before
+		unless (!$mult || $s_mult1->{$band} =~ / $mult /) {
+			$s_mult1->{$band} .= " $mult ";
+		}
+	} elsif ($main::defmult1 =~ /prefix-(.+)/) {
 		my $prefix;
 		my $bands = $1;
 
@@ -649,7 +679,19 @@ sub scoreqso {
 	# MULT 2 MULT 3 MULT 2
 	###################################################
 
-	if (($main::defmult2 =~ /(exc\d)-(\w+)-(\w+)/) &&
+	if (exists($main::coderefs{$main::contest}{'MULT2'})) {
+
+		my $mult = '';
+
+		# eval the code, which should:
+		#  - set $mult to the unique multiplier keyword (eg, country code)
+		eval $main::coderefs{$main::contest}{'MULT2'} or die $@;
+
+		# remember the multiplier keyword if not seen before
+		unless (!$mult || $s_mult2->{$band} =~ / $mult /) {
+			$s_mult2->{$band} .= " $mult ";
+		}
+	} elsif (($main::defmult2 =~ /(exc\d)-(\w+)-(\w+)/) &&
 			($qso{$1} ne '')) {			# might be empty, like in IOTA..
 		my $mult = $qso{$1};
 
