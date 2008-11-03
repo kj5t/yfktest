@@ -29,12 +29,12 @@ sub rigctl {
 		    print $main::hamlibsock "f\n";
 		    $freq = <$main::hamlibsock>;
 		    chomp($freq);
-		    <$main::hamlibsock>;            # rigctld sends an extra line "END"
+#		    <$main::hamlibsock>;            # rigctld sends an extra line "END"
 
 			print $main::hamlibsock "m\n";
 			$mode = <$main::hamlibsock>;
 			<$main::hamlibsock>;			# bandiwidth and END not needed..
-			<$main::hamlibsock>;
+#			<$main::hamlibsock>;
 			chomp($mode);
 
 			if ($mode =~ /CW/) {	# CW, CWR
@@ -80,7 +80,7 @@ sub rigctl {
 					$main::rig->set_mode($Hamlib::RIG_MODE_RTTY);
 				}
 				else {
-					print $main::hamlibsock "M RTTY 0\n";
+					print $main::hamlibsock "M RTTY 0";
 				}
 			}
 			elsif ($band eq 'CW') {
@@ -88,7 +88,7 @@ sub rigctl {
 					$main::rig->set_mode($Hamlib::RIG_MODE_CW);
 				}
 				else {
-					print $main::hamlibsock "M CW 0\n";
+					print $main::hamlibsock "M CW 0";
 				}
 			}
 			elsif ($band eq 'SSB') {
@@ -97,7 +97,7 @@ sub rigctl {
 						$main::rig->set_mode($Hamlib::RIG_MODE_LSB);
 					}
 					else {
-						print $main::hamlibsock "M LSB 0\n";
+						print $main::hamlibsock "M LSB 0";
 					}
 				}
 				else {
@@ -105,7 +105,7 @@ sub rigctl {
 						$main::rig->set_mode($Hamlib::RIG_MODE_USB);
 					}
 					else {
-						print $main::hamlibsock "M USB 0\n";
+						print $main::hamlibsock "M USB 0";
 					}
 				}
 			}
@@ -130,7 +130,7 @@ sub rigctl {
 				$main::rig->set_freq($band, $vfo);
 			}
 			else {
-				print $main::hamlibsock "F $band \n";
+				print $main::hamlibsock "F $band";
 			}
 		}
 
