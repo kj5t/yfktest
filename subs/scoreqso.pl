@@ -667,6 +667,16 @@ sub scoreqso {
 	elsif ($main::contest eq 'ARRL-FD') {
 		$main::guesshash{$qso{call}} = $qso{exc1}.'/'.$qso{exc2};
 	}
+	elsif ($main::defmult1 =~ /hungarian/) {		# HA counties by band
+		if ($qso{'exc1'} =~ /[A-Z]{2}/) {
+			my $mult = $qso{'exc1'};
+			unless ($s_mult2->{$qso{'band'}} =~ / $mult /) {
+					$s_mult2->{$qso{'band'}} .= " $mult ";
+			}
+		}
+		# Remove YO from mult1, since it doesn't count as DXCC mult
+		$s_mult1->{$qso{'band'}} =~ s/ HA //;
+	}
 	elsif ($main::contest =~ /ALLASIAN/) {
 		$main::guesshash{$qso{call}} = $qso{exc1};
 	}
