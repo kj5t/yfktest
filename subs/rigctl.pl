@@ -49,6 +49,8 @@ sub rigctl {
 		unless ($freq =~ /^[0-9]+$/) {
 			return 0;
 		}
+		
+addstr($wmain,23,40,"Freq: $freq HZ");
 
 		$freq /= 1000;
 			
@@ -133,9 +135,8 @@ sub rigctl {
 				print $main::hamlibsock "F $band";
 			}
 		}
-
 	}
-
+#addstr($wmain,23,40,"Freq: $freqrig");
 	$main::counter = 0;
 }
 

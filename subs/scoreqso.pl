@@ -124,6 +124,40 @@ sub scoreqso {
 			}
 		}
 	}
+	elsif($main::defqsopts eq 'epc' ) {
+		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
+		if ($dxcc eq $main::mydxcc) {		# same DXCC country
+			$s_qsopts->{$qso{'band'}} += 1;
+		}
+			if ($qso{call} =~ /\/(MM)/i) {
+					$s_qsopts-> {$qso{'band'}} += 3;
+			}
+		elsif ($cont eq $main::mycont) {
+			if ($qso{band} > 15) {			# 20-80m
+				$s_qsopts->{$qso{'band'}} += 2;
+			}
+			else {							# 40-80m
+				$s_qsopts->{$qso{'band'}} += 3;
+			}
+		}
+		elsif ($cont ne $main::mycont) {
+			if ($qso{band} == 40) {			# 40m
+				$s_qsopts->{$qso{'band'}} += 4;
+			}
+			elsif ($qso{band} == 20){				# 20m
+				$s_qsopts->{$qso{'band'}} += 4;
+			}
+			elsif ($qso{band} == 15){				# 15m
+				$s_qsopts->{$qso{'band'}} += 4;
+			}
+			elsif ($qso{band} == 10){				# 10m
+				$s_qsopts->{$qso{'band'}} += 5;
+			}
+			elsif ($qso{band} == 80){							# 40-80m
+				$s_qsopts->{$qso{'band'}} += 6;
+			}
+		}
+	}
 	elsif($main::defqsopts=~/dx=(\d+)~cont=(\d+)~own=(\d+)~(\w+)=(.+?)=(\d+)/) {
 			my $dxpts = $1;
 			my $contpts = $2;
@@ -207,11 +241,11 @@ sub scoreqso {
 		if ($dxcc =~ /^CT/) {
 			$s_qsopts->{$qso{'band'}} += 3;
 			
-	    		    if ($qso{call} eq 'CT1ARR') {
+			    if ($qso{call} eq 'CT1ARR') {
 					$s_qsopts-> {$qso{'band'}} = 6;# $ct1arr = 6;
-	    		    }
-			
-		}		
+			    }
+
+		}
 		else {	# DX
 		$s_qsopts->{$qso{'band'}} += 1;
 		}
@@ -398,7 +432,6 @@ sub scoreqso {
 		if (index($qso{'call'}, '/') > -1) {
 			$qso{'call'} =~ s/((\/QRP)|(\/P)|(\/M)|(\/A))//g;
 		}
-
 		if (index($qso{'call'}, '/') < 0) {
 			$qso{'call'} =~ /^(.+?)[A-Z]+$/;
 			$prefix = $1;
@@ -674,7 +707,7 @@ sub scoreqso {
 					$s_mult2->{$qso{'band'}} .= " $mult ";
 			}
 		}
-		# Remove YO from mult1, since it doesn't count as DXCC mult
+		# Remove HA from mult1, since it doesn't count as DXCC mult
 		$s_mult1->{$qso{'band'}} =~ s/ HA //;
 	}
 	elsif ($main::contest =~ /ALLASIAN/) {

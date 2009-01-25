@@ -40,6 +40,8 @@ if ($hashamlib) {
 
 our $cwspeed=32;
 
+# our $freq = $rigctl;
+
 our $cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
 PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
 or die "Cannot open socket for CWdaemon.\n";
@@ -349,6 +351,7 @@ addstr($wrate, 0,0, "   QSO Rates:   ");
 addstr($wrate, 1,0, " "x66);
 addstr($wrate, 3,0, "  CW-Speed: $cwspeed");
 refresh($wrate);
+#addstr($wmain,23,40,"Freq: ");
 
 my $ch='';
 
