@@ -50,7 +50,7 @@ sub rigctl {
 			return 0;
 		}
 		
-addstr($wmain,23,40,"Freq: $freq HZ");
+# addstr($wmain,23,40,"Freq: $freq HZ");
 
 		$freq /= 1000;
 			
