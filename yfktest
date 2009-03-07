@@ -46,7 +46,7 @@ our $cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
 PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
 or die "Cannot open socket for CWdaemon.\n";
 
-print $cwsocket chr(27)."2 $cwspeed";
+print $cwsocket chr(27)."2$cwspeed";
 
 our $hamlibsock; 			# initialized later, if needed.
 
