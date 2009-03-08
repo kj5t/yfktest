@@ -57,7 +57,7 @@ sub editcwmessages {
 		elsif ($ch eq KEY_RIGHT) {
 			$curpos++ if ($curpos < length($message));
 		}
-		elsif (($ch =~ /^[A-Za-z0-9\/ =\?]$/) && (length($message) < 25)) {
+		elsif (($ch =~ /^[A-Z+-a-z0-9\/ =\?]$/) && (length($message) < 25)) {
 			$curpos++;
 			$ch = "\U$ch";
 			$message = substr($message, 0, $curpos-1).$ch.substr($message, $curpos-1, );
