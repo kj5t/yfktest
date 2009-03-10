@@ -234,6 +234,71 @@ sub scoreqso {
 			$s_qsopts->{$qso{'band'}} += 5;
 		}
 	}
+	elsif ($main::defqsopts eq 'rdxc-dx') {
+		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
+
+		if ($dxcc =~ /^UA/) {
+			$s_qsopts->{$qso{'band'}} += 10;
+		}
+		elsif ($dxcc =~ /^UA2/) {
+			$s_qsopts->{$qso{'band'}} += 10;
+		}
+		elsif ($dxcc =~ /^R1FJ/) {
+			$s_qsopts->{$qso{'band'}} += 10;
+		}
+		elsif ($dxcc =~ /^R1MV/) {
+			$s_qsopts->{$qso{'band'}} += 10;
+		}
+		elsif ($qso{call} eq 'R1AN') {
+			$s_qsopts->{$qso{'band'}} += 10;
+		}
+		elsif ($qso{call} eq 'R1ANF') {
+			$s_qsopts->{$qso{'band'}} += 10;
+		}
+		elsif ($dxcc =~ /^UA9/) {
+			$s_qsopts->{$qso{'band'}} += 10;
+		}
+		elsif (($cont eq $main::mycont) && ($dxcc ne $main::mydxcc)) {
+			$s_qsopts->{$qso{'band'}} += 3;
+		}
+		elsif ($dxcc eq $main::mydxcc) {
+			$s_qsopts->{$qso{'band'}} += 2;
+		}
+		else {	# DX
+			$s_qsopts->{$qso{'band'}} += 5;
+		}
+	} # RDXC-DX
+	elsif ($main::defqsopts eq 'rdxc-ru') {
+		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
+
+		if (($dxcc =~ /^UA/) && ($qso{'call'} =~ /\//)) {	# C1 / C2
+			$s_qsopts->{$qso{'band'}} += 2;
+		}
+		elsif ($dxcc =~ /^UA9/) {
+			$s_qsopts->{$qso{'band'}} += 5;
+		}
+		elsif ($dxcc =~ /^R1FJ/) {
+			$s_qsopts->{$qso{'band'}} += 2;
+		}
+		elsif ($dxcc =~ /^R1MV/) {
+			$s_qsopts->{$qso{'band'}} += 2;
+		}
+		elsif ($dxcc =~ /^R1AN/) {
+			$s_qsopts->{$qso{'band'}} += 5;
+		}
+		elsif (($cont eq $main::mycont) && ($dxcc =~ /^UA2/)) {
+			$s_qsopts->{$qso{'band'}} += 2;
+		}
+		elsif (($cont ne $main::mycont) && ($dxcc =~ /^UA/)) {	# UA, diff cont
+			$s_qsopts->{$qso{'band'}} += 5;
+		}
+		elsif (($cont eq $main::mycont) && ($dxcc ne $main::mydxcc)) {
+			$s_qsopts->{$qso{'band'}} += 3;
+		}
+		else {	# DX
+			$s_qsopts->{$qso{'band'}} += 5;
+		}
+	}
 	elsif ($main::defqsopts eq 'almeihf') {
 		my $dxcc;
 		$dxcc = (&dxcc($qso{'call'}))[7];
@@ -649,6 +714,20 @@ sub scoreqso {
 			$s_mult1->{$qso{'band'}} .= " $mult ";
 		}
 	}
+	elsif ($main::defmult1 =~ /rdxc/) {
+		if ($qso{'exc1'} =~ /[A-Z]{2}/) {		# Only RDAs, no Serials
+			my $mult = $qso{'exc1'};
+			unless ($s_mult1->{'All'} =~ / $mult$qso{'mode'} /) {
+					$s_mult2->{'All'} .= " $mult$qso{'mode'} ";
+			$s_mult1->{$qso{'band'}} =~ s/ UA //;
+			$s_mult1->{$qso{'band'}} =~ s/ UA2 //;
+			$s_mult1->{$qso{'band'}} =~ s/ UA9 //;
+			$s_mult1->{$qso{'band'}} =~ s/ R1FJ //;
+			$s_mult1->{$qso{'band'}} =~ s/ R1MV //;
+			$s_mult1->{$qso{'band'}} =~ s/ R1AN //;
+			}
+		}
+	}
 	elsif ($main::defmult1 eq 'foc') {
 		# Mults are actually bonus points.
 		# 2 per DXCC (over all bands), 5 per Continent (over all bands)
@@ -773,6 +852,15 @@ sub scoreqso {
 			}
 		}
 	}
+#	elsif ($main::defmult2 =~ /rdxc/) {
+#		if ($qso{'exc1'} =~ /[A-Z]{2}/) {		# Only RDAs, no Serials
+#			my $mult = $qso{'exc1'};
+#			unless ($s_mult2->{'All'} =~ / $mult$qso{'mode'} /) {
+#					$s_mult2->{'All'} .= " $mult$qso{'mode'} ";
+#			$s_mult2->{$qso{'band'}} =~ s/ UA //;
+#			}
+#		}
+#	}
 	elsif ($main::defmult2 =~ /yodx/) {		# YO provinces by band
 		if ($qso{'exc1'} =~ /[A-Z]{2}/) {
 			my $mult = $qso{'exc1'};
