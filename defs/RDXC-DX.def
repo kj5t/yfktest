@@ -1,5 +1,5 @@
 Russian DX Contest - DX side
-exc1-band-mode		# multiplier 1
+dxcc-band-all		# multiplier 1
 rdxc-dx				# scoring
 rdxc					# multiplier 2
 1					# exchange fields

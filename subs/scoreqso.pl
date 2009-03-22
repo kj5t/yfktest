@@ -714,20 +714,20 @@ sub scoreqso {
 			$s_mult1->{$qso{'band'}} .= " $mult ";
 		}
 	}
-	elsif ($main::defmult1 =~ /rdxc/) {
-		if ($qso{'exc1'} =~ /[A-Z]{2}/) {		# Only RDAs, no Serials
-			my $mult = $qso{'exc1'};
-			unless ($s_mult1->{'All'} =~ / $mult$qso{'mode'} /) {
-					$s_mult2->{'All'} .= " $mult$qso{'mode'} ";
-			$s_mult1->{$qso{'band'}} =~ s/ UA //;
-			$s_mult1->{$qso{'band'}} =~ s/ UA2 //;
-			$s_mult1->{$qso{'band'}} =~ s/ UA9 //;
-			$s_mult1->{$qso{'band'}} =~ s/ R1FJ //;
-			$s_mult1->{$qso{'band'}} =~ s/ R1MV //;
-			$s_mult1->{$qso{'band'}} =~ s/ R1AN //;
-			}
-		}
-	}
+#	elsif ($main::defmult1 =~ /rdxc/) {
+#		if ($qso{'exc1'} =~ /[A-Z]{2}/) {		# Only RDAs, no Serials
+#			my $mult = $qso{'exc1'};
+#			unless ($s_mult1->{'All'} =~ / $mult$qso{'mode'} /) {
+#					$s_mult1->{'All'} .= " $mult$qso{'mode'} ";
+#					$s_mult1->{$qso{'band'}} =~ s/ UA //;
+#					$s_mult1->{$qso{'band'}} =~ s/ UA2 //;
+#					$s_mult1->{$qso{'band'}} =~ s/ UA9 //;
+#					$s_mult1->{$qso{'band'}} =~ s/ R1FJ //;
+#					$s_mult1->{$qso{'band'}} =~ s/ R1MV //;
+#					$s_mult1->{$qso{'band'}} =~ s/ R1AN //;
+#			}
+#		}
+#	}
 	elsif ($main::defmult1 eq 'foc') {
 		# Mults are actually bonus points.
 		# 2 per DXCC (over all bands), 5 per Continent (over all bands)
@@ -782,8 +782,8 @@ sub scoreqso {
 	elsif ($main::defmult1 =~ /hungarian/) {		# HA counties by band
 		if ($qso{'exc1'} =~ /[A-Z]{2}/) {
 			my $mult = $qso{'exc1'};
-			unless ($s_mult2->{$qso{'band'}} =~ / $mult /) {
-					$s_mult2->{$qso{'band'}} .= " $mult ";
+			unless ($s_mult1->{$qso{'band'}} =~ / $mult /) {
+					$s_mult1->{$qso{'band'}} .= " $mult ";
 			}
 		}
 		# Remove HA from mult1, since it doesn't count as DXCC mult
@@ -852,15 +852,21 @@ sub scoreqso {
 			}
 		}
 	}
-#	elsif ($main::defmult2 =~ /rdxc/) {
-#		if ($qso{'exc1'} =~ /[A-Z]{2}/) {		# Only RDAs, no Serials
-#			my $mult = $qso{'exc1'};
-#			unless ($s_mult2->{'All'} =~ / $mult$qso{'mode'} /) {
-#					$s_mult2->{'All'} .= " $mult$qso{'mode'} ";
-#			$s_mult2->{$qso{'band'}} =~ s/ UA //;
-#			}
-#		}
-#	}
+	elsif ($main::defmult2 =~ /rdxc/) {
+		if ($qso{'exc1'} =~ /[A-Z]{2}/) {		# Only RDAs, no Serials
+			my $mult = $qso{'exc1'};
+			unless ($s_mult2->{$qso{'band'}} =~ / $mult /) {
+					$s_mult2->{$qso{'band'}} .= " $mult ";
+			}
+		}
+		$s_mult1->{$qso{'band'}} =~ s/ UA //;
+		$s_mult1->{$qso{'band'}} =~ s/ UA //;
+		$s_mult1->{$qso{'band'}} =~ s/ UA2 //;
+		$s_mult1->{$qso{'band'}} =~ s/ UA9 //;
+		$s_mult1->{$qso{'band'}} =~ s/ R1FJ //;
+		$s_mult1->{$qso{'band'}} =~ s/ R1MV //;
+		$s_mult1->{$qso{'band'}} =~ s/ R1AN //;
+	}
 	elsif ($main::defmult2 =~ /yodx/) {		# YO provinces by band
 		if ($qso{'exc1'} =~ /[A-Z]{2}/) {
 			my $mult = $qso{'exc1'};
