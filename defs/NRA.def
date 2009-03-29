@@ -19,9 +19,9 @@ QSO: %5d %s %s %s %-13s %-3s %4s %6s %-13s %-3s %4s %6s 0		# cabrillo def
 band mode date utc mycall rsts nr exc1s call rst exc1 exc2		# cabrillo def
 NRA														# CBR name
 exc1s															# fixed exc														# name thereof
-ZONE:
+ZONE/ID club:
 CQ TEST MYCALL MYCALL TEST			# F1
-5NN NR EXC2S						# F2
+5NN EXC1S						# F2
 TU MYCALL							# F3
 MYCALL								# F4
 HISCALL								# F5
