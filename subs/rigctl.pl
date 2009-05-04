@@ -50,9 +50,10 @@ sub rigctl {
 			return 0;
 		}
 		
-addstr($wmain,23,40,"Freq: $freq HZ");
-
 		$freq /= 1000;
+		
+addstr($wmain,23,40,"Freq: $freq   ");
+addstr($wmain,23,55,"Mhz");
 			
 		if (($freq >= 1800) && ($freq <= 2000)) { $freq = "160"; }
 		elsif (($freq >= 3500) && ($freq <= 4000)) { $freq = "80"; }
@@ -136,7 +137,6 @@ addstr($wmain,23,40,"Freq: $freq HZ");
 			}
 		}
 	}
-#addstr($wmain,23,40,"Freq: $freqrig");
 	$main::counter = 0;
 }
 
