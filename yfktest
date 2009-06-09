@@ -311,6 +311,8 @@ if ($modes eq 'SSB') {
 	$qso{'rst'} = '59';
 }
 
+($qso{'band'} = $bands) =~ s/[MG]$// if ($bands ne 'ALL');
+
 # Activate Hamlib if needed.
 
 if ($rigctl eq 'Hamlib.pm') {
