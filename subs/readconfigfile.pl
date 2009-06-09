@@ -2,7 +2,7 @@
 
 sub readconfigfile {
 
-	open CONF, $ENV{HOME}."/.yfktest";
+	open CONF, $ENV{HOME}."/.yfktest" or return;
 
 	while ($line = <CONF>) {
 		if ($line =~ /mycall=(.+)/) {
