@@ -158,7 +158,7 @@ sub scoreqso {
 			}
 		}
 	}
-	elsif ($main::defqsopts eq 'gacw-dx') {
+	elsif ($main::defqsopts eq 'gacw-dxa') {
 		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
 		if ($dxcc eq $main::mydxcc) {		# same DXCC country
 			$s_qsopts->{$qso{'band'}} += 0;
