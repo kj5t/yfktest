@@ -159,27 +159,27 @@ sub callinfo {
 		addstr($win, 4, 0, "Name: $friends{$call}".' 'x20) if defined ($friends{$call});
 		refresh($win);
 	} #CNCW
-	elsif ($contest eq 'SMREY-DX') {	# His Majesty King of Spain: Show provinces
-		my $band = $main::qso{'band'};
-		my $mults = $main::s_mult2{$band};
-		my @districts = qw/AV BU C LE LO LU O OU P PO S SA SG SO VA ZA BI HU NA SS TE VI Z B GI L T BA CC CR CU GU M TO A AB CS MU V IB AL CA CO GR H J MA SE GC TF CE ML/;
+#	elsif ($contest eq 'SMREY-DX') {	# His Majesty King of Spain: Show provinces
+#		my $band = $main::qso{'band'};
+#		my $mults = $main::s_mult2{$band};
+#		my @districts = qw/AV BU C LE LO LU O OU P PO S SA SG SO VA ZA BI HU NA SS TE VI Z B GI L T BA CC CR CU GU M TO A AB CS MU V IB AL CA CO GR H J MA SE GC TF CE ML/;
 
-		move($win, 0,0);
-		foreach my $d (@districts) {
-			if ($mults =~ / $d /) {
-				attron($win, COLOR_PAIR(2));
-			}
-			else {
-				attron($win, COLOR_PAIR(4));
-			}
-			addstr($win, $d);
-			attron($win, COLOR_PAIR(4));
-			addstr($win, " ") unless ($d =~ /CE/);
-			addstr($win, " ") if ($d =~ /GI/);
-		}
-		addstr($win, 4, 0, "Name: $friends{$call}".' 'x20) if defined ($friends{$call});
-		refresh($win);
-	} #SMREY-DX
+#		move($win, 0,0);
+#		foreach my $d (@districts) {
+#			if ($mults =~ / $d /) {
+#				attron($win, COLOR_PAIR(2));
+#			}
+#			else {
+#				attron($win, COLOR_PAIR(4));
+#			}
+#			addstr($win, $d);
+#			attron($win, COLOR_PAIR(4));
+#			addstr($win, " ") unless ($d =~ /CE/);
+#			addstr($win, " ") if ($d =~ /GI/);
+#		}
+#		addstr($win, 4, 0, "Name: $friends{$call}".' 'x20) if defined ($friends{$call});
+#		refresh($win);
+#	} #SMREY-DX
 	elsif ($contest eq 'PDCON-DX') {	# Portugal Day Contest: Show provinces
 		my $band = $main::qso{'band'};
 		my $mults = $main::s_mult2{$band};
@@ -275,6 +275,27 @@ sub callinfo {
 		addstr($win, 2, 6, "$iota{$call}".' 'x80) if defined ($iota{$call});
 		refresh($win);
 	}
+	elsif ($contest eq 'SMREY-DX') {	# His Majesty King of Spain: Show provinces
+		my $band = $main::qso{'band'};
+		my $mults = $main::s_mult2{$band};
+		my @districts = qw/AV BU C LE LO LU O OU P PO S SA SG SO VA ZA BI HU NA SS TE VI Z B GI L T BA CC CR CU GU M TO A AB CS MU V IB AL CA CO GR H J MA SE GC TF CE ML/;
+
+		move($win, 0,0);
+		foreach my $d (@districts) {
+			if ($mults =~ / $d /) {
+				attron($win, COLOR_PAIR(2));
+			}
+			else {
+				attron($win, COLOR_PAIR(4));
+			}
+			addstr($win, $d);
+			attron($win, COLOR_PAIR(4));
+			addstr($win, " ") unless ($d =~ /CE/);
+			addstr($win, " ") if ($d =~ /GI/);
+		}
+		addstr($win, 4, 0, "Name: $friends{$call}".' 'x20) if defined ($friends{$call});
+		refresh($win);
+	} #SMREY-DX
 	elsif ($contest eq 'ARRLDX-DX') {		# ARRLDX, DX side: Show Mults
 		my $band = $main::qso{'band'};
 		my $mults = $main::s_mult1{$band};

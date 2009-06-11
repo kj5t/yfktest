@@ -158,6 +158,33 @@ sub scoreqso {
 			}
 		}
 	}
+	elsif ($main::defqsopts eq 'gacw-dx') {
+		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
+		if ($dxcc eq $main::mydxcc) {		# same DXCC country
+			$s_qsopts->{$qso{'band'}} += 0;
+		}
+		elsif ($cont eq 'SA') {
+			$s_qsopts->{$qso{'band'}} += 5;
+		}
+		elsif ($cont eq $main::mycont) {
+			$s_qsopts->{$qso{'band'}} += 1;
+		}
+		else {							
+			$s_qsopts->{$qso{'band'}} += 3;
+		}
+	}
+	elsif ($main::defqsopts eq 'gacw') {
+		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
+		if ($dxcc eq $main::mydxcc) {		# same DXCC country
+			$s_qsopts->{$qso{'band'}} += 0;
+		}
+		elsif ($cont eq $main::mycont) {
+			$s_qsopts->{$qso{'band'}} += 1;
+		}
+		else {							
+			$s_qsopts->{$qso{'band'}} += 3;
+		}
+	}
 	elsif($main::defqsopts=~/dx=(\d+)~cont=(\d+)~own=(\d+)~(\w+)=(.+?)=(\d+)/) {
 			my $dxpts = $1;
 			my $contpts = $2;
