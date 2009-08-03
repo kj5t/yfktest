@@ -16,9 +16,9 @@ cqzone					# multiplier 2
 [0-9]				# regex for every single character in exchange field 4
 					# regex for complete valid exchange field 4
 QSO: %5d %s %s %s %-13s %-3s %-6s %-13s %-3s %s
-band mode date utc mycall rsts nr call rst exc1
-GACW-DX 														# CBR name
-exc1s 																# fixed exc
+band mode date utc mycall rsts exc1s call rst exc1 stn
+GACW-DX 
+exc1s
 ZONE:
 CQ TEST MYCALL MYCALL TEST			# F1
 5NN EXC1S 								# F2
