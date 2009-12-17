@@ -124,6 +124,9 @@ sub readakey {
 	elsif (ord($ch) == 248) {		# ESC or Alt-X
 		return 'esc';
 	}
+#	elsif ($ch eq KEY_ESC) {		# ESC
+#		return 'esc';
+#	}
 	elsif ($ch eq KEY_UP) {
 		return 'up';
 	}

@@ -50,6 +50,8 @@ print $cwsocket chr(27)."2$cwspeed";
 
 our $hamlibsock; 			# initialized later, if needed.
 
+our $hamlibrigd;
+
 our $netname = "STN1";
 # will be overridden later by found path
 our $contestpath = "defs/";

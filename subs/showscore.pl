@@ -22,7 +22,7 @@ sub showscore {
 	addstr($$window, 1, 0, "                     ");
 	addstr($$window, 1, (11-length($main::mycall)/2), $main::mycall);
 	addstr($$window, 9, 0, " Total QSOs: ".($#main::qsos+1)."          ");
-	
+#	4
 	}
 	else { # Normal contest, 6 Bands 
 	my $y = 2;
