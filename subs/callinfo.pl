@@ -118,7 +118,7 @@ sub callinfo {
 		addstr($win, 4, 0, "Name: $friends{$call}".' 'x20) if defined ($friends{$call});
 		refresh($win);
 	} #YODX
-	elsif ($contest eq 'HADXTEST') {	# HA-DX-Contest: Show counties
+	elsif ($contest eq 'HA-DX') {	# HA-DX-Contest: Show counties
 		my $band = $main::qso{'band'};
 		my $mults = $main::s_mult2{$band};
 		my @districts = qw/BA BE BN BO BP CS FE GY HB HE KO NG PE SA SO TO VA VE ZA/;
