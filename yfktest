@@ -40,8 +40,6 @@ if ($hashamlib) {
 
 our $cwspeed=32;
 
-# our $freq = $rigctl;
-
 our $cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
 PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
 or die "Cannot open socket for CWdaemon.\n";
@@ -76,8 +74,8 @@ load_subs("writelog.pl");
 load_subs("sendcw.pl");
 load_subs("dxcc.pl");
 load_subs("callinfo.pl");
-load_subs("rigctl.pl");
-#load_subs("rigctld.pl");
+#load_subs("rigctl.pl");
+load_subs("rigctld.pl");
 load_subs("keyboardmode.pl");
 load_subs("editcwmessages.pl");
 load_subs("guessexchange.pl");
@@ -144,9 +142,11 @@ my $oldeditnr = 0;			# we have to check if it changes now and then
 
 
 our $rigmodel = ''; 
-our $rigpath = '';			
+our $rigpath = '';
 our $rigctl=0;
 our $rigctld=1;
+our $rig=1;
+
 
 our %s_qsos = ("160" =>0,"80" => 0, "40" => 0, "30" => 0, "20" => 0,
 				"17" => 0, "15" => 0, "12" => 0, "10" => 0, "6" => 0);
@@ -304,7 +304,6 @@ if ($ARGV[0] || ($contest eq '0')) {
 		}
 }
 
-
 my @tmp = &dxcc($mycall);
 ($mydxcc, $mycont) = @tmp[7,3];
 
@@ -315,18 +314,20 @@ if ($modes eq 'SSB') {
 
 ($qso{'band'} = $bands) =~ s/[MG]$// if ($bands ne 'ALL');
 
+#system("sh rigfile");
+
 # Activate Hamlib if needed.
 
-if ($rigctl eq 'Hamlib.pm') {
-	Hamlib::rig_set_debug(0);
-	our $rig = new Hamlib::Rig($rigmodel);
-	$rig->set_conf("rig_pathname", $rigpath);	# Set path/device
-	$rig->open();
-}
-elsif ($rigctl eq 'rigctld') {
+#if ($rigctl eq 'Hamlib.pm') {
+#	Hamlib::rig_set_debug(0);
+#	our $rig = new Hamlib::Rig($rigmodel);
+#	$rig->set_conf("rig_pathname", $rigpath);	# Set path/device
+#	$rig->open();
+#}
+#if ($rig eq 'Rigctld' {
 	$hamlibsock = new IO::Socket::INET ( PeerAddr => 'localhost',
 		            PeerPort => 4532, Proto => 'tcp');
-}
+#}
 
 ##############################################################################
 # Actual logging starts here
@@ -355,7 +356,6 @@ addstr($wrate, 0,0, "   QSO Rates:   ");
 addstr($wrate, 1,0, " "x66);
 addstr($wrate, 3,0, "  CW-Speed: $cwspeed");
 refresh($wrate);
-#addstr($wmain,23,40,"Freq: ");
 
 my $ch='';
 
@@ -396,7 +396,7 @@ while (1) {
 		$oldcall = $qso{'call'};
 		$oldeditnr = $editnr;
 
-		&rigctl('get') unless ($editnr || ($counter % 20) || (!$rigctl));
+		&rigctld('get') unless ($editnr || ($counter % 20) || (!$rigctld));
 		$counter++;
 
 		my $ch = &readakey(\$wmain, \%qso, $entryfields, \$activefield,
@@ -436,6 +436,7 @@ while (1) {
 				if ($qso{'call'} eq 'QUIT') {
 					endwin;
 					print "Thanks for using YFKtest!\n";
+#					system("killall -9 rigctld");
 					exit;
 				}
 

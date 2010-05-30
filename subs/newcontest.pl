@@ -17,6 +17,8 @@ my $operator;
 my $power;
 my $transmitter;
 my $fix='';
+my $rig;
+my $rigfile;
 my $ch;
 
 
@@ -163,45 +165,15 @@ elsif ($main::fixexchange eq 'exc2s') {
 	$fix = $main::exc2s;
 }
 
-my $hamlibchoice;
 
-if (!$main::hashamlib) {
-	$hamlibchoice = 'rigctld NO';
-}
-else {
-	$hamlibchoice='rigctld Hamlib.pm NO';
-}
+$rig = &chose(\$wdialog, 10, 20, 'Rigctld NO', $rig);
 
-$main::rigctl = &chose(\$wdialog, 10, 20, $hamlibchoice, '');
-
-if ($main::rigctl eq 'NO') {
-	$main::rigctl = 0;
+if ($rig eq 'NO') {
+	$main::rigctld = 0;
 }
 
 refresh($wdialog);
 
-if ($main::rigctl eq 'Hamlib.pm') {
-	
-	my %hamlibrigs = &readhamlibrigs();
-	
-	addstr($wdialog , 14, 3 , "Hamlib rig:");
-	addstr($wdialog , 15, 3 , "Hamlib port:");
-	refresh($wdialog);
-	
-	my @a = sort keys(%hamlibrigs);
-	my $tmp = "@a";
-	$tmp = &chose(\$wdialog, 14, 20, $tmp);
-	
-	$main::rigmodel = $hamlibrigs{$tmp};	
-	$tmp = &chose(\$wdialog, 15, 20, '/dev/ttyS0 /dev/ttyS1 /dev/ttyUSB0
-			/dev/ttyUSB1 /dev/cuaa0 /dev/cuaa1 localhost');
-	$main::rigpath = $tmp;
-
-	refresh($wdialog);
-}
-elsif ($main::rigctl eq 'rigctld') {
-	$main::rigmodel = 'rigctld';
-}
 # All ok?
 
 addstr($wdialog, 18, 5, "Press Enter to continue, 'e' to edit the settings above.");
@@ -231,12 +203,9 @@ else {
 			$main::cwmessages[0]."\n".$main::cwmessages[1]."\n".
 			$main::cwmessages[2]."\n".$main::cwmessages[3]."\n".
 			$main::cwmessages[4]."\n".$main::cwmessages[5]."\n".
-			$main::cwmessages[6]."\n".$main::rigmodel." ".$main::rigpath."\n";
-
+			$main::cwmessages[6]."\n";
 	close LOG;
 }
-
-
 
 
 return ($contest, $filename, $mycall, $assisted, $bands, $modes, $operator,
@@ -331,20 +300,6 @@ curs_set(1);
 return $opts[$nr];
 
 }
-
-sub readhamlibrigs {
-	my $line;
-	my %hash;
-	open RIG, find_file("hamlibrigs");
-	while ($line = <RIG>) {
-		chomp($line);
-		my @a = split(/\s+/, $line);
-		$hash{$a[0]} = $a[1];
-	}
-	close RIG;
-	return %hash;
-}
-
 
 return 1;
 

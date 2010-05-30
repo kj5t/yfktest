@@ -35,15 +35,15 @@ sub readlog {
 		$main::cwmessages[5] = <LOG>;
 		$main::cwmessages[6] = <LOG>;
 
-		my $tmp = <LOG>;
-		if ($tmp =~ /rigctld/) {
-			$main::rigctl = 'rigctld';
-		}
-		elsif ($tmp =~ /[a-z]/) {
-			($main::rigmodel, $main::rigpath, $main::rigspeed) = split(/\s+/,
-				$tmp);
-			$main::rigctl = 'Hamlib.pm';
-		}
+#		my $tmp = <LOG>;
+#		if ($tmp =~ /rigctld/) {
+#			$main::rigctl = 'rigctld';
+#		}
+#		elsif ($tmp =~ /[a-z]/) {
+#			($main::rigmodel, $main::rigpath, $main::rigspeed) = split(/\s+/,
+#				$tmp);
+#			$main::rigctl = 'Hamlib.pm';
+#		}
 
 
 		chomp(@main::cwmessages);
