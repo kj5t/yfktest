@@ -436,7 +436,11 @@ while (1) {
 				if ($qso{'call'} eq 'QUIT') {
 					endwin;
 					print "Thanks for using YFKtest!\n";
-#					system("killall -9 rigctld");
+					exit;
+				}
+				if ($qso{'call'} eq 'EXIT') {
+					endwin;
+					print "Thanks for using YFKtest!\n";
 					exit;
 				}
 
