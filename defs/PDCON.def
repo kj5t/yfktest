@@ -1,6 +1,6 @@
 Portugal Day Contest - CT side
 dxcc-band-all		# multiplier 1 = DXCCs by band but not by mode
-dx=1~cont=1~own=0~exc1=[A-Z]{2}=5	# scoring
+dx=2~cont=1~own=0~exc1=[A-Z]{2}=5	# scoring
 portuday			# multiplier 2 CT provinces, Madeira and Azores counties.
 1					# exchange fields
 4					# length of exchange field 1
