@@ -1,14 +1,14 @@
 Portugal Day Contest - DX side
 dxcc-band-all		# multiplier 1 = DXCCs by band but not by mode
-dx=3~cont=3~own=0~exc1=[A-Z]{2}=6	# scoring
-portuday			# multiplier 2 EA provinces
+dx=2~cont=1~own=1~exc1=[A-Z]{2}=10	# scoring
+portuday			# multiplier 2 CT provinces, Madeira and Azores counties
 1					# exchange fields
 4					# length of exchange field 1
 4					# length of exchange field 2
 4					# length of exchange field 3
 4					# length of exchange field 4
 [0-9A-Za-z]			# regex for every single character in exchange field 1
-(AV|BJ|BR|BG|CB|CO|EV|FR|GD|LR|LX|PG|PT|SR|ST|VC|VS|AC|MD)|([0-9]+)	# regex for complete valid exchange field 1
+(AV|BJ|BR|BG|CB|CO|EV|FR|GD|LR|LX|PG|PT|SR|ST|VC|VS|CAL|CMB|FU|MC|PS|PM|PTS|RB|SCM|STM|SV|AH|CA|SCG|VL|PV|CV|HT|LJF|LJP|MD|SCF|SRP|LG|ND|PD|PO|RG|FC|VP)|([0-9]+)	# regex for complete valid exchange field 1
 [0-9]				# regex for every single character in exchange field 2
 					# regex for complete valid exchange field 2
 [0-9]				# regex for every single character in exchange field 3
