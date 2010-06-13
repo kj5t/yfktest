@@ -34,7 +34,7 @@ sub rigctld {
 		
 		$freq /= 1000;
 		
-addstr($wmain,23,40,"Freq: $freq   ");
+addstr($wmain,23,40,"Freq: $freq    ");
 			
 		if (($freq >= 1800) && ($freq <= 2000)) { $freq = "160"; }
 		elsif (($freq >= 3500) && ($freq <= 4000)) { $freq = "80"; }
