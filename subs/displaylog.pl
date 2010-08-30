@@ -35,9 +35,10 @@ addstr($$window, $y, 13, $qsos[$i]{'utc'}.'  ');
 addstr($$window, $y, 18, $qsos[$i]{'call'}.'            ');
 addstr($$window, $y, 31, $qsos[$i]{'rst'}.'   ');
 addstr($$window, $y, 37, $qsos[$i]{'exc1'}.'    ');
-addstr($$window, $y, 43, $qsos[$i]{'exc2'}.' ');
+addstr($$window, $y, 44, $qsos[$i]{'exc2'}.' ');
 addstr($$window, $y, 49, $qsos[$i]{'exc3'}.' ');
-addstr($$window, $y, 55, $qsos[$i]{'exc4'}.' ');
+addstr($$window, $y, 54, $qsos[$i]{'exc4'}.' ');
+addstr($$window, 23, 40, $qsos[$i]{'freq'}.'        ');
 
 move($$window, $y, 0);
 chgat($$window, 58, A_REVERSE, 1, 0) if ($editnr == ($i+1));

@@ -35,16 +35,6 @@ sub readlog {
 		$main::cwmessages[5] = <LOG>;
 		$main::cwmessages[6] = <LOG>;
 
-#		my $tmp = <LOG>;
-#		if ($tmp =~ /rigctld/) {
-#			$main::rigctl = 'rigctld';
-#		}
-#		elsif ($tmp =~ /[a-z]/) {
-#			($main::rigmodel, $main::rigpath, $main::rigspeed) = split(/\s+/,
-#				$tmp);
-#			$main::rigctl = 'Hamlib.pm';
-#		}
-
 
 		chomp(@main::cwmessages);
 
@@ -60,21 +50,22 @@ sub readlog {
 				@a = split(/;/, $line);
 				$qso{'nr'} = $a[0];
 				$qso{'band'} = $a[1];
-				$qso{'mode'} = $a[2];
-				$qso{'utc'} = $a[3];
-				$qso{'date'} = $a[4];
-				$qso{'call'} = $a[5];
+				$qso{'freq'} = $a[2];
+				$qso{'mode'} = $a[3];
+				$qso{'utc'} = $a[4];
+				$qso{'date'} = $a[5];
+				$qso{'call'} = $a[6];
 
 				# make sure *something* is in the exc's
 
 				$qso{'exc1'} = $qso{'exc2'} = $qso{'exc3'} = $qso{'exc4'} = '';
 
-				$qso{'exc1'} = $a[6] if defined($a[6]);
-				$qso{'exc2'} = $a[7] if defined($a[7]);
-				$qso{'exc3'} = $a[8] if defined($a[8]);
-				$qso{'exc4'} = $a[9] if defined($a[9]);
+				$qso{'exc1'} = $a[7] if defined($a[7]);
+				$qso{'exc2'} = $a[8] if defined($a[8]);
+				$qso{'exc3'} = $a[9] if defined($a[9]);
+				$qso{'exc4'} = $a[10] if defined($a[10]);
 				
-				$qso{stn} = $a[10] if defined($a[10]);
+				$qso{stn} = $a[11] if defined($a[11]);
 
 
 				if ($qso{'mode'}  eq 'SSB') {

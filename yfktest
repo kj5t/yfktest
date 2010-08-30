@@ -38,7 +38,7 @@ if ($hashamlib) {
 	import Hamlib;
 }
 
-our $cwspeed=32;
+our $cwspeed=70;
 
 our $cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
 PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
@@ -187,6 +187,7 @@ our %qso = (		# The current QSO
 		'exc3' => '',
 		'exc4' => '',
 		'band' => '20',
+		'freq' => '',
 		'mode' => 'CW',
 		'stn' => $netname
 );

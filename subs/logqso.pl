@@ -36,8 +36,8 @@ sub logqso {
 		open LOG, ">>$filename";
 
 		my $logline = sprintf(
-				"%-4s;%-3s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s\n",
-				$qso{'nr'}, $qso{'band'}, $qso{'mode'}, $qso{'utc'},
+				"%-4s;%-3s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s\n",
+				$qso{'nr'}, $qso{'band'}, $qso{'freq'}, $qso{'mode'}, $qso{'utc'},
 				$qso{'date'}, $qso{'call'}, $qso{'exc1'}, $qso{'exc2'},
 				$qso{'exc3'}, $qso{'exc4'}, $qso{stn});
 
@@ -49,8 +49,8 @@ sub logqso {
 #		print STDERR "$qso{stn} == $main::netname ?\n";
 
 		$logline = sprintf(
-				"%-4s;%-3s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s\n",
-				0, $qso{'band'}, $qso{'mode'}, $qso{'utc'},
+				"%-4s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s\n",
+				0, $qso{'band'}, $qso{'freq'}, $qso{'mode'}, $qso{'utc'},
 				$qso{'date'}, $qso{'call'}, $qso{'exc1'}, $qso{'exc2'},
 				$qso{'exc3'}, $qso{'exc4'}, $qso{stn});
 
@@ -102,8 +102,8 @@ sub logeditqso {
 			next while ($i < 17);						# HEADER
 			if ($log[$i] =~ /^$qso{'nr'}.+$main::netname\s*$/) {
 				$log[$i] =  sprintf(
-				"%-4s;%-3s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s\n",
-				$qso{'nr'}, $qso{'band'}, $qso{'mode'}, $qso{'utc'},
+				"%-4s;%-3s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s\n",
+				$qso{'nr'}, $qso{'band'}, $qso{'freq'}, $qso{'mode'}, $qso{'utc'},
 				$qso{'date'}, $qso{'call'}, $qso{'exc1'}, $qso{'exc2'},
 				$qso{'exc3'}, $qso{'exc4'}, $qso{stn});
 				$success = 1;

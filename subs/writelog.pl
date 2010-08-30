@@ -154,6 +154,10 @@ sub writelog {
 			print ADIF "<band:".(length($main::qsos[$i]{'band'})+1).'>'.
 					$main::qsos[$i]{'band'}.'m  ';
 
+			print ADIF "<freq:".(length($main::qsos[$i]{'freq'})).'>'.
+					$main::qsos[$i]{'freq'}.'  ';
+					
+					
 			my $mode = $main::qsos[$i]{'mode'};
 			if ($mode eq 'P31') { $mode = 'PSK31'; }
 			if ($mode eq 'P63') { $mode = 'PSK63'; }

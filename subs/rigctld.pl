@@ -32,21 +32,23 @@ sub rigctld {
 			return 0;
 		}
 		
-		$freq /= 1000;
+		$freq /= 1000000;
 		
-addstr($wmain,23,40,"Freq: $freq    ");
-			
-		if (($freq >= 1800) && ($freq <= 2000)) { $freq = "160"; }
-		elsif (($freq >= 3500) && ($freq <= 4000)) { $freq = "80"; }
-		elsif (($freq >= 7000) && ($freq <= 7300)) { $freq = "40"; }
-		elsif (($freq >=10100) && ($freq <=10150)) { $freq = "30"; }
-		elsif (($freq >=14000) && ($freq <=14350)) { $freq = "20"; }
-		elsif (($freq >=18068) && ($freq <=18168)) { $freq = "17"; }
-		elsif (($freq >=21000) && ($freq <=21450)) { $freq = "15"; }
-		elsif (($freq >=24890) && ($freq <=24990)) { $freq = "12"; }
-		elsif (($freq >=28000) && ($freq <=29700)) { $freq = "10"; }
-		elsif (($freq >=50000) && ($freq <=54000)) { $freq = "6"; }
-		elsif (($freq >=144000) && ($freq <=148000)) { $freq = "2"; }
+addstr($wmain, 23, 40,"$freq");
+#addstr($$window, 23, 40,$qso{'freq'}.'       ');
+		$main::qso{'freq'} = $freq;
+		
+		if (($freq >= 1.800) && ($freq <= 2.000)) { $freq = "160"; }
+		elsif (($freq >= 3.500) && ($freq <= 4.000)) { $freq = "80"; }
+		elsif (($freq >= 7.000) && ($freq <= 7.300)) { $freq = "40"; }
+		elsif (($freq >=10.100) && ($freq <=10.150)) { $freq = "30"; }
+		elsif (($freq >=14.000) && ($freq <=14.350)) { $freq = "20"; }
+		elsif (($freq >=18.068) && ($freq <=18.168)) { $freq = "17"; }
+		elsif (($freq >=21.000) && ($freq <=21.450)) { $freq = "15"; }
+		elsif (($freq >=24.890) && ($freq <=24.990)) { $freq = "12"; }
+		elsif (($freq >=28.000) && ($freq <=29.700)) { $freq = "10"; }
+		elsif (($freq >=50.000) && ($freq <=54.000)) { $freq = "6"; }
+		elsif (($freq >=144.000) && ($freq <=148.000)) { $freq = "2"; }
 		else {
 			return 0;
 		}
@@ -75,19 +77,19 @@ addstr($wmain,23,40,"Freq: $freq    ");
 			}
 		}
 		elsif ($band =~ /^[0-9]+$/) {			# band/freq
-			if ($band eq '6') { $band = '50000000'; }
-			elsif ($band eq '10') { $band = '28000000'; }
-			elsif ($band eq '12') { $band = '24890000'; }
-			elsif ($band eq '15') { $band = '21000000'; }
-			elsif ($band eq '17') { $band = '18068000'; }
-			elsif ($band eq '20') { $band = '14000000'; }
-			elsif ($band eq '30') { $band = '10100000'; }
-			elsif ($band eq '40') { $band = '7000000'; }
-			elsif ($band eq '80') { $band = '3500000'; }
-			elsif ($band eq '160') { $band = '1800000'; }
+			if ($band eq '6') { $band = '50.000000'; }
+			elsif ($band eq '10') { $band = '28.000000'; }
+			elsif ($band eq '12') { $band = '24.890000'; }
+			elsif ($band eq '15') { $band = '21.000000'; }
+			elsif ($band eq '17') { $band = '18.068000'; }
+			elsif ($band eq '20') { $band = '14.000000'; }
+			elsif ($band eq '30') { $band = '10.100000'; }
+			elsif ($band eq '40') { $band = '7.000000'; }
+			elsif ($band eq '80') { $band = '3.500000'; }
+			elsif ($band eq '160') { $band = '1.800000'; }
 			# if nothing matched, it was a frequency which will be passed right
 			# through, after conversion kHz to Hz
-			else { $band *= 1000 }
+			else { $band *= 10000000 }
 
 				print $main::hamlibsock "F $band";
 		}
