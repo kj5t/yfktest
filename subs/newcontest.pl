@@ -138,7 +138,7 @@ addstr($wdialog , 7, 3 , "Power:");
 addstr($wdialog , 8, 3 , "Transmitter:");
 addstr($wdialog , 9, 3 , $main::fixexchangename) if ($main::fixexchange); 
 addstr($wdialog , 9, 48 , "(if applicable)") if ($main::fixexchange);
-addstr($wdialog , 10, 3 , "CAT control:");
+#addstr($wdialog , 10, 3 , "CAT control:");
 
 refresh($wdialog);
 
@@ -166,11 +166,11 @@ elsif ($main::fixexchange eq 'exc2s') {
 }
 
 
-$rig = &chose(\$wdialog, 10, 20, 'Rigctld NO', $rig);
+#$rig = &chose(\$wdialog, 10, 20, 'Rigctld NO', $rig);
 
-if ($rig eq 'NO') {
-	$main::rigctld = 0;
-}
+#if ($rig eq 'NO') {
+#	$main::rigctld = 0;
+#}
 
 refresh($wdialog);
 

@@ -17,7 +17,7 @@ sub rigctld {
 
 			print $main::hamlibsock "m\n";
 			$mode = <$main::hamlibsock>;
-			<$main::hamlibsock>;			# bandiwidth and END not needed..
+			<$main::hamlibsock>;			# bandwidth and END not needed..
 			chomp($mode);
 
 			if ($mode =~ /CW/) {	# CW, CWR
@@ -35,7 +35,6 @@ sub rigctld {
 		$freq /= 1000000;
 		
 addstr($wmain, 23, 40,"$freq");
-#addstr($$window, 23, 40,$qso{'freq'}.'       ');
 		$main::qso{'freq'} = $freq;
 		
 		if (($freq >= 1.800) && ($freq <= 2.000)) { $freq = "160"; }
@@ -88,7 +87,7 @@ addstr($wmain, 23, 40,"$freq");
 			elsif ($band eq '80') { $band = '3.500000'; }
 			elsif ($band eq '160') { $band = '1.800000'; }
 			# if nothing matched, it was a frequency which will be passed right
-			# through, after conversion kHz to Hz
+			# through, after conversion mHz to Hz
 			else { $band *= 10000000 }
 
 				print $main::hamlibsock "F $band";

@@ -276,7 +276,7 @@ if ($ARGV[0] || ($contest eq '0')) {
 					}
 
 
-					printw "Rescoring the log: ";
+					printw "Rescoring the log:";
 					my $i = 0;
 
 					my @tmp = &dxcc($mycall);
@@ -315,17 +315,91 @@ if ($modes eq 'SSB') {
 
 ($qso{'band'} = $bands) =~ s/[MG]$// if ($bands ne 'ALL');
 
-#system("sh rigfile");
-
 # Activate Hamlib if needed.
 
-#if ($rigctl eq 'Hamlib.pm') {
-#	Hamlib::rig_set_debug(0);
-#	our $rig = new Hamlib::Rig($rigmodel);
+if (-r 'rigctld.sh') {
+#			printw "\nExecuting rigctld...\n";
+#getch ();
+	system('sh rigctld.sh');
+	sleep 1;
+}else {
+		my $wdialog1 = newwin(24,80,0,0);
+		attron($wdialog1, COLOR_PAIR(4));
+		addstr($wdialog1, 0, 0, " " x (24*80));
+		addstr($wdialog1, 0, 0, "Radio configuration");
+
+		addstr($wdialog1, 1, 0, "Is your radio connected with your computer?");
+		my $choice='YES NO';
+		if (!$main::rigctld) {
+	    	$choice = 'NO_(Não há ligação)';
+		}
+
+		$main::rigctld = &chose(\$wdialog1, 1, 50, $choice);
+
+		if ($main::rigctld =~ /NO/) {
+			$main::rigctld = 0;
+		}
+		else {
+			$main::rigctld = 1;
+
+		my %hamlibrigs = &readhamlibrigs();
+
+		addstr($wdialog1, 5, 0 , "Hamlib rig:");
+		addstr($wdialog1, 6, 0 , "Hamlib port:");
+		addstr($wdialog1, 7, 0 , "Hamlib speed:");
+		my @a = sort keys(%hamlibrigs);
+		my $tmp = "@a";
+		$tmp = &chose(\$wdialog1, 5, 20, $tmp);
+
+		$main::rigmodel = $hamlibrigs{$tmp};
+		$tmp = &chose(\$wdialog1, 6, 20, '/dev/ttyS0 /dev/ttyS1 /dev/ttyUSB0
+		/dev/ttyUSB1 /dev/ttyUSB2 /dev/ttyUSB3');
+		$main::rigspeed = &chose(\$wdialog1, 7, 20, '1200 4800 9600 19200 38400');
+		$main::rigpath = $tmp;
+		
+		open RIGFILE1, ">rigctld.sh";
+		print RIGFILE1 "rigctld -m ";
+		print RIGFILE1 $main::rigmodel." "."-r ".$tmp." -s ".$main::rigspeed. " &";
+		
+		close RIGFILE1;
+		system('sh rigctld.sh');
+		sleep 1;
+		refresh($wdialog1);
+		}
+}
+#if (-r 'rigctld.sh') {
+#			printw "\nExecuting rigctld...\n";
+#addstr($wdialog1, 10, 1,  "Executing rigctld");
+#getch ();
+#				system('sh rigctld.sh');
+#}else {
+#			printw "Do you want to configure your rig with rigctld?(y/n).\n";
+			
+#			getch()
+#}
+#printw "Testar o rigctld.";
+
+
+sub readhamlibrigs {
+	my $line;
+	my %hash;
+	open RIG, "hamlibrigs";
+	while ($line = <RIG>) {
+		chomp($line);
+		my @a = split(/\s+/, $line);
+		$hash{$a[0]} = $a[1];
+	}
+	close RIG;
+	return %hash;
+}
+
+#if ($rigctld eq 'Rigctld' {
+
+#	Rigctld::rig_set_debug(0);
+#	our $rig = new Rigctld::Rig($rigmodel);
 #	$rig->set_conf("rig_pathname", $rigpath);	# Set path/device
 #	$rig->open();
 #}
-#if ($rig eq 'Rigctld' {
 	$hamlibsock = new IO::Socket::INET ( PeerAddr => 'localhost',
 		            PeerPort => 4532, Proto => 'tcp');
 #}
@@ -436,11 +510,13 @@ while (1) {
 
 				if ($qso{'call'} eq 'QUIT') {
 					endwin;
+					system ("killall -9 rigctld");
 					print "Thanks for using YFKtest!\n";
 					exit;
 				}
 				if ($qso{'call'} eq 'EXIT') {
 					endwin;
+					system ("killall -9 rigctld");
 					print "Thanks for using YFKtest!\n";
 					exit;
 				}
