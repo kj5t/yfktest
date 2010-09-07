@@ -1,4 +1,4 @@
-use strict;
+use strict;	
 
 my %friends;
 my %iota;
@@ -13,14 +13,14 @@ while ($line = <FRIEND>) {
 }
 close FRIEND;
 
-#open IOTA, find_file('iota.txt');
-#my $line1;
-#while ($line1 = <IOTA>) {
-#		chomp($line1);
-#	my @a = split(/=/, $line1);
-#	$iota{$a[0]} =  $a[1];
-#}
-#close IOTA;
+open IOTA, find_file('iota.csv');
+my $line1;
+while ($line1 = <IOTA>) {
+		chomp($line1);
+	my @a = split ',', $line1;
+	$iota{$a[0]} = $a[1] = $a[2];
+}
+close IOTA;
 
 # FOC marathon
 
@@ -240,7 +240,7 @@ sub callinfo {
 			attron($win, COLOR_PAIR(4));
 			addstr($win, " ") unless ($d =~ /PG/);
 		}
-#		addstr($win, 3, 0, "Iota: $iota{$call}".' 'x20) if defined ($iota{$call});
+		addstr($win, 3, 0, "Iota: $iota{$call}".' 'x20) if defined ($iota{$call});
 		addstr($win, 4, 0, "Name: $friends{$call}".' 'x20) if defined ($friends{$call});
 		refresh($win);
 	}
@@ -251,8 +251,7 @@ sub callinfo {
 
 		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
 		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
-		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if 
-												defined ($friends{$call});
+		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
 
 		addstr($win, 3, 0, "FOC: $foc{$call}".' 'x80) if defined($foc{$call});
 
@@ -271,7 +270,8 @@ sub callinfo {
 
 		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
 		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
-		addstr($win, 2, 0, "Iota: ".' 'x80);
+		addstr($win, 2, 0, "Iota: $iota{$call}".' 'x80) if defined ($iota{$call});
+		addstr($win, 3, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
 		addstr($win, 2, 6, "$iota{$call}".' 'x80) if defined ($iota{$call});
 		refresh($win);
 	}
@@ -323,7 +323,7 @@ sub callinfo {
 		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
 		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
 		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
-#		addstr($win, 3, 0, "Iota: $iota{$call}".' 'x80) if defined ($iota{$call});
+		addstr($win, 3, 0, "Iota: $iota{$call}".' 'x80) if defined ($iota{$call});
 	refresh($win);
 	return 0;
 

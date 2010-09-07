@@ -26,7 +26,6 @@ sub readlog {
 		$main::transmitter= <LOG>;
 		
 		
-#system ("rigctld -m 228 -r /dev/ttyUSB2 -s 9600 &");	
 		$main::tmp = <LOG>;			# :-|  fixed exchange. will be put to right
 									# var in main.
 		$main::cwmessages[0] = <LOG>;

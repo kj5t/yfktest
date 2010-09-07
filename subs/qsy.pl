@@ -55,7 +55,7 @@ sub qsy {
 sub qsyband {
 	my $direction = shift;
 	my $currentband = $main::qso{'band'};
-	my @bands = qw/160 80 40 30 20 17 15 12 10/;
+	my @bands = qw/160 80 40 30 20 17 15 12 10 6/;
 	my $pos=0;
 
 	for (0..$#bands) {

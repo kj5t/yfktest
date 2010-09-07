@@ -34,7 +34,8 @@ sub rigctld {
 		
 		$freq /= 1000000;
 		
-addstr($wmain, 23, 40,"$freq");
+addstr($wmain, 23, 40, "$freq MHz      ");
+
 		$main::qso{'freq'} = $freq;
 		
 		if (($freq >= 1.800) && ($freq <= 2.000)) { $freq = "160"; }
@@ -76,19 +77,19 @@ addstr($wmain, 23, 40,"$freq");
 			}
 		}
 		elsif ($band =~ /^[0-9]+$/) {			# band/freq
-			if ($band eq '6') { $band = '50.000000'; }
-			elsif ($band eq '10') { $band = '28.000000'; }
-			elsif ($band eq '12') { $band = '24.890000'; }
-			elsif ($band eq '15') { $band = '21.000000'; }
-			elsif ($band eq '17') { $band = '18.068000'; }
-			elsif ($band eq '20') { $band = '14.000000'; }
-			elsif ($band eq '30') { $band = '10.100000'; }
-			elsif ($band eq '40') { $band = '7.000000'; }
-			elsif ($band eq '80') { $band = '3.500000'; }
-			elsif ($band eq '160') { $band = '1.800000'; }
+			if ($band eq '6') { $band = '50000000'; }
+			elsif ($band eq '10') { $band = '28000000'; }
+			elsif ($band eq '12') { $band = '24890000'; }
+			elsif ($band eq '15') { $band = '21000000'; }
+			elsif ($band eq '17') { $band = '18068000'; }
+			elsif ($band eq '20') { $band = '14000000'; }
+			elsif ($band eq '30') { $band = '10100000'; }
+			elsif ($band eq '40') { $band = '7000000'; }
+			elsif ($band eq '80') { $band = '3500000'; }
+			elsif ($band eq '160') { $band = '1800000'; }
 			# if nothing matched, it was a frequency which will be passed right
 			# through, after conversion mHz to Hz
-			else { $band *= 10000000 }
+			else { $band *= 1000 }
 
 				print $main::hamlibsock "F $band";
 		}

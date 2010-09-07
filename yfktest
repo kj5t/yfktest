@@ -367,18 +367,6 @@ if (-r 'rigctld.sh') {
 		refresh($wdialog1);
 		}
 }
-#if (-r 'rigctld.sh') {
-#			printw "\nExecuting rigctld...\n";
-#addstr($wdialog1, 10, 1,  "Executing rigctld");
-#getch ();
-#				system('sh rigctld.sh');
-#}else {
-#			printw "Do you want to configure your rig with rigctld?(y/n).\n";
-			
-#			getch()
-#}
-#printw "Testar o rigctld.";
-
 
 sub readhamlibrigs {
 	my $line;
@@ -393,16 +381,8 @@ sub readhamlibrigs {
 	return %hash;
 }
 
-#if ($rigctld eq 'Rigctld' {
-
-#	Rigctld::rig_set_debug(0);
-#	our $rig = new Rigctld::Rig($rigmodel);
-#	$rig->set_conf("rig_pathname", $rigpath);	# Set path/device
-#	$rig->open();
-#}
 	$hamlibsock = new IO::Socket::INET ( PeerAddr => 'localhost',
 		            PeerPort => 4532, Proto => 'tcp');
-#}
 
 ##############################################################################
 # Actual logging starts here

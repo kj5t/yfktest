@@ -5,9 +5,9 @@ sub writelog {
 		my $cn = $main::cabrilloname;
 		my @cabvalues;		# values of the cbr file, like mode, date,	freq...
 
-		my %freq = (160 => 1800, 80 => 3500, 40 => 7000, 30 => 10100,
-				20 => 14000, 17 => 18068, 15=>21000, 12 => 24890, 
-				10 => 28000, 6 => 50000);
+#		my %freq = (160 => 1800, 80 => 3500, 40 => 7000, 30 => 10100,
+#				20 => 14000, 17 => 18068, 15=>21000, 12 => 24890, 
+#				10 => 28000, 6 => 50000);
 
 		if ($main::contest eq 'NAQP') {
 			if ($main::exc1s =~ /\//) {
@@ -59,8 +59,11 @@ sub writelog {
 					if ($_ eq 'mycall') {
 						push @values, $main::mycall;
 					}
-					elsif ($_ eq 'band') {
-						push @values, $freq{$main::qsos[$i]{'band'}};
+#					elsif ($_ eq 'band') {
+#						push @values, $freq{$main::qsos[$i]{'band'}};
+#					}
+					elsif ($_ eq 'freq') {
+						push @values, ($main::qsos[$i]{'freq'} /=0.001);
 					}
 					elsif ($_ =~ /^rst/) {
 						if ($main::qsos[$i]{'mode'} eq 'SSB') {
@@ -155,13 +158,13 @@ sub writelog {
 					$main::qsos[$i]{'band'}.'m  ';
 
 			print ADIF "<freq:".(length($main::qsos[$i]{'freq'})).'>'.
-					$main::qsos[$i]{'freq'}.'  ';
+					($main::qsos[$i]{'freq'} /=1000);
 					
 					
 			my $mode = $main::qsos[$i]{'mode'};
 			if ($mode eq 'P31') { $mode = 'PSK31'; }
 			if ($mode eq 'P63') { $mode = 'PSK63'; }
-			print ADIF "<mode:".length($mode).'>'.
+			print ADIF " <mode:".length($mode).'>'.
 					$mode.'  ';
 
 			my $rst = '599';
