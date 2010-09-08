@@ -15,8 +15,8 @@ almeihf			# multiplier 2 CT provinces
 					# regex for complete valid exchange field 3
 [0-9]				# regex for every single character in exchange field 4
 					# regex for complete valid exchange field 4
-QSO: %5d %s %s %s %-13s %-3s %-6s %-13s %-3s %s
-band mode date utc mycall rsts nr call rst exc1
+QSO: %s %s %s %s %-13s %-3s %-6s %-13s %-3s %s
+freq mode date utc mycall rsts nr call rst exc1
 ALMEI-DX-HF
 exc2s
 O seu distrito:   

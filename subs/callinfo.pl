@@ -13,14 +13,14 @@ while ($line = <FRIEND>) {
 }
 close FRIEND;
 
-open IOTA, find_file('iota.csv');
-my $line1;
-while ($line1 = <IOTA>) {
-		chomp($line1);
-	my @a = split ',', $line1;
-	$iota{$a[0]} = $a[1] = $a[2];
-}
-close IOTA;
+#open IOTA, find_file('iota.csv');
+#my $line1;
+#while ($line1 = <IOTA>) {
+#		chomp($line1);
+#	my @a = split ',', $line1;
+#	$iota{$a[0]} = $a[1] = $a[2];
+#}
+#close IOTA;
 
 # FOC marathon
 

@@ -15,8 +15,8 @@ dx=1~cont=1~own=1~exc1=blabla=1		# score
 [0-9A-Z]+				# regex for complete valid exchange field 3
 [0-9]				# regex for every single character in exchange field 4
 					# regex for complete valid exchange field 4
-QSO: %5d %s %s %s %-13s %4s %15s  %-13s  %3s %-10s %2s 		# cabrillo def
-band mode date utc mycall 599 nr exc1s call exc1 exc2 exc3		# cabrillo def
+QSO: %s %s %s %s %-13s %4s %15s  %-13s  %3s %-10s %2s 		# cabrillo def
+freq mode date utc mycall 599 nr exc1s call exc1 exc2 exc3		# cabrillo def
 CWT-CWops														# CBR name
 exc1s															# fixed exc
 Name/cwt number:                   (e.g. FAB/TX)

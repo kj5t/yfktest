@@ -5,9 +5,9 @@ sub writelog {
 		my $cn = $main::cabrilloname;
 		my @cabvalues;		# values of the cbr file, like mode, date,	freq...
 
-#		my %freq = (160 => 1800, 80 => 3500, 40 => 7000, 30 => 10100,
-#				20 => 14000, 17 => 18068, 15=>21000, 12 => 24890, 
-#				10 => 28000, 6 => 50000);
+		my %freq = (160 => 1800, 80 => 3500, 40 => 7000, 30 => 10100,
+				20 => 14000, 17 => 18068, 15=>21000, 12 => 24890, 
+				10 => 28000, 6 => 50000);
 
 		if ($main::contest eq 'NAQP') {
 			if ($main::exc1s =~ /\//) {
@@ -59,9 +59,9 @@ sub writelog {
 					if ($_ eq 'mycall') {
 						push @values, $main::mycall;
 					}
-#					elsif ($_ eq 'band') {
-#						push @values, $freq{$main::qsos[$i]{'band'}};
-#					}
+					elsif ($_ eq 'band') {
+						push @values, $freq{$main::qsos[$i]{'band'}};
+					}
 					elsif ($_ eq 'freq') {
 						push @values, ($main::qsos[$i]{'freq'} /=0.001);
 					}

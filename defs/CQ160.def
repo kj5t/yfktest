@@ -15,8 +15,8 @@ dx=10~cont=5~own=2~exc1=blabla=1		# scoring (last case irrelevant)
 					# regex for complete valid exchange field 3
 [0-9]				# regex for every single character in exchange field 4
 					# regex for complete valid exchange field 4
-QSO: %5d %s %s %s %-13s %-3s %-6s %-13s %-3s %-6s %s
-band mode date utc mycall rsts exc1s call rst exc1 stn
+QSO: %s %s %s %s %-13s %-3s %-6s %-13s %-3s %-6s %s
+freq mode date utc mycall rsts exc1s call rst exc1 stn
 CQ-160-!MODE!
 exc1s
 State/Cty:

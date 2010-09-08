@@ -15,8 +15,8 @@ dx=1~cont=1~own=1~exc2=.+=4		# score
 					# regex for complete valid exchange field 3
 [0-9]				# regex for every single character in exchange field 4
 					# regex for complete valid exchange field 4
-QSO: %5d %s %s %s %-13s %-3s %4s %6s %-13s %-3s %4s %6s 0		# cabrillo def
-band mode date utc mycall rsts nr exc2s call rst exc1 exc2		# cabrillo def
+QSO: %s %s %s %s %-13s %-3s %4s %6s %-13s %-3s %4s %6s 0		# cabrillo def
+freq mode date utc mycall rsts nr exc2s call rst exc1 exc2		# cabrillo def
 IRTS-80m														# CBR name
 exc2s															# fixed exc
 Own County:														# name thereof
