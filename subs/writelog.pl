@@ -59,11 +59,19 @@ sub writelog {
 					if ($_ eq 'mycall') {
 						push @values, $main::mycall;
 					}
-					elsif ($_ eq 'band') {
-						push @values, $freq{$main::qsos[$i]{'band'}};
-					}
-					elsif ($_ eq 'freq') {
-						push @values, ($main::qsos[$i]{'freq'} /=0.001);
+#					elsif ($_ eq 'band') {
+#						push @values, $freq{$main::qsos[$i]{'band'}};
+#					}
+#					elsif ($qso{freq} > 0) {
+#						push @values, $main::qsos[$i]{'freq'};
+#					}	
+					elsif ($_ =~ /^freq/) {
+						if ($main::qsos[$i]{'freq'}) {
+						push @values, $main::qsos[$i]{'freq'} /=0.001;
+						}
+						else {
+							push @values, $freq{$main::qsos[$i]{'band'}};
+						}
 					}
 					elsif ($_ =~ /^rst/) {
 						if ($main::qsos[$i]{'mode'} eq 'SSB') {
@@ -157,9 +165,13 @@ sub writelog {
 			print ADIF "<band:".(length($main::qsos[$i]{'band'})+1).'>'.
 					$main::qsos[$i]{'band'}.'m  ';
 
+			if ($main::qsos[$i]{'freq'}) {
 			print ADIF "<freq:".(length($main::qsos[$i]{'freq'})).'>'.
 					($main::qsos[$i]{'freq'} /=1000);
-					
+			}
+			else {
+					print ADIF " ";
+			}
 					
 			my $mode = $main::qsos[$i]{'mode'};
 			if ($mode eq 'P31') { $mode = 'PSK31'; }
