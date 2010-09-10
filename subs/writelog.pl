@@ -167,7 +167,7 @@ sub writelog {
 
 			if ($main::qsos[$i]{'freq'}) {
 			print ADIF "<freq:".(length($main::qsos[$i]{'freq'})).'>'.
-					($main::qsos[$i]{'freq'} /=1000);
+					(($main::qsos[$i]{'freq'} /=1000).' ');
 			}
 			else {
 					print ADIF " ";
@@ -176,7 +176,7 @@ sub writelog {
 			my $mode = $main::qsos[$i]{'mode'};
 			if ($mode eq 'P31') { $mode = 'PSK31'; }
 			if ($mode eq 'P63') { $mode = 'PSK63'; }
-			print ADIF " <mode:".length($mode).'>'.
+			print ADIF "<mode:".length($mode).'>'.
 					$mode.'  ';
 
 			my $rst = '599';
