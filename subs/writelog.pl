@@ -168,7 +168,7 @@ sub writelog {
 			if ($main::qsos[$i]{'freq'}) {
 			print ADIF "<freq:".(length($main::qsos[$i]{'freq'})).'>'.
 					(($main::qsos[$i]{'freq'} /=1000).' ');
-			}
+								}
 			else {
 					print ADIF " ";
 			}
