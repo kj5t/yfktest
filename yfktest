@@ -38,7 +38,7 @@ if ($hashamlib) {
 	import Hamlib;
 }
 
-our $cwspeed=70;
+our $cwspeed=30;
 
 our $cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
 PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
@@ -73,7 +73,7 @@ load_subs("readrules.pl");
 load_subs("writelog.pl");
 load_subs("sendcw.pl");
 load_subs("dxcc.pl");
-load_subs("iota1.pl");
+#load_subs("iota1.pl");
 load_subs("callinfo.pl");
 load_subs("rigctld.pl");
 load_subs("keyboardmode.pl");
