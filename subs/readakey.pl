@@ -271,8 +271,8 @@ sub refreshscreen {
 	addstr($$window, 22, 13, &gettime());
 	addstr($$window, 22, 18, $qso{'call'}.'            ');
 	addstr($$window, 22, 31, $qso{'rst'}.'   ');
-	addstr($$window, 22, 37, $qso{'exc1'}.' 'x$exc1len);
-	addstr($$window, 22, 43, $qso{'exc2'}.' 'x$exc2len);
+	addstr($$window, 22, 37, $qso{'exc1'}.'    'x$exc1len);
+	addstr($$window, 22, 43, $qso{'exc2'}.'     'x$exc2len);
 	addstr($$window, 22, 49, $qso{'exc3'}.' 'x$exc3len);
 	addstr($$window, 22, 55, $qso{'exc4'}.' 'x$exc4len);
 

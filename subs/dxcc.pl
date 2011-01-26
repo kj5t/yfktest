@@ -23,10 +23,10 @@ while (my $line = <CTY>) {
 	else {										# prefix-line
 		$line =~ s/\s+//g;
 		unless (defined($prefixes{$mainprefix}[0])) {
-			@{$prefixes{$mainprefix}} = split(/[=\/,:|;]/, $line);
+			@{$prefixes{$mainprefix}} = split(/[=\,:|;]/, $line);
 		}
 		else {
-			push(@{$prefixes{$mainprefix}}, split(/[=\/,:|;]/, $line));
+			push(@{$prefixes{$mainprefix}}, split(/[=\,:|;]/, $line));
 		}
 	}
 }

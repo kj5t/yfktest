@@ -2,7 +2,9 @@ use strict;
 use warnings;
 
 my %friends;
+my %cwt;
 my %foc;
+my %iotaref;
 
 open FRIEND, find_file('friend.ini');
 my $line;
@@ -12,7 +14,31 @@ while (my $line = <FRIEND>) {
 	$friends{$a[0]} = $a[1];
 }
 
-#close FRIEND;
+close FRIEND;
+
+if (-e 'cwops.txt') {
+
+open CWT, find_file('cwops.txt');
+my $line;
+while (my $line = <CWT>) {
+		chomp($line);
+	my @a = split(/;/, $line);
+	$cwt{$a[0]} = $a[1];
+}
+close CWT;
+}
+
+if (-e 'islands.csv') {
+
+open IOTAREF, find_file('islands.csv');
+my $line;
+while (my $line = <IOTAREF>) {
+		chomp($line);
+	my @a = split(/;/, $line);
+	$iotaref{$a[0]} = $a[1];
+}
+close IOTAREF;
+}
 
 # FOC marathon
 
@@ -257,14 +283,26 @@ sub callinfo {
 	} 
 	elsif ($contest eq 'IOTA') {	# IOTA
 		my @info = &dxcc($call);
+		my $exc2 = $main::qso{'exc2'};
 #		my @island = &iota($call);
 		if ($call eq '') { return 0; }
 
 
 		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
 		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
-#		addstr($win, 2, 0, "Iota: $island[0]".' 'x80);
+		addstr($win, 2, 0, "Iota: $iotaref{$exc2}".' 'x80) if defined ($iotaref{$exc2});
 		addstr($win, 3, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
+		refresh($win);
+	}
+	elsif ($contest eq 'CWT-MEMBERS') {	# CWT
+		my @info = &dxcc($call);
+		if ($call eq '') { return 0; }
+
+
+		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
+		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
+		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
+		addstr($win, 3, 0, "CWops-member: $cwt{$call}".' 'x80) if defined ($cwt{$call});
 		refresh($win);
 	}
 	elsif ($contest eq 'SMREY-DX') {	# His Majesty King of Spain: Show provinces
@@ -315,7 +353,6 @@ sub callinfo {
 		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
 		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
 		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
-#		addstr($win, 3, 0, "Iota: $iota{$call}".' 'x80) if defined ($iota{$call});
 	refresh($win);
 	return 0;
 

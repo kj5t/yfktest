@@ -38,14 +38,6 @@ if ($hashamlib) {
 	import Hamlib;
 }
 
-our $cwspeed=30;
-
-our $cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
-PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
-or die "Cannot open socket for CWdaemon.\n";
-
-print $cwsocket chr(27)."2$cwspeed";
-
 our $hamlibsock; 			# initialized later, if needed.
 
 our $hamlibrigd;
@@ -73,7 +65,7 @@ load_subs("readrules.pl");
 load_subs("writelog.pl");
 load_subs("sendcw.pl");
 load_subs("dxcc.pl");
-#load_subs("iota1.pl");
+#load_subs("iota.pl");
 load_subs("callinfo.pl");
 load_subs("rigctld.pl");
 load_subs("keyboardmode.pl");
@@ -146,7 +138,7 @@ our $rigpath = '';
 our $rigctl=0;
 our $rigctld=1;
 our $rig=1;
-
+our $winkeypath = '';
 
 our %s_qsos = ("160" =>0,"80" => 0, "40" => 0, "30" => 0, "20" => 0,
 				"17" => 0, "15" => 0, "12" => 0, "10" => 0, "6" => 0);
@@ -318,8 +310,6 @@ if ($modes eq 'SSB') {
 # Activate Hamlib if needed.
 
 if (-r 'rigctld.sh') {
-#			printw "\nExecuting rigctld...\n";
-#getch ();
 	system('sh rigctld.sh');
 	sleep 1;
 }else {
@@ -328,7 +318,7 @@ if (-r 'rigctld.sh') {
 		addstr($wdialog1, 0, 0, " " x (24*80));
 		addstr($wdialog1, 0, 0, "Radio configuration");
 
-		addstr($wdialog1, 1, 0, "Is your radio connected with your computer?");
+		addstr($wdialog1, 1, 0, "Is your radio connected with computer ?");
 		my $choice='YES NO';
 		if (!$main::rigctld) {
 	    	$choice = 'NO_(Não há ligação)';
@@ -383,6 +373,57 @@ sub readhamlibrigs {
 
 	$hamlibsock = new IO::Socket::INET ( PeerAddr => 'localhost',
 		            PeerPort => 4532, Proto => 'tcp');
+
+# Activate Winkey if needed.
+
+if (-r 'winkeydaemon.sh') {
+	system('sh winkeydaemon.sh');
+	sleep 1;
+}else {
+		my $wdialog2 = newwin(24,80,0,0);
+		attron($wdialog2, COLOR_PAIR(4));
+		addstr($wdialog2, 0, 0, " " x (24*80));
+		addstr($wdialog2, 0, 0, "Winkey configuration");
+
+		addstr($wdialog2, 1, 0, "Have you winkey device ?");
+		my $choice='YES NO';
+		if (!$main::winkey) {
+#	    	$choice = 'NO_(Não há ligação)';
+		}
+
+		$main::winkey = &chose(\$wdialog2, 1, 50, $choice);
+
+		if ($main::winkey =~ /NO/) {
+			$main::winkey = 0;
+		}
+		else {
+			$main::winkey = 1;
+
+		addstr($wdialog2, 5, 0 , "Winkey port:");
+		$tmp = &chose(\$wdialog2, 5, 20, '/dev/ttyS0 /dev/ttyS1 /dev/ttyUSB0
+		/dev/ttyUSB1 /dev/ttyUSB2 /dev/ttyUSB3');
+		$main::winkeypath = $tmp;
+		
+		open RIGFILE2, ">winkeydaemon.sh";
+		print RIGFILE2 "winkeydaemon.pl -d ";
+		print RIGFILE2 $tmp."  ";
+		
+		close RIGFILE2;
+		system('sh winkeydaemon.sh');
+		sleep 1;
+		refresh($wdialog2);
+		}
+}
+
+
+our $cwspeed=20;
+
+our $cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
+PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
+or die "Cannot open socket for CWdaemon.\n";
+
+print $cwsocket chr(27)."2$cwspeed";
+
 
 ##############################################################################
 # Actual logging starts here
@@ -491,12 +532,16 @@ while (1) {
 				if ($qso{'call'} eq 'QUIT') {
 					endwin;
 					system ("killall -9 rigctld");
+					print $cwsocket chr(27)."5";
+					system ("killall -9 winkeydaemon.pl");
 					print "Thanks for using YFKtest!\n";
 					exit;
 				}
 				if ($qso{'call'} eq 'EXIT') {
 					endwin;
 					system ("killall -9 rigctld");
+					print $cwsocket chr(27)."5";
+					system ("killall -9 winkeydaemon.pl");
 					print "Thanks for using YFKtest!\n";
 					exit;
 				}
