@@ -23,6 +23,7 @@ for ($i = $stop; $i >= $start; $i--) {
 	$y--;
 
 curs_set(0);
+attron($$window, COLOR_PAIR(3));
 addstr($$window, $y, 0, ' 'x59);
 #addstr($$window, $y, 0, $i+1);
 #move($$window, 22, 18);
