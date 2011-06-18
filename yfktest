@@ -405,7 +405,7 @@ if (-r 'winkeydaemon.sh') {
 		$main::winkeypath = $tmp;
 		
 		open RIGFILE2, ">winkeydaemon.sh";
-		print RIGFILE2 "winkeydaemon.pl -d ";
+		print RIGFILE2 ".\/winkeydaemon.pl -d ";
 		print RIGFILE2 $tmp."  ";
 		
 		close RIGFILE2;
