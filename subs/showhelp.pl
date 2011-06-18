@@ -71,20 +71,20 @@ Alt-K       Keyboard-Mode in CW
 
 Alt-R       Rate Graph
 
-Alt-M       Edit CW messages
+Alt-M       Edit CW messages. Changes are written to the log file.
 
-F1..7       CW messages like in CT. They can be modified by Alt-M, and
-INS         are written to the log file and restored when restarting the
-ESC         contest.
+F1..7       Play CW messages. 
+INS
+ESC
 
-10M..160M   Entering the desired band in the callsign-field causes YFKtest to
-            QSY.
+10M..160M   Entering the desired band in the callsign-field to QSY.
 
 SSB, CW     Change the mode my entering SSB/CW in the callsign field.
 
-WRITELOG    Writes the log in Cabrillo- and ADIF-Format for submission to the
-            log-checker and / or import to your main logbook/LOTW etc.
-            Also a summary file of the contest score is written to a file.
+WRITELOG    Writes the log, and creates additional files in Cabrillo,
+            ADIF-Format, and an ascii Summary file.
+
+QUIT        Ends program.
 ";
 	}
 
