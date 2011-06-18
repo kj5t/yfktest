@@ -2,7 +2,7 @@ Simple HOW-TO for using YFKTEST for logging the ARRL Field Day Contest:
 		de Bob, w9ya		June 2011
 
 
-Installing under Ubuntu 10.10 (or 11.04);
+Installing under Ubuntu 10.10 (or 11.04 using the "classic"(gnome) login);
 	- Make sure you have “subversion” installed, via the (Alt+F1, System,
 		Administration,) Synaptic Package Manager.
 	- IF you want to use the winkeyer interface you will need to also
