@@ -347,6 +347,27 @@ sub callinfo {
 
 		refresh($win);
 	}
+	elsif ($contest eq 'ARRL-FD') {		# ARRL-FD: Shows Sections
+		my $band = $main::qso{'band'};
+		my $mults = $main::s_mult1{$band};
+		my @districts = qw/AB AK AL AR AZ BC CO CT DE EB EMA ENY EPA EWA GA IA ID IL IN KS KY LA LAX MAR MB MDC ME MI MN MO MS MT NC ND NE NFL NH NL NLI NM NNJ NNY NTX NV NWT OH OK ON OR ORG PAC PR QC RI SB SC SCV SD SDG SF SFL SNJ SJV SK STX SV TN UT VA VI VT WCF WI WMA WNY WPA WTX WV WWA WY/;
+
+		move($win, 0,0);
+		foreach my $d (@districts) {
+			if ($mults =~ / $d /) {
+				attron($win, COLOR_PAIR(2));
+			}
+			else {
+				attron($win, COLOR_PAIR(4));
+			}
+			addstr($win, $d);
+			attron($win, COLOR_PAIR(4));
+			addstr($win, " ") unless ($d =~ /EW|NN|SC|SN/);
+			addstr($win, " ") if ($d =~ /NJ|CV/);
+		}
+
+	refresh($win);
+	}
 	else {							# Show generic callsign info.
 		my @info = &dxcc($call);
 		if ($call eq '') { return 0; }
