@@ -14,6 +14,7 @@ sub dupecheck {
 				($_->{'band'} eq $qso{'band'}) &&
 				($_->{'mode'} eq $qso{'mode'})) {
 
+ 					attron($$window, COLOR_PAIR(6));
 					addstr($$window, 23, 18, "DUPE");
 					last;
 			}
