@@ -15,8 +15,8 @@ arrlfd				# scoring
 					# regex for complete valid exchange field 3
 [0-9]				# regex for every single character in exchange field 4
 					# regex for complete valid exchange field 4
-QSO: %s %s %s %s %-13s %-6s %-6s %-13s %-3s %-3s %-2s
-freq mode date utc mycall nr exc1s call rst exc1 exc2
+QSO: %s %s %s %s %-13s %-3s %-6s %-13s %-6s %-2s
+freq mode date utc mycall nr exc1s call exc1 exc2
 ARRL-FD
 exc1s
 MY EXCHANGE
