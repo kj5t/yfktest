@@ -74,11 +74,13 @@ Running yfktest;
 				out using the arrow keys and the <enter> key.
             	- Next time through invoke this to select the contest file;
                 	./yfktest-ARRL-FD ARRL-FD.yfk <enter>
-	- Play around a bit. Logging is simple with these 5 simple rules;
+	- Play around a bit. Logging is simple with these 6 simple rules;
 		- The <tab> key will bring you to the callsign entry “window”
 		- The <space> bar/key will toggle through the 3 input “windows”
 		- The <enter> key will log the completed contact
 		- Alt+H brings up the help screen
+		- If things jam up (like trying to use Alt+K/keyboard CW mode;
+			use Alt+W to erase the current exchange/callsign info
 		- If things jam up badly, you can always hit Ctrl+C to force
 			the program to quit
 
