@@ -381,10 +381,19 @@ sub scoreqso {
 		}
 	}
 	elsif ($main::defqsopts eq 'arrlfd') {
-		if ($qso{mode} eq 'SSB') {
+		if ($qso{mode} eq 'SSB' && $main::power eq 'HIGH') {
 			$s_qsopts->{$qso{band}} += 1;
 		}
-		else {
+		elsif ($qso{mode} eq 'SSB' && $main::power ne 'HIGH') {
+			$s_qsopts->{$qso{band}} += 2;
+		}
+		elsif ($main::power eq 'LOW') {
+			$s_qsopts->{$qso{band}} += 4;
+		}
+		elsif ($main::power eq 'QRP-BATTERY') {
+			$s_qsopts->{$qso{band}} += 10;
+		}
+		else { # Just a 2x digital contact
 			$s_qsopts->{$qso{band}} += 2;
 		}
 	}
