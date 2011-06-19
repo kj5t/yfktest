@@ -149,7 +149,7 @@ $assisted = &chose(\$wdialog, 3, 20, 'ASSISTED NON-ASSISTED', $assisted);
 $bands = &chose(\$wdialog, 4, 20, 'ALL 160M 80M 40M 20M 15M 10M 6M 2M 222 432 902 1.2G', $bands);
 $modes = &chose(\$wdialog, 5, 20, 'CW MIXED PSK SSB RTTY', $modes);
 $operator = &chose(\$wdialog, 6, 20, 'SINGLE-OP MULTI-OP CHECKLOG', $operator);
-$power = &chose(\$wdialog, 7, 20, 'HIGH LOW QRP', $power);
+$power = &chose(\$wdialog, 7, 20, 'HIGH LOW QRP QRP-BATTERY', $power);
 $transmitter = &chose(\$wdialog, 8, 20, 'ONE TWO LIMITED UNLIMITED SWL',
 		$transmitter);
 
