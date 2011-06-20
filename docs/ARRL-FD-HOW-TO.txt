@@ -86,17 +86,17 @@ Running yfktest;
 
 
 Helpful suggestions;
-        - To streamline things, you can avoid ALL the starting questions
-		concerning the rig-control and keyer interface by creating
-		“dummy” files like this example; 
+        - To streamline things, you can avoid repeating ALL of the starting
+		questions concerning the rig-control and keyer interface by
+		creating “dummy” files like this example; 
 			touch rigctld.sh <enter> 
 				AND/OR 
 			touch winkeydaemon.sh <enter>
                 (These two files -fools- the program into using no
-			rig control/einkeyer interface without
+			rig control and/or winkeyer interface without
                         having to declare that you are not using these
 			interface(s) each time you run the program !)
-	- To invoke the program after using QUIT, you can use the <up-arrow>
+	- To re-invoke the program after using QUIT, you can use the <up-arrow>
 		key to scroll back through your previous terminal commands.
         - I *strongly* suggest using an ascii text editor (my favorite is
 		‘nano’) to add a space to separate the class and section keying
@@ -104,3 +104,5 @@ Helpful suggestions;
 			Invoke editing like this;
                         	nano -w ARRL.yfk <enter>
                                 	(then scroll down to line number 10.)
+
+updated 20 June 2011 by Bob, w9ya
