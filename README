@@ -26,31 +26,42 @@ programmed in Perl 5 and requires the following modules:
 
 Optional: cwdaemon or winkeydaemon.pl, Hamlib
 
-Inet, and possibly Curses, might not be a part of your standard distribution of
-Perl. These should be available through your system's package manager (Debian:
-libcurses-perl).
+IO::Socket::Inet, and possibly Curses, might not be a part of your standard
+distribution of Perl. These should be available through your system's package
+manager (Debian: libcurses-perl and Ubuntu info can be found here in the
+docs/ARRL-FD-HOW-TO.txt file.)
 
 yfktest was designed to run in a console window with 80x24 characters.
 
 5. Installation
 ---------------
 If you are reading this after downloading the files that is all the
-installation that is recommended. Installation with a make file is not needed
-or recommended for personal use.
+installation that is recommended. You simply run the program from the directory
+you downloaded to.
 
-See docs/HOW-TO for Ubuntu installation instructions. Version 10.10 is tested.
-Later versions should work as well.
+See docs/ARRL-FD-HOW-TO.txt for instructions on setting up and using yfktest
+with Ubuntu Linux. Version 10.10 has been tested. Later versions should work
+as well and mostly earlier versions that are not too old.
 
-(See docs/INSTALL and misc/ for more info if you just gotta try an "install".)
+NOTE: *** Installation with the makefile in misc/ is not needed and certainly
+not recommended for personal use. (i.e. None of the contributors are running the
+makefile install ! .... Using yfktest with such "packaging" has not been
+tested on the latest svn code as a result. See docs/INSTALL and the misc/
+directory for more info if you just gotta try a "makefile install".)
 
 6. Future plans
 ---------------
 Addition of (all) popular HF contests. Networking. DX cluster + Bandmap.
 
+Please see the docs/TODO file if you would like to contribute to any ongoing
+work.
+
 7. Acknowledgements
 --------------------
 YFKtest uses cty.dat by AD1C: http://country-files.com/
 and master.scp by K5ZD: http://www.k5zd.com/
+and winkeydaemon by PA0R: original and modifed version are
+included in the yfktest svn code base
 
 8. Contact
 ----------
@@ -59,3 +70,4 @@ Fabian Kurz <mail@fkurz.net>
 Further contact details can be found at: http://fkurz.net/
 
 *changed/updated 19 June 2011, w9ya
+*changed/updated 20 June 2011, w9ya
