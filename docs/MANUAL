@@ -1,11 +1,11 @@
-YFKtest Version 0.0.1000 Manual
+YFKtest Version 0.0.10 Manual
 ----------------------------
 
 1. Getting started
 ------------------
 
 To start a new contest, just invoke YFKtest without any arguments on the command
-line: ./yfktest.pl. You'll be asked to select a contest definition and enter
+line: ./yfktest . You'll be asked to select a contest definition and enter
 the neccesary details, like a filename for the contest, your callsign, category
 etc. After completing this form, the contest operation starts.
 
@@ -17,7 +17,7 @@ possible value to set there is your own call, syntax:   mycall=CALL
 --------------------------
 
 To load an existing contest log, invoke YFKtest with the filename as the
-command like argument:  ./yfktest.pl CQWW07.yfk
+command like argument:  ./yfktest CQWW07.yfk
 The contest log will be read, user settings from the last contest are restored
 and the score will be calculated. 
 
@@ -79,11 +79,15 @@ lines which import Hamlib.pm  in yfktest.pl.
 5. CW Functions
 ---------------
 
-CW is realized via cwdaemon by PG4I. Cwdaemon must be up and running and set up
-in order to be used by YFKtest. The F-keys are set similarly to CT by default:
+CW is realized via cwdaemon by PG4I OR winkeydaemon.pl . Cwdaemon must be up
+and running and set up in order to be used by YFKtest. Winkeydaemon will be
+setup by a dialog when running yfktest and will run the next time automagically
+when you start yfktest.
+
+The F-keys are set similarly to CT by default:
 
 F1: CQ
-F2: RST + Exchange
+F2: RST +/or Exchange
 F3: TU $MYCALL
 F4: MYCALL
 F5: HISCALL
@@ -93,4 +97,6 @@ F7: ?
 Alt-M opens a dialog to change these messages.
 
 Alt-K activates the Keyboard-Mode, meaning everything you type in is
-immediately sent via cwdaemon. Alt-K again or ESC stops it.
+immediately sent via cwdaemon or winkeydaemon.pl . Alt-K again or ESC stops it.
+
+*changed/updated 19 June 2011 - Bob, w9ya
