@@ -38,6 +38,8 @@ YFKlog was designed to run in a console window with 80x24 characters.
 Installation is not needed or recommended for personal use. See docs/INSTALL
 and misc/.
 
+See docs/HOW-TO for Ubuntu installation instructions. (Version 10.10 tested.)
+
 6. Future plans
 ---------------
 Addition of (all) popular HF contests. Networking. DX cluster + Bandmap.
