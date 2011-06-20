@@ -35,10 +35,14 @@ YFKlog was designed to run in a console window with 80x24 characters.
 
 5. Installation
 ---------------
-Installation is not needed or recommended for personal use. See docs/INSTALL
-and misc/.
+If you are reading this after downloading the files that is all the
+installation that is recommended. Installation with a make file is not needed
+or recommended for personal use.
 
-See docs/HOW-TO for Ubuntu installation instructions. (Version 10.10 tested.)
+See docs/HOW-TO for Ubuntu installation instructions. Version 10.10 is tested.
+Later versions should work as well.
+
+(See docs/INSTALL and misc/ for more info if you just gotta try an "install".)
 
 6. Future plans
 ---------------
