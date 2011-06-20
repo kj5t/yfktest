@@ -1,0 +1,52 @@
+YFKtest Version 0.0.10 - Ham Radio Contest logger por Fabian Kurz, DJ1YFK
+-----------------------------------------------------------------------------
+
+1. Descricion del projecto
+--------------------------
+
+YFKtest es uno programa borrador para contestes de radioaficionados [1]. Puede 
+trabajar con muchos contestes populares y es muy facil de añadir contestes
+con reglas muy diversas.
+[1] http://en.wikipedia.org/wiki/Contesting
+
+Ver el MANUAL para una descricion pequeña de funcionalidades básicas y teclado.
+
+2. Donde se queda el projecto
+-----------------------------
+La version mas reciente se queda en http://fkurz.net/ham/yfktest.html
+
+3. Necesidades del sistema
+--------------------------
+YFKtest es desarollado y probado con Debian Etch, OpenSuSE y FreeBSD 5. 
+Es programado en Perl 5 y necesita los modulos seguintes:
+
+- strict
+- Curses
+- IO::Socket
+
+Opcional: cwdaemon, Hamlib
+
+La excepcion para Curses, todos hacen parte de las distribuiciones standard del Perl. 
+Curses es disponible a través de su programa de ficheros del sistema (Debian:
+libcurses-perl).
+
+YFKlog fue hecho para trabajar en consolas con 80x24 caracteres.
+
+5. Instalacion
+--------------
+Ver INSTALL.
+
+6. Planos futuros
+-----------------
+Añadir(todos) mas concursos populares de HFddition. Networking. DX cluster + Bandmap.
+
+7. Agradecimientos
+------------------
+YFKtest trabaja con el cty.dat de AD1C: http://country-files.com/
+y el master.scp de K5ZD: http://www.k5zd.com/
+
+8. Contacto
+-----------
+Fabian Kurz <mail@fkurz.net>
+
+Mas detalles de contacto se quedan en: http://fkurz.net/
