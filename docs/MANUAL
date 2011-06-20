@@ -80,7 +80,7 @@ lines which import Hamlib.pm  in yfktest.pl.
 ---------------
 
 CW is realized via cwdaemon by PG4I OR winkeydaemon.pl . Cwdaemon must be up
-and running and set up in order to be used by YFKtest. Winkeydaemon will be
+and running and set up in order to be used by YFKtest. *** Winkeydaemon will be
 setup by a dialog when running yfktest and will run the next time automagically
 when you start yfktest.
 
@@ -100,3 +100,4 @@ Alt-K activates the Keyboard-Mode, meaning everything you type in is
 immediately sent via cwdaemon or winkeydaemon.pl . Alt-K again or ESC stops it.
 
 *changed/updated 19 June 2011 - Bob, w9ya
+*changed/updated 20 June 2011 - Bob, w9ya

@@ -1,8 +1,9 @@
 
-yfktest is the executable file, nothing to install or setup. (See docs/MANUAL
-	or docs/HOW-TO for more information.
+yfktest is the executable file, nothing to install or setup. See docs/README
+	docs/MANUAL, and docs/ARRL-FD-HOW-TO.TXT for more information.
 
-** Note this is a very early version, it all runs in the current directory.
-	In later versions it'll fine a nice place in $PREFIX etc...future
-	instructions/make files/etc. for moving where things will reside
-	in the misc/ directory.
+** Note this version runs from the directory where the files were downloaded to.
+	Untested coding for a full-packaged-styled install including placement
+	via $PREFIX and similar variables reside in the misc/ directory.
+
+updated 20 June 2011 by Bob, w9ya
