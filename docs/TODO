@@ -13,6 +13,8 @@ As of 19 June 2011 - w9ya
 	- Add a CwOps/CWT defs.
 	- Work on the HOW-TO stuff....currently called ARRL-FD-HOW-TO. i.e.
 	  Try to make it more generic, or at least less kludgy.
+	- Is there an adif generation issue ? i.e. Noted that the exchange
+	  field is always 5NN. Is this correct for some silly reason ?
 
 
 $Id: TODO 36 2008-06-21 16:47:05Z dj1yfk $
