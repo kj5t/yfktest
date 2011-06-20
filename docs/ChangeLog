@@ -1,3 +1,11 @@
+0.0.10-svn /    As of 19 June 2011  - Bob, w9ya <w9ya@amsat.org>
+	* Numerous changes in the past few years by ct1drb, ws6z, oh1fjv,
+	  dj1yfk, and most recently by myself.
+	* Also includes rearranging the directory structure adding docs/
+	  and misc/ directories.
+	* Experimenting with different color and sub-windows schemes. These
+	  are located in the file yfktest-ARRL-FD.	   
+
 0.0.9 / 2008-06-16   Fabian Kurz   <mail@fkurz.net>
 	* Added a few contests, including ARRL-Fieldday, All-Asian, King of
 	  Spain, NRA, CNCW. Thanks to CT1DRB for his help!
