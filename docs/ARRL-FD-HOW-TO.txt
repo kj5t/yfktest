@@ -59,6 +59,10 @@ Testing and Preparing your Winkeyer and the interface;
 		running on /dev/ttyUSB0. WkDemo is directed to use com1 and
 		this is driected to the linux kernel drivers using the above
 		command.
+	****NOTE: since only ONE program can access the serial/usb port at a
+		time, be sure that you are NOT connected from the WkDemo
+		program when using yfktest. (Conversely yfktest cannot using
+		the keyer and so must not be running when using WkDemo.)
 
 
 Running yfktest;
