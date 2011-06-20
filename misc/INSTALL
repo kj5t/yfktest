@@ -1,11 +1,4 @@
 
-yfktest.pl is the executable file, nothing to install or setup.
-
-Note this is a very early version, it all runs in the current directory. In
-later versions it'll fine a nice place in $PREFIX etc...
-
-----------------------------------------------------------------------
-future instructions:
 
 perl Makefile.PL
 make
