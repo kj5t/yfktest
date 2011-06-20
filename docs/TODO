@@ -1,6 +1,20 @@
 YFKtest TODO list (feel free to add things!)
 --------------------------------------------
 
+As of 19 June 2011 - w9ya
+	- Add some sort of ability to select different sized sub-windows AND
+	  color schemes. Possibly defaults and selection from either the defs
+	  files and/or the ~/.yfktest file.
+	- Find a working solution (i.e. easily added in) for adding at least
+	  two outgoing exchange fields. OR at the very least find a way to
+	  include a space in the one outgoing exchange field during the contest
+	  setup dialog.
+	- Investigate why ALT-K does not seem to work here. (I'm using winkey.)
+	- Add a CwOps/CWT defs.
+	- Work on the HOW-TO stuff....currently called ARRL-FD-HOW-TO. i.e.
+	  Try to make it more generic, or at least less kludgy.
+
+
 $Id: TODO 36 2008-06-21 16:47:05Z dj1yfk $
 
 Adding Contests
