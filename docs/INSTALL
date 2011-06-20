@@ -4,5 +4,5 @@ yfktest is the executable file, nothing to install or setup. (See docs/MANUAL
 
 ** Note this is a very early version, it all runs in the current directory.
 	In later versions it'll fine a nice place in $PREFIX etc...future
-	instructions/make files/etc. for moving where things reside in the
-        misc/ directory
+	instructions/make files/etc. for moving where things will reside
+	in the misc/ directory.
