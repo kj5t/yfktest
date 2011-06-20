@@ -1,12 +1,8 @@
 
-yfktest.pl is the executable file, nothing to install or setup.
+yfktest is the executable file, nothing to install or setup. (See docs/MANUAL
+	or docs/HOW-TO for more information.
 
-Note this is a very early version, it all runs in the current directory. In
-later versions it'll fine a nice place in $PREFIX etc...
-
-----------------------------------------------------------------------
-future instructions:
-
-perl Makefile.PL
-make
-sudo make install
+** Note this is a very early version, it all runs in the current directory.
+	In later versions it'll fine a nice place in $PREFIX etc...future
+	instructions/make files/etc. for moving where things reside in the
+        misc/ directory
