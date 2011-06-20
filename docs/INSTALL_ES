@@ -1,0 +1,5 @@
+
+yfktest.pl es uno fichero executable, nada para instalar o configurar.
+
+Mire usted que es una version muy nueva, todo trabaja en la directoria actual. Con
+futuras versiones puede ser muy bueno trabajar debajo de $PREFIX etc...
