@@ -22,16 +22,15 @@ programmed in Perl 5 and requires the following modules:
 
 - strict
 - Curses
-- IO::Socket
--
+- IO::Socket::INET
 
 Optional: cwdaemon or winkeydaemon.pl, Hamlib
 
-Except for Curses, they should all be part of any standard distribution of
-Perl. Curses should be available through your system's package manager (Debian:
+Inet, and possibly Curses, might not be a part of your standard distribution of
+Perl. These should be available through your system's package manager (Debian:
 libcurses-perl).
 
-YFKlog was designed to run in a console window with 80x24 characters.
+yfktest was designed to run in a console window with 80x24 characters.
 
 5. Installation
 ---------------
