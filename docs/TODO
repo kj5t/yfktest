@@ -1,7 +1,7 @@
 YFKtest TODO list (feel free to add things!)
 --------------------------------------------
 
-As of 19-20 June 2011 - w9ya
+As of 19-23 June 2011 - w9ya
 	- Add some sort of ability to select different sized sub-windows AND
 	  color schemes. Possibly defaults and selection from either the defs
 	  files and/or the ~/.yfktest file.
@@ -17,6 +17,8 @@ As of 19-20 June 2011 - w9ya
 	  field is always 5NN. Is this correct for some silly reason ?
 	- Create a method to setup and initilize the keyer with options from
 	  inside of yfktest.
+	- Allow choice of cwdaemon/winkeydaemon as runtime/configfile/ or ??
+		(Is cwdaemon still "current" and/or usable ???)
 
 
 $Id: TODO 36 2008-06-21 16:47:05Z dj1yfk $
