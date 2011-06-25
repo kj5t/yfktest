@@ -12,7 +12,7 @@ sub keyboardmode {
 			last if ((ord($ch) == 27) || (ord($ch) == 235)
 				|| (ord($ch) == 195));
 			next unless ($ch =~ /^[a-z0-9\/?=,.+ ]$/);
-			print $main::cwsocket $ch;
+			print $main::cwsocket "\U$ch";
 		} 
 		
 		addstr($main::wmain, 23, 5, "                                   ");
