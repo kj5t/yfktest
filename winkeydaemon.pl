@@ -138,37 +138,29 @@ if ($opt_n) {
 	$debug = 1;
 	Do_operations();	## do not fork, debug
 } else {
-#	if (fork()) {			## run as daemon
-#	    exit(0);
-#	} else {
-#		for my $handle (*STDIN,*STDOUT, *STDERR) { # silent...
-#			open $handle, "+<", "/dev/null" 
-#			or die "Cannot reopen $handle to /dev/null: $!";
-#		}
+	if (fork) {			## run as daemon
+	    exit;
+	} else {
+		for my $handle (*STDIN,*STDOUT, *STDERR) { # silent...
+			open $handle, "+<", "/dev/null" 
+			or die "Cannot reopen $handle to /dev/null: $!";
+		}
 		Do_operations();
 	}
 
-#}
+}
 exit;
 
 
  ########## Start operations ########
  sub Do_operations {
  ####################################
- 
+
  my $busy = 0;
  my $echo = "";
- 
+
    $count = $port->write("QRV");
-   
-	if (fork()) {			## run as daemon
-	    exit(0);
-	} else {
-		for my $handle (*STDIN,*STDOUT, *STDERR) { # silent...
-			open $handle, "+<", "/dev/null" 
-			or die "Cannot reopen $handle to /dev/null: $!";
-		}
-} 
+
 while (1) {
   
 	if ($cnt > 31) { 
@@ -378,7 +370,7 @@ while (1) {
 				}
         }
  }
- 
+
 	$keyerclose = sprintf ("%c%c", 0x00, 3);
    	$count = $port->write($keyerclose);
    	undef $port;
