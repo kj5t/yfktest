@@ -73,7 +73,7 @@ getopts("np:s:d:");
 
 if ($opt_p) {
 	$server_port = $opt_p;
-} 
+}
 
 if ($opt_s) {
 	$speed = $opt_s;
@@ -115,12 +115,15 @@ my $timeout = 0;
  	or die "Couldn't setup udp server on port $server_port : $@\n";
  	
 ########### Initialize keyer
- 
+
  $keyeropen = sprintf ("%c%c", 0x00, 2);		## open keyer interface
  $count = $port->write($keyeropen);
-# sleep 1;
+ sleep 1;
  select undef,undef,undef, 0.3;
- 
+
+# $keyerwk2 = sprintf ("%c%c", 0x00, 0x1B);
+# $count = $port->write($keyerwk2);
+# sleep 1;
 # $keyertune = sprintf ("%c%c", 0x0B, 0x01);		## key down
 # $count = $port->write($keyertune);
 # sleep 1;
@@ -135,18 +138,17 @@ if ($opt_n) {
 	$debug = 1;
 	Do_operations();	## do not fork, debug
 } else {
-	if (fork) {			## run as daemon
-		exit;
-	} else {
-		for my $handle (*STDIN,*STDOUT, *STDERR) { # silent...
-			open $handle, "+<", "/dev/null" 
-			or die "Cannot reopen $handle to /dev/null: $!";
-		}
+#	if (fork()) {			## run as daemon
+#	    exit(0);
+#	} else {
+#		for my $handle (*STDIN,*STDOUT, *STDERR) { # silent...
+#			open $handle, "+<", "/dev/null" 
+#			or die "Cannot reopen $handle to /dev/null: $!";
+#		}
 		Do_operations();
 	}
 
-}
-
+#}
 exit;
 
 
@@ -158,7 +160,15 @@ exit;
  my $echo = "";
  
    $count = $port->write("QRV");
- 
+   
+	if (fork()) {			## run as daemon
+	    exit(0);
+	} else {
+		for my $handle (*STDIN,*STDOUT, *STDERR) { # silent...
+			open $handle, "+<", "/dev/null" 
+			or die "Cannot reopen $handle to /dev/null: $!";
+		}
+} 
 while (1) {
   
 	if ($cnt > 31) { 
