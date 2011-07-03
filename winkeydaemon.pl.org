@@ -157,7 +157,7 @@ if ($opt_n) {
 			open $handle, "+<", "/dev/null" 
 			or die "Cannot reopen $handle to /dev/null: $!";
 		}
-		Do_operations();
+		Do_operations;
 	}
 
 }

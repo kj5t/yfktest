@@ -25,6 +25,7 @@ programmed in Perl 5 and requires the following modules:
 - IO::Socket::INET
 
 Optional: cwdaemon or winkeydaemon.pl, Hamlib
+- Working::Daemon
 
 IO::Socket::Inet, and possibly Curses, might not be a part of your standard
 distribution of Perl. These should be available through your system's package
