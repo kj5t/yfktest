@@ -318,7 +318,7 @@ if (-r 'rigctld.sh') {
 		addstr($wdialog1, 0, 0, " " x (24*80));
 		addstr($wdialog1, 0, 0, "Radio configuration");
 
-		addstr($wdialog1, 1, 0, "Is your radio connected with computer ?");
+		addstr($wdialog1, 1, 0, "Is your radio connected to the computer ?");
 		my $choice='YES NO';
 		if (!$main::rigctld) {
 	    	$choice = 'NO_(There is no connection)';
@@ -385,7 +385,7 @@ if (-r 'winkeydaemon.sh') {
 		addstr($wdialog2, 0, 0, " " x (24*80));
 		addstr($wdialog2, 0, 0, "Winkey configuration");
 
-		addstr($wdialog2, 1, 0, "Do you have winkey device ?");
+		addstr($wdialog2, 1, 0, "Do you have a winkeyer attached?");
 		my $choice='YES NO';
 		if (!$main::winkey) {
 #	    	$choice = 'NO_(There is not connection)';
