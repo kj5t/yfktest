@@ -9,7 +9,8 @@ popular contests and is easily extendable to log and score arbitrary contests.
 [1] http://en.wikipedia.org/wiki/Contesting
 
 See docs/MANUAL for a short description of the basic functionalities and keys.
-See docs/ARRL-FD-HOW-TO for a step by step install guide for using with Ubuntu (10.10). (This is specific to ARRL-FD, but can also be used for basic setup.
+See docs/ARRL-FD-HOW-TO for a step by step install guide for using with Ubuntu
+(10.10). (This is specific to ARRL-FD, but can also be used for basic setup.)
 
 2. Project website
 ------------------
@@ -31,7 +32,9 @@ distribution of Perl. These should be available through your system's package
 manager (Debian: libcurses-perl and Ubuntu info can be found here in the
 docs/ARRL-FD-HOW-TO.txt file.)
 
-(*** Note that IF you are running SuSe-Linux you might also need Working::Daemon. A special version of winkeydaemon.pl has been modified for this called winkeydaemon.pl_suse_snafu .)
+(*** Note that IF you are running SuSe-Linux you might also need
+Working::Daemon. A special version of winkeydaemon.pl has been modified for
+this called winkeydaemon.pl_suse_snafu .)
 
 yfktest was designed to run in a console window with 80x24 characters.
 
@@ -46,8 +49,8 @@ with Ubuntu Linux. Version 10.10 has been tested. Later versions should work
 as well and mostly earlier versions that are not too old.
 
 NOTE: *** Installation with the makefile in misc/ is not needed and certainly
-not recommended for personal use. (i.e. None of the contributors are running the
-makefile install ! .... Using yfktest with such "packaging" has not been
+not recommended for personal use. (i.e. None of the contributors are running
+the makefile install ! .... Using yfktest with such "packaging" has not been
 tested on the latest svn code as a result. See docs/INSTALL and the misc/
 directory for more info if you just gotta try a "makefile install".)
 
