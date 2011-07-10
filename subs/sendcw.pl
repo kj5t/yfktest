@@ -6,7 +6,7 @@ sub sendcw {
 	print $main::cwsocket chr(27)."2$main::cwspeed";
 	
 	if ($c eq 'esc') {
-		print $main::cwsocket chr(27)."6";
+		print $main::cwsocket chr(27)."4";
 	}
 	if ($c =~ /f(\d)/) {
 		print $main::cwsocket &cwmsg($main::cwmessages[$1-1]).' ';

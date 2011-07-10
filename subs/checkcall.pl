@@ -26,11 +26,10 @@ sub checkcall {
 			if ($main::contest ne 'DXPED') {
 				if ($band == 160) { $ypos = 1; }
 				elsif ($band == 80) { $ypos = 2; }
-				elsif ($band == 60) { $ypos = 3; }
-				elsif ($band == 40) { $ypos = 4; }
-				elsif ($band == 20) { $ypos = 5; }
-				elsif ($band == 15) { $ypos = 6; }
-				elsif ($band == 10) { $ypos = 7; }
+				elsif ($band == 40) { $ypos = 3; }
+				elsif ($band == 20) { $ypos = 4; }
+				elsif ($band == 15) { $ypos = 5; }
+				elsif ($band == 10) { $ypos = 6; }
 			}
 			else {	# DXPED
 				if ($band == 160) { $ypos = 1; }
