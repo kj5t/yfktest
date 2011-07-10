@@ -2,11 +2,11 @@
 
 sub qsy {
 	my $value=0;
-	if ($_[0]->{'call'} =~ /^(6|10|12|15|17|20|30|40|80|160)M$|^(\d{4,5})$/) {
+	if ($_[0]->{'call'} =~ /^(6|10|12|15|17|20|30|40|60|80|160)M$|^(\d{4,5})$/) {
 		$value = $1 if defined $1;
 		$value = $2 if defined $2;
 
-		if ($value =~ /^(6|10|12|15|17|20|30|40|80|160)$/) {
+		if ($value =~ /^(6|10|12|15|17|20|30|40|60|80|160)$/) {
 				$_[0]->{'band'} = $value;
 		}
 		elsif (my $tmp = &ishamfreq($value)) {
@@ -87,6 +87,7 @@ sub ishamfreq {
 	my $freq = shift;
 	if (($freq >= 1800) && ($freq <= 2000)) { return 160 }
 	elsif (($freq >= 3500) && ($freq <= 4000)) { return 80 }
+	elsif (($freq >= 5250) && ($freq <= 5450)) { return 60 }
 	elsif (($freq >= 7000) && ($freq <= 7300)) { return 40 }
 	elsif (($freq >= 10100) && ($freq <= 10150)) { return 30 }
 	elsif (($freq >= 14000) && ($freq <= 14350)) { return 20 }

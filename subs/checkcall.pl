@@ -26,22 +26,24 @@ sub checkcall {
 			if ($main::contest ne 'DXPED') {
 				if ($band == 160) { $ypos = 1; }
 				elsif ($band == 80) { $ypos = 2; }
-				elsif ($band == 40) { $ypos = 3; }
-				elsif ($band == 20) { $ypos = 4; }
-				elsif ($band == 15) { $ypos = 5; }
-				elsif ($band == 10) { $ypos = 6; }
+				elsif ($band == 60) { $ypos = 3; }
+				elsif ($band == 40) { $ypos = 4; }
+				elsif ($band == 20) { $ypos = 5; }
+				elsif ($band == 15) { $ypos = 6; }
+				elsif ($band == 10) { $ypos = 7; }
 			}
 			else {	# DXPED
 				if ($band == 160) { $ypos = 1; }
 				elsif ($band == 80) { $ypos = 2; }
 				elsif ($band == 40) { $ypos = 3; }
-				elsif ($band == 30) { $ypos = 4; }
-				elsif ($band == 20) { $ypos = 5; }
-				elsif ($band == 17) { $ypos = 6; }
-				elsif ($band == 15) { $ypos = 7; }
-				elsif ($band == 12) { $ypos = 8; }
-				elsif ($band == 10) { $ypos = 9; }
-				elsif ($band == 6) { $ypos = 1; }  # .. 
+				elsif ($band == 60) { $ypos = 4; }
+				elsif ($band == 30) { $ypos = 5; }
+				elsif ($band == 20) { $ypos = 6; }
+				elsif ($band == 17) { $ypos = 7; }
+				elsif ($band == 15) { $ypos = 8; }
+				elsif ($band == 12) { $ypos = 9; }
+				elsif ($band == 10) { $ypos = 10; }
+				elsif ($band == 6) { $ypos = 11; }  # .. 
 			}
 	
 			addstr($$window, $ypos, 0, ' ' x 30 );

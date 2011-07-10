@@ -532,7 +532,7 @@ while (1) {
 				if ($qso{'call'} eq 'QUIT') {
 					endwin;
 					system ("killall -9 rigctld");
-					print $cwsocket chr(27)."5";
+					print $cwsocket chr(27)."3";
 					system ("killall -9 winkeydaemon.pl");
 					print "Thanks for using YFKtest!\n";
 					exit;
@@ -540,7 +540,7 @@ while (1) {
 				if ($qso{'call'} eq 'EXIT') {
 					endwin;
 					system ("killall -9 rigctld");
-					print $cwsocket chr(27)."5";
+					print $cwsocket chr(27)."3";
 					system ("killall -9 winkeydaemon.pl");
 					print "Thanks for using YFKtest!\n";
 					exit;

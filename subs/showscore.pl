@@ -12,10 +12,11 @@ sub showscore {
 	addstr($$window, 0,0, ' 'x999);
 
 	if ($main::contest eq 'DXPED') {
-	addstr($$window,3,1,sprintf(" 6m: %4d  10m: %4d", $s_qso{6}, $s_qso{10}));
-	addstr($$window,4,1,sprintf("12m: %4d  15m: %4d", $s_qso{12}, $s_qso{15}));
-	addstr($$window,5,1,sprintf("17m: %4d  20m: %4d", $s_qso{17}, $s_qso{20}));
-	addstr($$window,6,1,sprintf("30m: %4d  40m: %4d", $s_qso{30}, $s_qso{40}));
+	addstr($$window,2,1,sprintf(" 6m: %4d", $s_qso{6}));
+	addstr($$window,3,1,sprintf("10m: %4d  12m: %4d", $s_qso{10}, $s_qso{12}));
+	addstr($$window,4,1,sprintf("15m: %4d  17m: %4d", $s_qso{15}, $s_qso{17}));
+	addstr($$window,5,1,sprintf("20m: %4d  30m: %4d", $s_qso{20}, $s_qso{30}));
+	addstr($$window,6,1,sprintf("40m: %4d  60m: %4d", $s_qso{40}, $s_qso{60}));
 	addstr($$window,7,1,sprintf("80m: %4d 160m: %4d", $s_qso{80}, $s_qso{160}));
 	attron($$window, COLOR_PAIR(2));
 	addstr($$window, 0, 0, "  DXpedition Summary ");
