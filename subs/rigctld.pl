@@ -40,7 +40,6 @@ addstr($wmain, 23, 40, "$freq MHz      ");
 		
 		if (($freq >= 1.800) && ($freq <= 2.000)) { $freq = "160"; }
 		elsif (($freq >= 3.500) && ($freq <= 4.000)) { $freq = "80"; }
-		elsif (($freq >= 5.250) && ($freq <= 5.450)) { $freq = "60"; }
 		elsif (($freq >= 7.000) && ($freq <= 7.300)) { $freq = "40"; }
 		elsif (($freq >=10.100) && ($freq <=10.150)) { $freq = "30"; }
 		elsif (($freq >=14.000) && ($freq <=14.350)) { $freq = "20"; }
@@ -86,7 +85,6 @@ addstr($wmain, 23, 40, "$freq MHz      ");
 			elsif ($band eq '20') { $band = '14000000'; }
 			elsif ($band eq '30') { $band = '10100000'; }
 			elsif ($band eq '40') { $band = '7000000'; }
-			elsif ($band eq '60') { $band = '5250000'; }
 			elsif ($band eq '80') { $band = '3500000'; }
 			elsif ($band eq '160') { $band = '1800000'; }
 			# if nothing matched, it was a frequency which will be passed right
