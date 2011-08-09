@@ -42,7 +42,8 @@ sub checkcall {
 				elsif ($band == 15) { $ypos = 8; }
 				elsif ($band == 12) { $ypos = 9; }
 				elsif ($band == 10) { $ypos = 10; }
-				elsif ($band == 6) { $ypos = 11; }  # .. 
+				elsif ($band == 6) { $ypos = 11; }
+				elsif ($band == 2) { $ypos = 12; }  # .. 
 			}
 	
 			addstr($$window, $ypos, 0, ' ' x 30 );

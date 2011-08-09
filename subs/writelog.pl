@@ -7,7 +7,7 @@ sub writelog {
 
 		my %freq = (160 => 1800, 80 => 3500, 40 => 7000, 30 => 10100,
 				20 => 14000, 17 => 18068, 15=>21000, 12 => 24890, 
-				10 => 28000, 6 => 50000);
+				10 => 28000, 6 => 50000, 2 => 144000);
 
 		if ($main::contest eq 'NAQP') {
 			if ($main::exc1s =~ /\//) {
@@ -77,6 +77,9 @@ sub writelog {
 						if ($main::qsos[$i]{'mode'} eq 'SSB') {
 							push @values, '59';
 						}
+						elsif ($main::qsos[$i]{'mode'} eq 'FM') {
+							push @values, '59';
+						}
 						else {
 							push @values, '599';
 						}
@@ -87,6 +90,9 @@ sub writelog {
 						}
 						elsif ($main::qsos[$i]{'mode'} eq 'RTTY') {
 							push @values, 'RY';
+						}
+						elsif ($main::qsos[$i]{'mode'} eq 'FM') {
+							push @values, 'PH';
 						}
 						elsif ($main::qsos[$i]{'mode'} eq 'CW') {
 							push @values, 'CW';
@@ -181,6 +187,9 @@ sub writelog {
 
 			my $rst = '599';
 			if ($main::qsos[$i]{'mode'} eq 'SSB') { 
+					$rst = '59';
+			}
+			if ($main::qsos[$i]{'mode'} eq 'FM') { 
 					$rst = '59';
 			}
 

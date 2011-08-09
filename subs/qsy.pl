@@ -2,30 +2,33 @@
 
 sub qsy {
 	my $value=0;
-	if ($_[0]->{'call'} =~ /^(6|10|12|15|17|20|30|40|60|80|160)M$|^(\d{4,5})$/) {
+	if ($_[0]->{'call'} =~ /^(2|6|10|12|15|17|20|30|40|60|80|160)M$|^(\d{4,6})$/) {
 		$value = $1 if defined $1;
 		$value = $2 if defined $2;
 
-		if ($value =~ /^(6|10|12|15|17|20|30|40|60|80|160)$/) {
+		if ($value =~ /^(2|6|10|12|15|17|20|30|40|60|80|160)$/) {
 				$_[0]->{'band'} = $value;
 		}
 		elsif (my $tmp = &ishamfreq($value)) {
 				$_[0]->{'band'} = $tmp;
 		}
-		else {				# Number entered is not a freqency in a ham band
+		else {				# Number entered is not a frequency in a ham band
 			return 0;
 		}
 		&rigctld($value) if $main::rigctld;
 		$_[0]->{'call'} = '';
 		${$_[1]} = 0;				# cursor position
 	}
-	elsif ($_[0]->{'call'} =~ /^(CW|SSB|RTTY|P31|P63)$/) {
+	elsif ($_[0]->{'call'} =~ /^(CW|FM|SSB|RTTY|P31|P63)$/) {
 		$_[0]->{'mode'} = $1;
 		&rigctld($1) if $main::rigctld;
 		$_[0]->{'call'} = '';
 		${$_[1]} = 0;				# cursor position
 		
 		if ($1 eq 'SSB') {
+			$_[0]->{'rst'} = '59';
+		}
+		elsif ($1 eq 'FM') {
 			$_[0]->{'rst'} = '59';
 		}
 		else {
@@ -55,7 +58,7 @@ sub qsy {
 sub qsyband {
 	my $direction = shift;
 	my $currentband = $main::qso{'band'};
-	my @bands = qw/160 80 40 30 20 17 15 12 10 6/;
+	my @bands = qw/160 80 60 40 30 20 17 15 12 10 6 2/;
 	my $pos=0;
 
 	for (0..$#bands) {
@@ -96,6 +99,7 @@ sub ishamfreq {
 	elsif (($freq >= 24890) && ($freq <= 24990)) { return 12 }
 	elsif (($freq >= 28000) && ($freq <= 29700)) { return 10 }
 	elsif (($freq >= 50000) && ($freq <= 54000)) { return 6 }
+	elsif (($freq >= 144000) && ($freq <= 148000)) { return 2 }
 	else { return 0 }
 }
 

@@ -12,13 +12,13 @@ sub showscore {
 	addstr($$window, 0,0, ' 'x999);
 
 	if ($main::contest eq 'DXPED') {
-	addstr($$window,2,1,sprintf(" 6m: %4d", $s_qso{6}));
+	addstr($$window,2,1,sprintf(" 2m: %4d   6m: %4d", $s_qso{2}, $s_qso{6}));
 	addstr($$window,3,1,sprintf("10m: %4d  12m: %4d", $s_qso{10}, $s_qso{12}));
 	addstr($$window,4,1,sprintf("15m: %4d  17m: %4d", $s_qso{15}, $s_qso{17}));
 	addstr($$window,5,1,sprintf("20m: %4d  30m: %4d", $s_qso{20}, $s_qso{30}));
 	addstr($$window,6,1,sprintf("40m: %4d  60m: %4d", $s_qso{40}, $s_qso{60}));
 	addstr($$window,7,1,sprintf("80m: %4d 160m: %4d", $s_qso{80}, $s_qso{160}));
-	attron($$window, COLOR_PAIR(2));
+	attron($$window, COLOR_PAIR(1));
 	addstr($$window, 0, 0, "  DXpedition Summary ");
 	addstr($$window, 1, 0, "                     ");
 	addstr($$window, 1, (11-length($main::mycall)/2), $main::mycall);

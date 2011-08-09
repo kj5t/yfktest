@@ -72,6 +72,9 @@ sub readlog {
 				if ($qso{'mode'}  eq 'SSB') {
 						$qso{'rst'} = '59';
 				}
+				elsif ($qso{'mode'}  eq 'FM') {
+						$qso{'rst'} = '59';
+				}
 				else {
 						$qso{'rst'} = '599';
 				}

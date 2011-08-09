@@ -114,7 +114,8 @@ addstr($wmain,23,55,"Mhz");
 			}
 		}
 		elsif ($band =~ /^[0-9]+$/) {			# band/freq
-			if ($band eq '6') { $band = '50000000'; }
+			if ($band eq '2') { $band = '1440000000'; }
+			elsif ($band eq '6') { $band = '50000000'; }
 			elsif ($band eq '10') { $band = '28000000'; }
 			elsif ($band eq '12') { $band = '24890000'; }
 			elsif ($band eq '15') { $band = '21000000'; }
