@@ -1,0 +1,1 @@
+rigctld -m 229 -r /dev/ttyS0 -s 38400 &

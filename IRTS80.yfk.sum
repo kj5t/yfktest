@@ -1,0 +1,28 @@
+Contest             : IRTS80 
+Callsign            : CT1DRB 
+Mode                : CW 
+Operator            : SINGLE-OP 
+Transmitter         : ONE 
+Assisted            : ASSISTED 
+Power               : LOW 
+Sent Exchange       : SET 
+
+Band    QSO    Qpts   Dupes   Mult1   Mult2
+-------------------------------------------
+   6      0       0       0       0       0
+  10      0       0       0       0       0
+  12      0       0       0       0       0
+  15      0       0       0       0       0
+  17      0       0       0       0       0
+  20      0       0       0       0       0
+  30      0       0       0       0       0
+  40      0       0       0       0       0
+  60      0       0       0       0       0
+  80      2       5       0       0       0
+ 160      0       0       0       0       0
+-------------------------------------------
+ ALL      2       5       0       1       0
+===========================================
+ Total Score: 5 
+
+  Logged with YFKtest v0.0.10
