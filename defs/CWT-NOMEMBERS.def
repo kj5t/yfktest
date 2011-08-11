@@ -20,7 +20,7 @@ freq mode date utc mycall 599 nr exc1s call exc1 exc2 exc3		# cabrillo def
 CWT-CWops														# CBR name
 exc1s															# fixed exc
 Name/pwr:                   (e.g. FAB/TX)
-MYCALL CQ CWT			# F1
+TEST CQ MYCALL MYCALL			# F1
 5NN NR EXC1S						# F2
 TU MYCALL							# F3
 MYCALL								# F4
