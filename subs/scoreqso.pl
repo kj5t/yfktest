@@ -369,6 +369,24 @@ sub scoreqso {
 			else { $s_qsopts->{$qso{'band'}} += 3; }
 		}
 	}
+	elsif ($main::defqsopts eq 'reg1fd-irts') {
+		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
+
+		my ($myportable, $otherportable) = (0,0);
+		if ($qso{'call'} =~ /\/(P|M|MM|AM)/i) { $otherportable = 1; }
+		if ($main::mycall =~ /\/(P|M|MM|AM)/i) { $myportable = 1; }
+
+		if (($myportable + $otherportable) == 0) {		# fixed<->fixed
+			$s_qsopts->{$qso{'band'}} += 0;
+		}
+		elsif ($dxcc =~ /^(ZA|7X|C3|EK|OE|A9|EU|ON|T9|E7|A2|LZ|XT|TJ|TN|9A|5B|OK|9Q|OZ|J2|SU|ES|ET|OY|OH|Z3|F|TR|C5|4L|DL|9G|ZB2|SV|HA|TF|YI|EI|4X|I|TU|JY|UN|5Z|9K|YL|OD|7P|EL|HB0|LY|LX|TZ|9H|3B|ER|3A|JT|4O|CN|C9|V5|PA|5N|LA|A4|SP|CT|A7|3X|YO|R|T7|6W|YU|9L|OM|S5|ZS|EA|3DA|SM|HB9|YK|EY|5H|3V|TA|EZ|5X|UR|A6|G|9J|Z2)$/) {							# EU
+			if ($otherportable) { $s_qsopts->{$qso{'band'}} += 5; }
+			else { $s_qsopts->{$qso{'band'}} += 2; }
+		}
+		else {											# DX
+			$s_qsopts->{$qso{'band'}} += 3; 
+		}
+	}
 	elsif ($main::defqsopts eq 'sac') {
 		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
 		if ($dxcc =~ /(JW|JX|LA|OH|OH0|OJ0|OX|OZ|OY|SM|TF)/) {

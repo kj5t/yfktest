@@ -1,0 +1,29 @@
+IARU Region 1 Fieldday - IRTS Scoring
+dxcc-band-all		# multiplier 1
+reg1fd-irts			# scoring
+-					# multiplier 2
+1					# exchange fields
+4					# length of exchange field 1
+4					# length of exchange field 2
+4					# length of exchange field 3
+4					# length of exchange field 4
+[0-9]				# regex for every single character in exchange field 1
+[0-9]+				# regex for complete valid exchange field 1
+[0-9]				# regex for every single character in exchange field 2
+					# regex for complete valid exchange field 2
+[0-9]				# regex for every single character in exchange field 3
+					# regex for complete valid exchange field 3
+[0-9]				# regex for every single character in exchange field 4
+					# regex for complete valid exchange field 4
+QSO: %s %s %s %s %-13s %-3s %-6s %-13s %-3s %s
+freq mode date utc mycall rsts nr call rst exc1
+IARU-REG1-FIELDDAY-!MODE!
+
+
+CQ TEST MYCALL MYCALL TEST          # F1
+5NN NR                              # F2
+TU MYCALL                           # F3
+MYCALL                              # F4
+HISCALL                             # F5
+NR?                                 # F6
+?                                   # F7
