@@ -12,7 +12,7 @@ sub rategraph {
 	attron($wgraph, COLOR_PAIR(4));
 	addstr($wgraph , 0,0, ' 'x(24*80));
 	attron($wgraph, A_BOLD);
-	addstr($wgraph , 0,0, "QSO Rate - Press Any Key To Return");
+	addstr($wgraph , 0,0, "QSO Rate - Press **ENTER** to close this window.");
 	attroff($wgraph, A_BOLD);
 
 
