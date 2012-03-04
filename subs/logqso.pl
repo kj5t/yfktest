@@ -81,7 +81,9 @@ sub logeditqso {
 				($qso{'exc3'} =~ /^$validentry[2]$/) &&
 				($qso{'exc4'} =~ /^$validentry[3]$/)
 		) {
-			addstr($main::wmain,23,0, "Invalid data entered QSO not changed!");
+			attron($main::wmain, COLOR_PAIR(6));
+			addstr($main::wmain,23,33, "Invalid!");
+			attroff($main::wmain, COLOR_PAIR(6));
 			return 0;
 		}
 
