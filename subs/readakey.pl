@@ -33,8 +33,14 @@ sub readakey {
 		elsif (ord($ch) == 168) {	# alt-h = help screen
 			return 'help';
 		}
+		elsif (ord($ch) == 175) {	# alt-o = help screen
+			return 'help';
+		}
 		elsif (ord($ch) == 178) {	# alt-r = rate screen
 			return 'rate';
+		}
+		elsif (ord($ch) == 172) {	# alt-l = rate screen
+			return 'override';
 		}
 		elsif (ord($ch) == 173) {	# alt-m edit cw messages
 			return 'cwmessages';
@@ -54,8 +60,14 @@ sub readakey {
 		if (ord($ch) == 104) {		# Alt-h
 			return 'help';
 		}
+		if (ord($ch) == 111) {		# Alt-o
+			return 'help';
+		}
 		elsif (ord($ch) == 114) {		# Alt-r
 			return 'rate';
+		}
+		elsif (ord($ch) == 108) {		# Alt-l
+			return 'override';
 		}
 		elsif (ord($ch) == 107) {		# Alt-k
 			return 'keyboard';
@@ -79,13 +91,19 @@ sub readakey {
 	elsif (ord($ch) == 232) {	# Alt-h -> HELP
 		return 'help';
 	} 
+	elsif (ord($ch) == 239) {	# Alt-o -> HELP
+		return 'help';
+	} 
 	elsif (ord($ch) == 242) {	# Alt-r -> Rate Graph
 		return 'rate';
 	} 
-	elsif (ord($ch) == 235) {	# Alt-K -> keyboard mode
+	elsif (ord($ch) == 236) {	# Alt-l -> Rate Graph
+		return 'override';
+	} 
+	elsif (ord($ch) == 235) {	# Alt-k -> keyboard mode
 		return 'keyboard';
 	} 
-	elsif (ord($ch) == 237) {	# Alt-M -> edit cw messages
+	elsif (ord($ch) == 237) {	# Alt-m -> edit cw messages
 		return 'cwmessages';
 	} 
 	elsif (ord($ch) == 10) {	# return
@@ -244,13 +262,13 @@ sub editfield {
 				$text = substr($text, 0, $curpos-1).substr($text, $curpos, );
 				$curpos--;
 			}
-			elsif ($ch eq ' ') {						# next field.
+			elsif (($ch eq ' ') || ($ch eq "\t" && $tabnextfield)) {	# next field.
 				$curpos = 0;
 				$realnextfield = $nextfield;			# we actually move
 			}
-			elsif ($ch eq "\t") {						# tab -> to callsign
+			elsif ($ch eq "\t") {
 				$curpos = 0;
-				$realnextfield = 'call';
+				$realnextfield = 'call';			# tab -> to callsign
 			}
 
 	return ($curpos, $text, $realnextfield);
