@@ -8,7 +8,7 @@ cqzone				# multiplier 2
 0					# length of exchange field 3
 0					# length of exchange field 4
 [0-9a-z]			# regex for every single character in exchange field 1
-(40)|(^[1230]?[0-9]$)	# regex for complete valid exchange field 1
+(40)|([0,1,2,3]+[0-9])			# regex for complete valid exchange field 1
 [0-9]				# regex for every single character in exchange field 2
 					# regex for complete valid exchange field 2
 [0-9]				# regex for every single character in exchange field 3
