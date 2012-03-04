@@ -59,6 +59,7 @@ sub qsyband {
 	my $direction = shift;
 	my $currentband = $main::qso{'band'};
 	my @bands = qw/160 80 60 40 30 20 17 15 12 10 6 2/;
+	if ($contest eq"ARRL-FD"){ @bands = qw/160 80 40 20 15 10 6 2/; }
 	my $pos=0;
 
 	for (0..$#bands) {
