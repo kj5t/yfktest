@@ -10,7 +10,8 @@ sub readlog {
 
 		$line = <LOG>;
 
-		unless ($line =~ /YFKtest/) {
+#		unless ($line =~ /YFKtest/) {		# ** ALSO incorrectly uses .adi(f) files !
+		unless (($line =~ /YFKtest/ && $line !~ m/log/)) {
 			return 0;
 		}
 
