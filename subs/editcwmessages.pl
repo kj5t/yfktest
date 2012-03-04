@@ -2,6 +2,12 @@ use strict;
 use warnings;
 
 sub editcwmessages {
+	curs_set(0);
+	attron($main::wmain,COLOR_PAIR(6));
+	addstr($main::wmain, 23, 0, "Edit CW Messages Mode - Use ARROWS & ENTER keys. ESC: Quit ");
+	attron($main::wmain,COLOR_PAIR(3));
+	refresh($main::wmain);
+
 	my $window = $_[0];
 	
 	curs_set(0);
@@ -25,7 +31,13 @@ sub editcwmessages {
 		if (($ch eq KEY_UP) && ($aline > 0)) { $aline-- }
 		elsif (($ch eq KEY_DOWN) && ($aline < 6)) { $aline++ }
 
-	} until ($ch =~ /\s+/);
+	} until (($ch =~ /\s+/) || (ord ($ch) == 27));
+
+	if (ord ($ch) == 27){
+		addstr($main::wmain, 23, 0, "     Logging Mode                         Alt-O or H: Help ");
+		curs_set(1);
+		return;
+	}
 
 	my $message = $main::cwmessages[$aline];
 
@@ -75,7 +87,13 @@ sub editcwmessages {
 		}
 		
 
-	} until ($ch =~ /\n/);
+	} until (($ch =~ /\n/) || (ord ($ch) == 27));
+
+	if (ord ($ch) == 27){
+		addstr($main::wmain, 23, 0, "     Logging Mode                         Alt-O or H: Help ");
+		curs_set(1);
+		return;
+	}
 
 	# We edited message $aline+1 which is in line 10+($aline+1) in the log file
 	
@@ -90,6 +108,9 @@ sub editcwmessages {
 	close LOG;
 
 	$main::cwmessages[$aline] = $message;
+
+	addstr($main::wmain, 23, 0, "     Logging Mode                         Alt-O or H: Help ");
+	curs_set(1);
 
 }
 
