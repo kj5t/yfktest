@@ -14,7 +14,8 @@ my @files;
 my $wmain = newwin(24,80,0,0);
 attron($wmain, COLOR_PAIR(4));
 addstr($wmain, 0, 0, " " x (24*80));
-addstr($wmain, 0, 0, "YFKtest - Open Contest - Please chose a contest file...");
+addstr($wmain, 0, 0, " Select a <contest-name>.yfk file using the arrow keys.");
+addstr($wmain, 1, 0, " Do NOT select a <contest-name>.yfk.<something_else_added_to_the_name> file.");
 
 my $wdialog = newwin(20,70,3,5);
 attron($wdialog , COLOR_PAIR(5));
