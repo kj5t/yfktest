@@ -16,7 +16,12 @@ sub dupecheck {
 
  					attron($$window, COLOR_PAIR(6));
 					addstr($$window, 23, 18, "DUPE");
+					if ($nologdupe){
+						$dupe=1;}
 					last;
+			}
+			else {
+				$dupe=0
 			}
 	}
 
