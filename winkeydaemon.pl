@@ -157,7 +157,7 @@ exit;
  my $busy = 0;
  my $echo = "";
  
-   $count = $port->write("QRV");
+#   $count = $port->write("QRV");
  
 while (1) {
   
