@@ -46,7 +46,8 @@ $names{$main::contestpath.'Open File....def'} = "Open existing YFKtest contest l
 my $wmain = newwin(24,80,0,0);
 attron($wmain, COLOR_PAIR(4));
 addstr($wmain, 0, 0, " " x (24*80));
-addstr($wmain, 0, 0, "YFKtest - New contest / Open Contest - Please chose a contest from the list:");
+addstr($wmain, 0, 0, "YFKtest - Open (existing contest log) file....");
+addstr($wmain, 1, 0, "        - OR use the up & down keys to create a NEW contest log file:");
 
 my $wdialog = newwin(20,70,3,5);
 attron($wdialog , COLOR_PAIR(5));
@@ -191,8 +192,14 @@ $filename .= ".yfk";
 
 if (-e $filename) {
 		endwin;
-		print "Error, file already exists! Open existing contest log by\n".
-				"giving the filename as command line argument.\n";
+		print "\nError, a log file for that contest already exists!\n".
+				"\nTo use an existing contest log you CAN give the".
+				" log's filename as command line argument.\n".
+				"Here's an example of what to enter on the command line:\n".
+				" yfktest ARRL-FD.yfk\n".
+				"(Substitute your contest file name for \"ARRL-FD\" in the example above.)\n". 
+				"\nIf you want to start a new log for this contest you will".
+				" need to either:\n MOVE or RENAME the existing/older file.\n\n";
 		exit;
 }
 else {
