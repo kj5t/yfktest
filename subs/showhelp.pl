@@ -62,29 +62,30 @@ WRITELOG    Escribe el log en formatos Cabrillo y ADIF- para enviar para el
 ';
 	}
 	else {
-		$help1 = 'YFKtest Quick Reference - Press any key to return.';
-		$help2 = "Alt-W, F11  Wipe QSO. Delete callsign- and exchange fields
+		$help1 = 'YFKtest Quick Reference - Press **ENTER** to return to logging window.';
+		$help2 = "Alt-r           Rate Graph Window.
 
-Alt-X       Stops CW sending immediately (like ESC) 
+F1..7           Play CW messages. - INS, ESC work during sending.
+Alt-k           Send CW direct from the keyboard.
+Alt-x, ESC      Stops sending CW immediately.
+PGUP, PGDN      Change CW speed in 2wpm steps.
 
-Alt-K       Keyboard-Mode in CW
+Alt-m           Edit CW messages. - Changes are written to the log file.
+UP, DOWN        Edit log. DUPECHECKING and WIPEING do not work in edit mode.
+Alt-w, F11      Wipe entire QSO.
 
-Alt-R       Rate Graph
+TAB, SPACEBAR   Move between fields. - TAB can be set to snap to call field.
+DEL, BACKSPACE  @ ANY field  - Edit/remove individual characters.
+LEFT, RIGHT     @ ANY field  - Move to specific character.
+ENTER           @ ANY field  - Log QSO as long as ALL FIELDS are entered.
+Alt-l		@ ANY field  - Over-ride protection (if set) & log a DUPE !!
 
-Alt-M       Edit CW messages. Changes are written to the log file.
+10M..160M       @ Call field - You can directly enter the freq too !!
+SSB, CW         @ Call field - RTTY and FM also work.
 
-F1..7       Play CW messages. 
-INS
-ESC
+WRITELOG        @ Call field - Writes Cabrillo, ADIF, & ASCII Summary files.
 
-10M..160M   Entering the desired band in the callsign-field to QSY.
-
-SSB, CW     Change the mode my entering SSB/CW in the callsign field.
-
-WRITELOG    Writes the log, and creates additional files in Cabrillo,
-            ADIF-Format, and an ascii Summary file.
-
-QUIT        Ends program.
+QUIT, EXIT      @ Call field - Ends program.
 ";
 	}
 
@@ -97,7 +98,7 @@ QUIT        Ends program.
 	attroff($whelp, A_BOLD);
 
 	attron($whelp, COLOR_PAIR(5));
-	addstr($whelp, 2,0, $help2);
+	addstr($whelp, 1,0, $help2);
 
 	refresh($whelp);
 	$ch = getch() until ($ch =~ /\s+/);
