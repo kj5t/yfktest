@@ -1,3 +1,50 @@
+0.0.10-svn /    As of 29 Feb. 2012  - Bob, w9ya <w9ya@amsat.org>
+
+CHANGES:
+
+CQWW def changes (Need to dbl. check these against BOTH the correct and the PUBLISHED CQWW cab
+DUPES do not log with new config file addtions.
+        Added no-log-a-dupe (nologdupe) as a config option.
+        Added nologdupe override (alt-l) and documented this.
+Rig-control and WinKey control can be ignored and setup skipped with config file additions.
+Tab-Key can be used like the space key & toggle between fields
+                 instead of default snap to callsign field.
+CW-Speed can also be set with the user's config file.
+Both the help and rate windows have both better and correct information.
+Program is essentially self-documenting while in use.
+... Add info about ctrl-c WITH config file info and caps lock caution to first screen.
+... Added sample config file with N0CALL for callsign.
+Added ability to change color scheme from defaults ala the config file.
+Changed first screen copyright info.
+Moved color selection to subs/.
+Better messages & corrected speeling - new contest selection & screen to load pre-existing logs.
+Added automatic window resizing for ARRL-FD operation.
+Currently selecting ARRL-FD uses the dummy.scp file which *can* allow for us &/or fd only files.
+Added newer uathors to copyright status
+Cleaned up messy comment locations and improved formatting of same in main program file.
+Added support for config file in local (main program) hierarchy !
+Badfilename in command line now errors on line 23, in red, with instructions.
+ESC nows works while editing cw messasges ** PLUS status for line 23 in red added.
+Line 23 now a full-status and info line during ALL operations including red "Edit" (during edit).
+.....The status-line (no. 23) is much better behaved now.
+Add sample config file with N0CALL for callsign.
+Status in the window during log-file-fetching and rescoring !
+ADIF file selection during "filebrowser" no longer cause yfktest to die & screwup the x-terminal.
+ARRL-FD file qsy band restricted to just the bands in use for that contest.
+
+SUPPOSEDLY FIXED (Should be fb om):
+
+Fix dump-out and terminal lockup(lockout?) when filetype selected from file menu (3rd) = bad
+'.....????.yfk not found. Exiting' but does NOT exit !! (Hi Hi) - WORKS, BUT BY WORDED PROMPT.
+Fix **AND DOUBLE CHECK** *fresh &/or making* .yfk file w/ editing and (status/)line 23 - WORKS.
+Minimal Config File needs to be checked. - TESTED
+Much better error messages about file and startup needed. ** grep endwin - WORKS
+Change copyright info in file(s) 2 add others (contributors) aftr conferring w/ Fabian. - NOT YET
+Line 23 operation o.k. with color changes. - WORKS
+Make all THREE options PLUS the default color-schemes & test w/ & w/out config file - WORKS.
+Make sure keyer operation is still fully correct after the changes. - WORKS
+
+
 0.0.10-svn /    As of 19 June 2011  - Bob, w9ya <w9ya@amsat.org>
 	* Numerous changes in the past few years by ct1drb, ws6z, oh1fjv,
 	  dj1yfk, and most recently by myself.

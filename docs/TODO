@@ -1,6 +1,54 @@
 YFKtest TODO list (feel free to add things!)
 --------------------------------------------
 
+
+As of 29 Feb. 2012 - w9ya
+
+TO-DO (Before next release):
+
+.......... ARRL-FD seems to replace "NR" as '5?' .
+.......... Winkey set-up screen needs info on which keys to use, perhaps status (red line 23 ?)
+..........   "      "    - Are the selections themselves properly declared ?
+.......... Add info abt "enter" key to cycle thru & put on line 23 (ala alt-k mode) 4 alt-m mode.
+** DONE ? - Decide on either a new config file selection OR a permament (arrl-fd) dummy.file select.
+See if ANY routines are better moved from "main".pl to subs/ .
+See if ANY code within ANY subroutines (or yfktest) can be turned into more subs.
+DOC files updated;
+... and rearranged as needed.
+... and (maybe) create doc abt. sample config file & possibly make config file self documenting !
+Make sure ALL of the above works from a "cold" start.
+Make sure the *new* CQWW files are included.
+Add in the new 'database' files de: ct1drb.
+Check for any more adds/move/changes that are on paper.
+DOUBLE-check older to-do files for anything not yet done.
+DOUBLE CHECK "supposedly fixes" with third party testing !
+Get Fabian ready for a 0.0.10 release !!
+
+WISH-LIST (Long term ideas):
+
+DXPED logging uses different colors and info in the summary window...
+...incorporate similar scoring window for ARRL-FD yet still have mults correctly calculated.
+Finish removing rig control & winkeyer setups 2 sub-directory/ i.e. references to TWO file
+.. locations - local and in sub-directory for .sh files.
+... then test for operation including minimal config file.
+Have cw memories (nature of content ala defs file) shown ALL the time on screen.
+.....OR as a pop-up OR some sort of combo of pop-up & all the time OR ???.
+Show qso-in-log blacked-out /t same aftr. as b4 going into rate or help screens from EDIT mode.
+Consider having section info in ARRL-FD (for instance) color in sections worked.
+Consider making 1st (startuo) screen have live config file data (+ which config file location.)
+(Fix file select screens to kill working screen before asking for exit on bad file selection.)
+... and/OR (& IF POSSIBLE) move all the log files into a separate directory for cleaner selection.
+** IF POSSIBLE; get working atl-H & O (uppercase) in case caps lock is on & help screen is needed.
+Scroll horiz. does not work to select new contest (only pre-existing log) ?
+Add a way to load various "database" (de: third parties) files.
+Correct the ALt-k (and Alt-o) remanant (sp?) character in call field.
+Trap or otherwise avoid "baudrate" error message when winkey selected but not connected.
+Add DUPECHECKING and RE-SCORING and WIPE-QSO to editing function.
+......... the above (most likely) *will* creat new problems with qso numbering.
+See if ANY routines are better moved from "main".pl to subs/ .
+
+
+
 As of 19-24 June 2011 - w9ya
 	- Add some sort of ability to select different sized sub-windows AND
 	  color schemes. Possibly defaults and selection from either the defs

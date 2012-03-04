@@ -1,6 +1,7 @@
 YFKtest Version 0.0.10 Manual
 ----------------------------
 
+
 1. Getting started
 ------------------
 
@@ -9,8 +10,11 @@ line: ./yfktest . You'll be asked to select a contest definition and enter
 the neccesary details, like a filename for the contest, your callsign, category
 etc. After completing this form, the contest operation starts.
 
-You may add a file ~/.yfktest to your home directory, currently the only
-possible value to set there is your own call, syntax:   mycall=CALL
+You may add a file ~/.yfktest (to your home directory), AND/OR you can add it to
+the working directory (where you downloaded yfktest to). It can contain any or
+all of the items notated on the first startup screen (the screen you see when
+you each time you start yfktest.) There is also a file called
+config.yfktest.sample that shows what this file could look like. 
 
 
 2. Loading an existing log
@@ -21,38 +25,44 @@ command like argument:  ./yfktest CQWW07.yfk
 The contest log will be read, user settings from the last contest are restored
 and the score will be calculated. 
 
-Alternatively, as of version 0.0.9, a crude file browser can be used to select
-a log from the file system, if yfktest was started without any command line
+Alternatively a file browser can be used to select a log from the file system.
+You will see this as the second screen (i.e. after you press <enter> from the
+stratup or first screen) if yfktest was started without any command line
 arguments.
 
 
 3. Keys and functions
 ---------------------
 
-Alt-W, F11  Wipe QSO. Delete callsign- and exchange fields
+Alt-w, F11  Wipe QSO. Delete callsign- and exchange fields
 
-Alt-X       Stops CW sending immediately (like ESC) 
+Alt-x       Stops CW sending immediately (like ESC) 
 
-Alt-H       Quick help screen
+Alt-o or h  Quick help screen
 
-Alt-K       Keyboard-Mode in CW
+Alt-k       Keyboard-Mode in CW
 
-Alt-R       Rate Graph
+Alt-r       Rate Graph
 
-Alt-M       Edit CW messages
+Alt-m       Edit CW messages
 
-F1..7       CW messages like in CT. They can be modified by Alt-M, and
+F1..7       CW messages like in CT. They can be modified by Alt-m, and
 INS         are written to the log file and restored when restarting the
 ESC         contest.
 
 10M..160M   Entering the desired band in the callsign-field causes YFKtest to
-            QSY.
+            QSY. **** NOTE: You can also just enter a freq. like 21075 to
+	    switch to 15 meters...and so forth !
 
-SSB, CW     Change the mode my entering SSB/CW in the callsign field.
+SSB, CW     Change the mode my entering SSB/CW in the callsign field. (RTTY
+	    works too.)
 
 WRITELOG    Writes the log in Cabrillo- and ADIF-Format for submission to the
             log-checker and / or import to your main logbook/LOTW etc.
             Also a summary file of the contest score is written to a file.
+
+QUIT, EXIT  Enter this int he callsign field to end the program execution.
+
 
 4. Hamlib
 ---------
@@ -76,6 +86,7 @@ FYI: Debian's hamlib Perl package is still broken. YFKtest will crash if you
 try to use it; either compile it yourself from the source, or uncomment the
 lines which import Hamlib.pm  in yfktest.pl.
 
+
 5. CW Functions
 ---------------
 
@@ -84,7 +95,9 @@ and running and set up in order to be used by YFKtest. *** Winkeydaemon will be
 setup by a dialog when running yfktest and will run the next time automagically
 when you start yfktest.
 
-The F-keys are set similarly to CT by default:
+The F-keys are set similarly to CT by default: (*** NOTE: These defaults can be
+automagically changed by the entries in the various contest definition files
+that are used by yfktest to setup a contest log.)
 
 F1: CQ
 F2: RST +/or Exchange
@@ -94,10 +107,11 @@ F5: HISCALL
 F6: NR?
 F7: ?
 
-Alt-M opens a dialog to change these messages.
+Alt-m opens a dialog to change these messages.
 
-Alt-K activates the Keyboard-Mode, meaning everything you type in is
+Alt-k activates the Keyboard-Mode, meaning everything you type in is
 immediately sent via cwdaemon or winkeydaemon.pl . Alt-K again or ESC stops it.
 
 *changed/updated 19 June 2011 - Bob, w9ya
 *changed/updated 20 June 2011 - Bob, w9ya
+*changed/updated 29 Feb  2012 - Bob, w9ya
