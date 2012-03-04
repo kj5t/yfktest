@@ -2,11 +2,35 @@
 
 sub readconfigfile {
 
-	open CONF, $ENV{HOME}."/.yfktest" or return;
 
+	my $filename=".yfktest";
+
+	if (-r $filename) {
+			open CONF, ".yfktest" or return;
+	} else {
+	open CONF, $ENV{HOME}."/.yfktest" or return;
+	}
 	while ($line = <CONF>) {
 		if ($line =~ /mycall=(.+)/) {
 			$main::mycall = uc($1);
+		}
+		elsif ($line =~ /rigctld=(.+)/) {
+			$main::rigctld = $1;
+		}
+		elsif ($line =~ /winkey=(.+)/) {
+			$main::winkey = $1;
+		}
+		elsif ($line =~ /cwspeed=(.+)/) {
+			$main::cwspeed = $1;
+		}
+		elsif ($line =~ /tabnextfield=(.+)/) {
+			$main::tabnextfield = $1;
+		}
+		elsif ($line =~ /nologdupe=(.+)/) {
+			$main::nologdupe = $1;
+		}
+		elsif ($line =~ /colorscheme=(.+)/) {
+			$main::colorscheme = $1;
 		}
 	}
 
