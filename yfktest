@@ -3,6 +3,7 @@
 # yfktest - a simple, single operator ham radio contest logbook
 # 
 # Copyright (C) 2008  Fabian Kurz, DJ1YFK
+# Copyright (C) 2012  Bob Finch, W9YA & David Quental, CT1DRB & OTHERS
 #
 # This program is free software; you can redistribute it and/or modify 
 # it under the terms of the GNU General Public License as published by 
@@ -34,16 +35,14 @@ our $VERSION="0.0.10";
 
 our $hashamlib = eval { require Hamlib };
 if ($hashamlib) {
-	# Import the needed symbols if we loaded it ok.
-	import Hamlib;
+	import Hamlib;							# Import the needed symbols if we loaded it ok.
 }
 
-our $hamlibsock; 			# initialized later, if needed.
-
+our $hamlibsock; 							# initialized later, if needed.
 our $hamlibrigd;
+our $cwsocket;
 
-our $netname = "STN1";
-# will be overridden later by found path
+our $netname = "STN1";							# will be overridden later by found path
 our $contestpath = "defs/";
 
 load_subs("newcontest.pl");
@@ -75,33 +74,38 @@ load_subs("readconfigfile.pl");
 load_subs("showhelp.pl");
 load_subs("rategraph.pl");
 #load_subs("subs/net_receiveqso.pl");
+load_subs("hamrigctrl.pl");
+load_subs("winkeyer.pl");
+load_subs("colorinfo.pl");
+
 
 our $version = "0.0.10";
 
-our ($contest,			# definition file: defs/$contest.def
-	$filename,			# of this current contest log
+our ($contest,								# definition file: defs/$contest.def
+	$filename,							# of this current contest log
 	$mycall,
-	$assisted,			# for cabrillo log
+	$assisted,							# for cabrillo log
 	$bands,				
 	$modes,	
 	$operator,
 	$power,
 	$transmitter);
 
-our $entryfields = 1;	# contest dependant
+our $entryfields = 1;							# contest dependant
 our $activefield = 'call';
 
-# printf-string for the cabrillo output
-our $cabrilloline='no cabrillo format defined!';
+our $tabnextfield = 0;
+
+our $cabrilloline='no cabrillo format defined!';			# printf-string for the cabrillo output
 our $cabrillovalues='band date utc ...';
 our $cabrilloname='CONTEST-NAME';
 
 our ($exc1len, $exc2len, $exc3len, $exc4len) = (4,4,4,4);
 
-our $fixexchange='';	# fixed exchange like in IOTA, ITU etc.
-						# contains which exchange will be fixed, i.e. exc1, 2..
-our $fixexchangename='';# what to ask the user for, like "IOTA-Ref:"?
-our $exc1s = '';		# actual value of the fixed exchange value
+our $fixexchange='';							# fixed exchange like in IOTA, ITU etc.
+									# contains which exchange will be fixed, i.e. exc1, 2..
+our $fixexchangename='';						# what to ask the user for, like "IOTA-Ref:"?
+our $exc1s = '';							# actual value of the fixed exchange value
 our $exc2s = '';
 
 our $tmp='';
@@ -110,54 +114,47 @@ our $counter=0;
 our $counter1=0;
 my $curpos = 0;
 
-# For guessexchange, only consider every callsign once, save in $lastguessed
-our $lastguessed = '';
-# A hash for use with guessexchange, for example "callsign -> State"
-our %guesshash = ();
+our $lastguessed = '';							# For guessexchange, only consider every callsign once, save in $lastguessed
+our %guesshash = ();							# A hash for use with guessexchange, for example "callsign -> State"
+
+our @validchars = ('[0-9A-Za-z]', '', '', '');				# Valid characters for the 4 entry fields  (will be read from def file)
+our @validentry = ('.+', '', '', '');					# Valid complete entries that can be logged (will be read from def file)
 
 
-# Valid characters for the 4 entry fields  (will be read from def file)
-our @validchars = ('[0-9A-Za-z]', '', '', '');
+my $oldcall='';								# check if call was changed. otherwise no PC/SCP
 
-# Valid complete entries that can be logged (will be read fm
-# def file)
-our @validentry = ('.+', '', '', '');
+our $editnr=0;								# the QSO which is currently being edited (if any),
+									# 0 = no QSO being edited, normal operation
+my $oldeditnr = 0;							# we have to check if it changes now and then
 
+our $nologdupe=0;
+our $dupe=0;
 
-my $oldcall=''; 			# check if call was changed. otherwise no PC/SCP
-
-
-our $editnr=0;				# the QSO which is currently being edited (if any),
-							# 0 = no QSO being edited, normal operation
-
-my $oldeditnr = 0;			# we have to check if it changes now and then
-
+our $colorscheme=0;
 
 our $rigmodel = ''; 
 our $rigpath = '';
 our $rigctl=0;
 our $rigctld=1;
 our $rig=1;
-our $winkeypath = '';
 
-our %s_qsos = ("160" =>0,"80" => 0, "60" =>0, "40" => 0, "30" => 0, "20" => 0,
-				"17" => 0, "15" => 0, "12" => 0, "10" => 0, "6" => 0, "2" => 0);
-our %s_qsopts = ("160" =>0,"80" => 0, "60" => 0, "40" => 0, "30" => 0, "20" => 0, "17" =>
-				0, "15" => 0, "12" => 0, "10" => 0, "6" => 0, "2" => 0);
-our %s_mult1 = ("160" => 0,"80"=> 0, "60"=> 0,"40" => 0, "30" => 0, "20" => 0, "17" =>
-				0, "15" => 0, "12" => 0, "10" => 0, "6" => 0, "2" => 0, "All" => 0);
-our %s_mult2 = ("160" => 0,"80"=> 0, "60"=> 0,"40" => 0, "30" => 0, "20" => 0, "17" =>
-				0, "15" => 0, "12" => 0, "10" => 0, "6" => 0, "2" => 0, "All" => 0);
-our %s_dupes = ("160" => 0,"80" => 0,"60" => 0,"40" => 0, "30" => 0, "20" => 0, "17" =>
-				0, "15" => 0, "12" => 0, "10" => 0, "6" => 0, "2" => 0, "All" => 0);
+our $winkeypath = '';
+our $winkey=1;
+our $cwspeed=20;
+
+our %s_qsos = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" => 0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0);
+our %s_qsopts = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" => 0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0);
+our %s_mult1 = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" =>0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0, "All" => 0);
+our %s_mult2 = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" =>0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0, "All" => 0);
+our %s_dupes = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" =>0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0, "All" => 0);
 our $s_sum = 0;
 
 
 our ($defmult1, $defmult2, $defqsopts);
 
 
-our @qsos;			# Array of hashes with single QSOs.
-#our @net_qsos : shared;	# Array of hashes with single QSOs received over the net
+our @qsos;								# Array of hashes with single QSOs.
+#our @net_qsos : shared;						# Array of hashes with single QSOs received over the net
 
 our @cwmessages  = ('');
 
@@ -167,13 +164,13 @@ our @scp = <SCP>;
 $scp[1] = $scp[2] = '';
 close SCP;
 
-our %qso = (		# The current QSO
+our %qso = (								# The current QSO
 		'nr' => 1,
 		'utc' => '',
 		'date' => '20070101',
 		'call' => '',
 		'rst' => '599',
-		'excs' => '',		# sent exchange
+		'excs' => '',						# sent exchange
 		'exc1' => '',
 		'exc2' => '',
 		'exc3' => '',
@@ -186,11 +183,14 @@ our %qso = (		# The current QSO
 
 # our %net_qso : shared = ();
 
-our %tmpqso;			# current Q will be saved here while editing prev QSOs
+our %tmpqso;								# current Q will be saved here while editing prev QSOs
 
-# Will be changed later if needed.
-our $mycont='EU';
+our $mycont='EU';							# Will change these two variables later as needed.
 our $mydxcc='DL';
+
+###############################################################################
+#  Stuff starts happening here !!
+###############################################################################
 
 initscr();
 noecho();
@@ -204,29 +204,39 @@ start_color();
 curs_set(0);
 
 printw "YFKtest v$version - Copyright (C) 2008 Fabian Kurz, DJ1YFK
-This is free software, and you are welcome to redistribute it
-under certain conditions (see COPYING).
+Copyright (c) 2012 Bob Finch, W9YA & David Quental, CT1DRB & Others.
+This is free software, and you are welcome to redistribute it under
+certain conditions (see the file name COPYING in the docs folder).
 
-Press any key to continue.";
+
+***********  FIRST - Make sure the caps lock is NOT on.
+***********  SECOND - Remember to exit immediately hit ctrl+c .
+***********  THEN - Press the ENTER key to continue this program.
+
+
+NOTE: You can add a config file named .yfktest, located in your
+home directory or here, containing any of the following lines:
+(* Include ONLY one item & its' value, per line & NOTHING else !)  
+
+CONFIG         # Reserved for future usage.
+mycall=N0CALL  # Enter your actual callsign for automatic usage.
+rigctl=0       # Turns off usage of rig-control software & config.
+winkey=0       # Turns off usage of the winkeyer software & config.
+tabnextfield=1 # Turns off 'snap to call'. It now work = spacebar.
+cwspeed=24     # Defaults to 24 wpm. Can be set to another value.
+nologdupe=1    # Prevents default dupe logging. Alt-L will override.
+colorscheme=2  # 0 is default & 1,2,or 3 are new window colors.";
 
 getch();
 
+readconfigfile();							# Look for ~/.yfktest config file...
 
-init_pair(1, COLOR_BLACK, COLOR_YELLOW);
-init_pair(2, COLOR_BLUE, COLOR_GREEN);
-init_pair(3, COLOR_BLUE, COLOR_CYAN);
-init_pair(4, COLOR_WHITE, COLOR_BLUE);
-init_pair(5, COLOR_WHITE, COLOR_BLACK);
-init_pair(6, COLOR_WHITE, COLOR_RED);
+# Select the color scheme...
 
-
-# Look for ~/.yfktest config file...
-
-readconfigfile();
+colorinfo();
 
 # If a file was supplied as command line argument, continue this contest,
 # otherwise start a new contest or ask for a filename...
-
 unless ($ARGV[0]) {
 
 	($contest, $filename, $mycall, $assisted, $bands, $modes, $operator,
@@ -246,17 +256,19 @@ if ($ARGV[0] || ($contest eq '0')) {
 		}
 
 		if (-r $filename) {
-			printw "\nOpening log file $filename...\n";
+#			printw "\nOpening log file $filename...\n";
+			attron(COLOR_PAIR(6));
+			printw "\nOpening file..";
 
 			unless (($contest = &readlog()) &&
 					($qso{'nr'} = $#qsos+2) 
 			) {
-				printw "$filename not a valid contest log! Exiting.\n";
+#				printw "\n\n$filename is not a valid contest log! Press *any* key to exit.\n";
+				printw "Its' not a valid contest log! Press *any* key to exit.\n";
 				getch; endwin; exit;
 			} else {					# Read log OK, now rescore!
 
-					# read the rules and fill neccessary variables...
-					&readrules($contest);
+					&readrules($contest);		# read the rules and fill neccessary variables...
 
 					if ($tmp) {
 						if ($fixexchange eq 'exc1s') {
@@ -292,8 +304,12 @@ if ($ARGV[0] || ($contest eq '0')) {
 
 		}
 		else {
-			printw "File $filename not found. Exiting.";
+##			printw "\n\nFile $filename not found. Press *any* key to exit.\n";
+			attron(COLOR_PAIR(6));
+#			printw "\n The log file cannot be found. Press *any* key to exit.\n";
+			printw "\n The log file you entered cannot be found. Press *any* key to exit.\n";
 			getch; endwin; exit;
+			exit;
 		}
 }
 
@@ -309,121 +325,30 @@ if ($modes eq 'SSB') {
 
 # Activate Hamlib if needed.
 
-if (-r 'rigctld.sh') {
-	system('sh rigctld.sh');
-	sleep 1;
-}else {
-		my $wdialog1 = newwin(24,80,0,0);
-		attron($wdialog1, COLOR_PAIR(4));
-		addstr($wdialog1, 0, 0, " " x (24*80));
-		addstr($wdialog1, 0, 0, "Radio configuration");
-
-		addstr($wdialog1, 1, 0, "Is your radio connected to the computer ?");
-		my $choice='YES NO';
-		if (!$main::rigctld) {
-	    	$choice = 'NO_(There is no connection)';
-		}
-
-		$main::rigctld = &chose(\$wdialog1, 1, 50, $choice);
-
-		if ($main::rigctld =~ /NO/) {
-			$main::rigctld = 0;
-		}
-		else {
-			$main::rigctld = 1;
-
-		my %hamlibrigs = &readhamlibrigs();
-
-		addstr($wdialog1, 5, 0 , "Hamlib rig:");
-		addstr($wdialog1, 6, 0 , "Hamlib port:");
-		addstr($wdialog1, 7, 0 , "Hamlib speed:");
-		my @a = sort keys(%hamlibrigs);
-		my $tmp = "@a";
-		$tmp = &chose(\$wdialog1, 5, 20, $tmp);
-
-		$main::rigmodel = $hamlibrigs{$tmp};
-		$tmp = &chose(\$wdialog1, 6, 20, '/dev/ttyS0 /dev/ttyS1 /dev/ttyUSB0
-		/dev/ttyUSB1 /dev/ttyUSB2 /dev/ttyUSB3');
-		$main::rigspeed = &chose(\$wdialog1, 7, 20, '1200 4800 9600 19200 38400');
-		$main::rigpath = $tmp;
-		
-		open RIGFILE1, ">rigctld.sh";
-		print RIGFILE1 "rigctld -m ";
-		print RIGFILE1 $main::rigmodel." "."-r ".$tmp." -s ".$main::rigspeed. " &";
-		
-		close RIGFILE1;
-		system('sh rigctld.sh');
-		sleep 1;
-		refresh($wdialog1);
-		}
-}
-
-sub readhamlibrigs {
-	my $line;
-	my %hash;
-	open RIG, "hamlibrigs";
-	while ($line = <RIG>) {
-		chomp($line);
-		my @a = split(/\s+/, $line);
-		$hash{$a[0]} = $a[1];
-	}
-	close RIG;
-	return %hash;
-}
+&hamrigctrl();
 
 	$hamlibsock = new IO::Socket::INET ( PeerAddr => 'localhost',
-		            PeerPort => 4532, Proto => 'tcp');
+		PeerPort => 4532, Proto => 'tcp');
 
 # Activate Winkey if needed.
 
-if (-r 'winkeydaemon.sh') {
-	system('sh winkeydaemon.sh');
-	sleep 1;
-}else {
-		my $wdialog2 = newwin(24,80,0,0);
-		attron($wdialog2, COLOR_PAIR(4));
-		addstr($wdialog2, 0, 0, " " x (24*80));
-		addstr($wdialog2, 0, 0, "Winkey configuration");
+&winkeyer();
 
-		addstr($wdialog2, 1, 0, "Do you have a winkeyer attached?");
-		my $choice='YES NO';
-		if (!$main::winkey) {
-#	    	$choice = 'NO_(There is not connection)';
-		}
-
-		$main::winkey = &chose(\$wdialog2, 1, 50, $choice);
-
-		if ($main::winkey =~ /NO/) {
-			$main::winkey = 0;
-		}
-		else {
-			$main::winkey = 1;
-
-		addstr($wdialog2, 5, 0 , "Winkey port:");
-		$tmp = &chose(\$wdialog2, 5, 20, '/dev/ttyS0 /dev/ttyS1 /dev/ttyUSB0
-		/dev/ttyUSB1 /dev/ttyUSB2 /dev/ttyUSB3');
-		$main::winkeypath = $tmp;
-		
-		open RIGFILE2, ">winkeydaemon.sh";
-		print RIGFILE2 ".\/winkeydaemon.pl -d ";
-		print RIGFILE2 $tmp."  ";
-		
-		close RIGFILE2;
-		system('sh winkeydaemon.sh');
-		sleep 1;
-		refresh($wdialog2);
-		}
-}
-
-
-our $cwspeed=20;
-
-our $cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
-PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
-or die "Cannot open socket for CWdaemon.\n";
+	$cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
+		PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
+		or die "Cannot open socket for CWdaemon.\n";
 
 print $cwsocket chr(27)."2$cwspeed";
 
+# Adjust scp if wanted/needed.
+
+if ($contest eq "ARRL-FD"){
+	close SCP;
+	open SCP, find_file("dummy.scp");
+	@scp = <SCP>;
+	$scp[1] = $scp[2] = '';
+	close SCP;
+}
 
 ##############################################################################
 # Actual logging starts here
@@ -432,19 +357,30 @@ print $cwsocket chr(27)."2$cwspeed";
 our $wmain = newwin(24,80,0,0);
 attron($wmain, COLOR_PAIR(3));
 addstr($wmain, 0,0, ' 'x(24*80));
+addstr($wmain, 23, 0, "     Logging Mode                         ALT-O or H: Help");
 refresh($wmain);
 
 our $wcheck = newwin(($contest eq 'DXPED' ? 10 : 7), 38,0,0);
 attron($wcheck, COLOR_PAIR(4));
 
 our $winfo = newwin(($contest eq 'DXPED' ? 3 : 6), 35, 
-		($contest eq 'DXPED' ?  11 : 8),0);
+	($contest eq 'DXPED' ?  11 : 8),0);
 attron($winfo, COLOR_PAIR(4));
 addstr($winfo, 0,0, ' 'x(6*35));
 refresh($winfo); 
-
+	
 our $wshowscore = newwin(10,21,14,59);
 our $wpartialcheck = newwin(9,40,0,39);
+
+if ($contest eq "ARRL-FD"){
+	$winfo = newwin(6,45,8,0);
+	attron($winfo, COLOR_PAIR(4));
+	addstr($winfo, 0,0, ' 'x(6*45));
+	refresh($winfo); 
+	
+	$wshowscore = newwin(10,21,14,59);
+	$wpartialcheck = newwin(7,40,0,39);
+}
 
 our $wrate = newwin(4, 16, 10, 62);
 attron($wrate, COLOR_PAIR(4));
@@ -469,7 +405,7 @@ my $ch='';
 
 
 halfdelay(1);
-while (1) {
+while (1) {								# begin main logging loop
 
 #		if (keys(%net_qso)) {
 #			&logqso(\%net_qso,\@qsos,\@validentry, $filename);
@@ -498,11 +434,11 @@ while (1) {
 		my $ch = &readakey(\$wmain, \%qso, $entryfields, \$activefield,
 				\$curpos, \@validchars, \@validentry);	
 
-		if ($ch ne 'ok') {		# some special key/function pressed
+		if ($ch ne 'ok') {					# some special key/function pressed
 			if (!$editnr && ($ch =~ /^(f\d|ins|esc|plus|pgup|pgdwn)$/)) {
 				&sendcw($ch);
 			}
-			elsif ($ch eq 'wipe') {								# Alt-W, F11
+			elsif ($ch eq 'wipe') {				# Alt-w, F11
 				&wipeqso(\%qso, \$curpos, \$activefield);
 			}
 			elsif ($ch eq 'help' || $ch eq 'rate') {	# alt-h alt-r
@@ -520,20 +456,21 @@ while (1) {
 				&rate(\$wrate, \@qsos);
 
 			}
-			elsif ($ch eq 'keyboard') {							# Alt-K
+			elsif ($ch eq 'keyboard') {			# Alt-k
 				&keyboardmode() if ($qso{'mode'} eq 'CW');
 			}
-			elsif ($ch eq 'cwmessages') {							# Alt-M
+			elsif ($ch eq 'cwmessages') {			# Alt-m
 				&editcwmessages(\$wcheck);
 			}
-			elsif ($ch eq 'log') {		# enter pressed
+#			elsif ($ch eq 'log' && !$dupe) {		# enter pressed
+			elsif (($ch eq 'log' && !$dupe) || ($ch eq 'override' && $dupe)) {		# enter pressed
 				&qsy(\%qso, \$curpos);	# check for: '20M', 'SSB', '21025' etc.
 
 				if ($qso{'call'} eq 'QUIT') {
 					endwin;
 					system ("killall -9 rigctld");
 					print $cwsocket chr(27)."5";
-					system ("killall -9 winkeydaemon_suse_snafu.pl");
+					system ("killall -9 winkeydaemon.pl");
 					print "Thanks for using YFKtest!\n";
 					exit;
 				}
@@ -557,24 +494,30 @@ while (1) {
 					}
 					&wipeqso(\%qso, \$curpos, \$activefield);
 				}
-				elsif ($editnr && &logeditqso()) {				# edit old QSO
+				elsif ($editnr && &logeditqso()) {	# edit old QSO
 					%{$qsos[$editnr-1]} = %qso;
-					$editnr = 0;							# XXX No rescoring
+					$editnr = 0;			# XXX No rescoring
 					%qso = %tmpqso;
 					delete $tmpqso{'call'};
-					addstr($wmain,23,0,"                                     ");
+#					addstr($wmain,23,0,"                                          ");
+					addstr($wmain,23,0,"     Logging Mode                         ");
 					&wipeqso(\%qso, \$curpos, \$activefield);
 				}
 				&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2,
 						\%s_dupes, $s_sum);
 				&rate(\$wrate, \@qsos);
 			}	# log
-			elsif ($ch eq 'up') {			# arrow up -> edit prev.
+			elsif ($ch eq 'up') {				# arrow up -> edit prev.
 				unless (defined($tmpqso{'call'})) {
 					%tmpqso = %qso;
 				}
 				
 				if ($editnr) {
+##					addstr($wmain,23,0,"Edit QSO $editnr. QSY: F1/2, Mode: F3          ");		# ...sigh
+					attron($wmain,COLOR_PAIR(6));
+					addstr($wmain,23,0,"Edit");		# ...sigh
+					attron($wmain,COLOR_PAIR(3));
+					addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
 					$editnr-- unless $editnr == 1;
 				}
 				else {
@@ -583,17 +526,24 @@ while (1) {
 				
 				%qso = %{$qsos[$editnr-1]} if (@qsos); 
 			}
-			elsif ($ch eq 'down') {			# arrow up -> edit prev.
+			elsif ($ch eq 'down') {				# arrow down -> edit prev.
 				next unless $editnr;
 				if ($editnr <= $#qsos) {
 						%qso = %{$qsos[$editnr]};
+##						addstr($wmain,23,0,"Edit QSO $editnr. QSY: F1/2, Mode: F3          ");	# ...sigh
+						attron($wmain,COLOR_PAIR(6));
+						addstr($wmain,23,0,"Edit");		# ...sigh
+						attron($wmain,COLOR_PAIR(3));
+						addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
 						$editnr++;
 				}
-				else {								# at last QSO
+				else {					# at last QSO
 						$editnr = 0;
-						%qso = %tmpqso;				# restore QSO
+						%qso = %tmpqso;		# restore QSO
 						delete $tmpqso{'call'};
-						addstr($wmain,23,0,"                                     ");
+						attron($wmain, COLOR_PAIR(3));
+#						addstr($wmain,23,0,"                                          ");
+						addstr($wmain,23,0,"     Logging Mode                         ");
 						&wipeqso(\%qso, \$curpos, \$activefield);
 				}
 			}
@@ -604,11 +554,21 @@ while (1) {
 			}
 		}
 
-		addstr($wmain,23,0,"Edit QSO $editnr. QSY: F1/2, Mode: F3") if $editnr;
+		if ($editnr){
+			attron($wmain,COLOR_PAIR(6));
+			addstr($wmain,23,0,"Edit");		# ...sigh
+			attron($wmain,COLOR_PAIR(3));
+			addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3");
+		}else{
+			addstr($wmain,23,0,"     Logging Mode                         ");
+		}
+##		attron($wmain, COLOR_PAIR(3));
+##		addstr($wmain,23,0,"Edit QSO $editnr. QSY: F1/2, Mode: F3") if $editnr;					# ...sigh
+###		addstr($wmain,23,0,"                                         ") if !$editnr;  	# NEEDED if addstr NOT added in $ch up (or down)
 		refresh($wmain);;
 
 
-}	# main loop
+}									# end main logging loop
 
 endwin();
 
@@ -622,11 +582,9 @@ sub load_subs {
 
 sub find_file {
 	my $file = shift;
-	if (-f "$file") {
-		# if it's in our local path, then use that
+	if (-f "$file") {						# if it's in our local path, then use that
 		return $file;
-	} elsif (-f "/usr/local/share/yfktest/$file") {
-		# else use the global installed version
+	} elsif (-f "/usr/local/share/yfktest/$file") {			# else use the global installed version
 		return "/usr/local/share/yfktest/$file";
 	} else {
 		print STDERR "Failed to find the needed file: '$file'\n";
