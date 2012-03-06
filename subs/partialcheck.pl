@@ -1,3 +1,6 @@
+# To update master.scp ->	1) Get new file: MASTER.SCP from www.supercheckpartial.com .
+#				2) Run this: sed 's/\r$//' MASTER.SCP > master.scp
+
 sub partialcheck {
 	my $window = $_[0];
 	my %qso = %{$_[1]};
