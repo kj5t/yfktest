@@ -1,0 +1,52 @@
+DO YOU WANT TO GET STARTED RIGHT AWAY - HERE'S WHY AND HOW TO DO THAT.
+
+
+WHY? -  O.K....so we ALL know the docs are for sissys and real guys
+	and gals just want to get started RIGHT NOW.... well here
+	is a suggested way to start having FUN immediately !
+
+
+HOW? - :
+
+1) Open a terminal window by pressing the keys below:
+
+	Ctrl+Alt+t	(The + is not typed, it means to hold the
+				keys down at the same time.)
+
+2) Then type the following lines, one at a time, at the prompt:
+			(be sure NOT type the "<enter>", that's the
+				name of the key you hit to enter the
+				line you just typed...)
+
+	mkdir logging/yfktest_svn/ <enter> 
+	cd logging/yfktest_svn/ <enter>
+	svn checkout svn://dl0tud.tu-dresden.de/yfk/yfktest/trunk <enter>
+	cd trunk <enter>
+
+3) Next it is STRONGLY recommended that you use the sample configuration:
+			*** Make sure the '.' (dot) is before "yfktest"
+				or you will overwrite the program file !!
+
+	cp -a config.yfktest.sample .yfktest <enter> 
+
+4) Then to run the program the first time:
+
+	./yfktest <enter>
+
+
+OOPS - :
+
+*  IF the "svn checkout..." line didn't work then you need to install the
+		subversion/svn package.
+** IF yfktest does not work:
+
+	- Did you forget to put the leading dot in front of the cp command
+		in step no.3 ? You get to start over !!! (Hey Hey...)
+
+	- Did you not type step 4 EXACTLY ?
+
+	- You might need to installed the perl INET module. See the
+		ARRL-FD-HOW-TO.txt documentation file for more info.
+
+
+Created: 06-Mar.-12 - Bob, w9ya
