@@ -46,7 +46,8 @@ OOPS - :
 	- Did you not type step 4 EXACTLY ?
 
 	- You might need to installed the perl INET module. See the
-		ARRL-FD-HOW-TO.txt documentation file for more info.
+		ARRL-FD-HOW-TO.txt file located in the docs/ folder
+		for more info.
 
 
 Created: 06-Mar.-12 - Bob, w9ya
