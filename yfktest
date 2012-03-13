@@ -35,14 +35,14 @@ our $VERSION="0.0.10";
 
 our $hashamlib = eval { require Hamlib };
 if ($hashamlib) {
-	import Hamlib;							# Import the needed symbols if we loaded it ok.
+	import Hamlib;									# Import the needed symbols if we loaded it ok.
 }
 
-our $hamlibsock; 							# initialized later, if needed.
+our $hamlibsock; 									# initialized later, if needed.
 our $hamlibrigd;
 our $cwsocket;
 
-our $netname = "STN1";							# will be overridden later by found path
+our $netname = "STN1";									# will be overridden later by found path
 our $contestpath = "defs/";
 
 load_subs("newcontest.pl");
@@ -81,31 +81,31 @@ load_subs("colorinfo.pl");
 
 our $version = "0.0.10";
 
-our ($contest,								# definition file: defs/$contest.def
-	$filename,							# of this current contest log
+our ($contest,										# definition file: defs/$contest.def
+	$filename,									# of this current contest log
 	$mycall,
-	$assisted,							# for cabrillo log
+	$assisted,									# for cabrillo log
 	$bands,				
 	$modes,	
 	$operator,
 	$power,
 	$transmitter);
 
-our $entryfields = 1;							# contest dependant
+our $entryfields = 1;									# contest dependant
 our $activefield = 'call';
 
 our $tabnextfield = 0;
 
-our $cabrilloline='no cabrillo format defined!';			# printf-string for the cabrillo output
+our $cabrilloline='no cabrillo format defined!';					# printf-string for the cabrillo output
 our $cabrillovalues='band date utc ...';
 our $cabrilloname='CONTEST-NAME';
 
 our ($exc1len, $exc2len, $exc3len, $exc4len) = (4,4,4,4);
 
-our $fixexchange='';							# fixed exchange like in IOTA, ITU etc.
-									# contains which exchange will be fixed, i.e. exc1, 2..
-our $fixexchangename='';						# what to ask the user for, like "IOTA-Ref:"?
-our $exc1s = '';							# actual value of the fixed exchange value
+our $fixexchange='';									# fixed exchange like in IOTA, ITU etc.
+											# contains which exchange will be fixed, i.e. exc1, 2..
+our $fixexchangename='';								# what to ask the user for, like "IOTA-Ref:"?
+our $exc1s = '';									# actual value of the fixed exchange value
 our $exc2s = '';
 
 our $tmp='';
@@ -114,18 +114,19 @@ our $counter=0;
 our $counter1=0;
 my $curpos = 0;
 
-our $lastguessed = '';							# For guessexchange, only consider every callsign once, save in $lastguessed
-our %guesshash = ();							# A hash for use with guessexchange, for example "callsign -> State"
+our $lastguessed = '';									# For guessexchange-only consider every callsign once & saved
+our %guesshash = ();									# A hash for use with guessexchange, i.e. "callsign -> State"
 
-our @validchars = ('[0-9A-Za-z]', '', '', '');				# Valid characters for the 4 entry fields  (will be read from def file)
-our @validentry = ('.+', '', '', '');					# Valid complete entries that can be logged (will be read from def file)
+our @validchars = ('[0-9A-Za-z]', '', '', '');						# Valid characters for the 4 entry fields-(read from def file)
+our @validentry = ('.+', '', '', '');							# Valid complete entries that can be logged 
+											# (will be read from def file)
 
 
-my $oldcall='';								# check if call was changed. otherwise no PC/SCP
+my $oldcall='';										# check if call was changed. otherwise no PC/SCP
 
-our $editnr=0;								# the QSO which is currently being edited (if any),
-									# 0 = no QSO being edited, normal operation
-my $oldeditnr = 0;							# we have to check if it changes now and then
+our $editnr=0;										# the QSO which is currently being edited (if any),
+											# 0 = no QSO being edited, normal operation
+my $oldeditnr = 0;									# we have to check if it changes now and then
 
 our $nologdupe=0;
 our $dupe=0;
@@ -153,8 +154,8 @@ our $s_sum = 0;
 our ($defmult1, $defmult2, $defqsopts);
 
 
-our @qsos;								# Array of hashes with single QSOs.
-#our @net_qsos : shared;						# Array of hashes with single QSOs received over the net
+our @qsos;										# Array of hashes with single QSOs.
+#our @net_qsos : shared;								# Array of hashes with single QSOs received over the net
 
 our @cwmessages  = ('');
 
@@ -164,13 +165,13 @@ our @scp = <SCP>;
 $scp[1] = $scp[2] = '';
 close SCP;
 
-our %qso = (								# The current QSO
+our %qso = (										# The current QSO
 		'nr' => 1,
 		'utc' => '',
 		'date' => '20070101',
 		'call' => '',
 		'rst' => '599',
-		'excs' => '',						# sent exchange
+		'excs' => '',								# sent exchange
 		'exc1' => '',
 		'exc2' => '',
 		'exc3' => '',
@@ -183,9 +184,9 @@ our %qso = (								# The current QSO
 
 # our %net_qso : shared = ();
 
-our %tmpqso;								# current Q will be saved here while editing prev QSOs
+our %tmpqso;										# current Q will be saved here while editing prev QSOs
 
-our $mycont='EU';							# Will change these two variables later as needed.
+our $mycont='EU';									# Will change these two variables later as needed.
 our $mydxcc='DL';
 
 ###############################################################################
@@ -229,7 +230,7 @@ colorscheme=2  # 0 is default & 1,2,or 3 are new window colors.";
 
 getch();
 
-readconfigfile();							# Look for ~/.yfktest config file...
+readconfigfile();									# Look for ~/.yfktest config file...
 
 # Select the color scheme...
 
@@ -242,7 +243,7 @@ unless ($ARGV[0]) {
 	($contest, $filename, $mycall, $assisted, $bands, $modes, $operator,
 			 $power, $transmitter) = &newcontest($mycall);
 
-	 if ($contest eq '0') {		# No new contest, open a file
+	 if ($contest eq '0') {								# No new contest, open a file
 			$filename = &filebrowser();
 	 }
 }
@@ -266,9 +267,9 @@ if ($ARGV[0] || ($contest eq '0')) {
 #				printw "\n\n$filename is not a valid contest log! Press *any* key to exit.\n";
 				printw "Its' not a valid contest log! Press *any* key to exit.\n";
 				getch; endwin; exit;
-			} else {					# Read log OK, now rescore!
+			} else {							# Read log OK, now rescore!
 
-					&readrules($contest);		# read the rules and fill neccessary variables...
+					&readrules($contest);				# read the rules and fill neccessary variables...
 
 					if ($tmp) {
 						if ($fixexchange eq 'exc1s') {
@@ -405,7 +406,7 @@ my $ch='';
 
 
 halfdelay(1);
-while (1) {								# begin main logging loop
+while (1) {										# begin main logging loop
 
 #		if (keys(%net_qso)) {
 #			&logqso(\%net_qso,\@qsos,\@validentry, $filename);
@@ -434,19 +435,19 @@ while (1) {								# begin main logging loop
 		my $ch = &readakey(\$wmain, \%qso, $entryfields, \$activefield,
 				\$curpos, \@validchars, \@validentry);	
 
-		if ($ch ne 'ok') {					# some special key/function pressed
+		if ($ch ne 'ok') {							# some special key/function pressed
 			if (!$editnr && ($ch =~ /^(f\d|ins|esc|plus|pgup|pgdwn)$/)) {
 				&sendcw($ch);
 			}
-			elsif ($ch eq 'wipe') {				# Alt-w, F11
+			elsif ($ch eq 'wipe') {						# Alt-w, F11
 				&wipeqso(\%qso, \$curpos, \$activefield);
 			}
-			elsif ($ch eq 'help' || $ch eq 'rate') {	# alt-h alt-r
+			elsif ($ch eq 'help' || $ch eq 'rate') {			# alt-h alt-r
 
 				if ($ch eq 'help') { &showhelp(); }
 				else { &rategraph(); }
 
-				touchwin($wmain);			# Restore Screen etc.
+				touchwin($wmain);					# Restore Screen etc.
 				touchwin($wrate);
 				&displaylog(\$wmain, \@qsos, 0);
 				&partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
@@ -456,13 +457,13 @@ while (1) {								# begin main logging loop
 				&rate(\$wrate, \@qsos);
 
 			}
-			elsif ($ch eq 'keyboard') {			# Alt-k
+			elsif ($ch eq 'keyboard') {					# Alt-k
 				&keyboardmode() if ($qso{'mode'} eq 'CW');
 			}
-			elsif ($ch eq 'cwmessages') {			# Alt-m
+			elsif ($ch eq 'cwmessages') {					# Alt-m
 				&editcwmessages(\$wcheck);
 			}
-#			elsif ($ch eq 'log' && !$dupe) {		# enter pressed
+#			elsif ($ch eq 'log' && !$dupe) {				# enter pressed
 			elsif (($ch eq 'log' && !$dupe) || ($ch eq 'override' && $dupe)) {		# enter pressed
 				&qsy(\%qso, \$curpos);	# check for: '20M', 'SSB', '21025' etc.
 
@@ -507,15 +508,14 @@ while (1) {								# begin main logging loop
 						\%s_dupes, $s_sum);
 				&rate(\$wrate, \@qsos);
 			}	# log
-			elsif ($ch eq 'up') {				# arrow up -> edit prev.
+			elsif ($ch eq 'up') {						# arrow up -> edit prev.
 				unless (defined($tmpqso{'call'})) {
 					%tmpqso = %qso;
 				}
 				
 				if ($editnr) {
-##					addstr($wmain,23,0,"Edit QSO $editnr. QSY: F1/2, Mode: F3          ");		# ...sigh
 					attron($wmain,COLOR_PAIR(6));
-					addstr($wmain,23,0,"Edit");		# ...sigh
+					addstr($wmain,23,0,"Edit");			# ...sigh
 					attron($wmain,COLOR_PAIR(3));
 					addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
 					$editnr-- unless $editnr == 1;
@@ -526,20 +526,19 @@ while (1) {								# begin main logging loop
 				
 				%qso = %{$qsos[$editnr-1]} if (@qsos); 
 			}
-			elsif ($ch eq 'down') {				# arrow down -> edit prev.
+			elsif ($ch eq 'down') {						# arrow down -> edit prev.
 				next unless $editnr;
 				if ($editnr <= $#qsos) {
 						%qso = %{$qsos[$editnr]};
-##						addstr($wmain,23,0,"Edit QSO $editnr. QSY: F1/2, Mode: F3          ");	# ...sigh
 						attron($wmain,COLOR_PAIR(6));
 						addstr($wmain,23,0,"Edit");		# ...sigh
 						attron($wmain,COLOR_PAIR(3));
 						addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
 						$editnr++;
 				}
-				else {					# at last QSO
+				else {							# at last QSO
 						$editnr = 0;
-						%qso = %tmpqso;		# restore QSO
+						%qso = %tmpqso;				# restore QSO
 						delete $tmpqso{'call'};
 						attron($wmain, COLOR_PAIR(3));
 #						addstr($wmain,23,0,"                                          ");
@@ -556,19 +555,21 @@ while (1) {								# begin main logging loop
 
 		if ($editnr){
 			attron($wmain,COLOR_PAIR(6));
-			addstr($wmain,23,0,"Edit");		# ...sigh
+			addstr($wmain,23,0,"Edit");					# ...sigh
 			attron($wmain,COLOR_PAIR(3));
 			addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3");
 		}else{
+			attron($wmain,COLOR_PAIR(3));
 			addstr($wmain,23,0,"     Logging Mode                         ");
+			if ($dupe){
+				attron($wmain,COLOR_PAIR(6));
+				addstr($wmain,23,18,"DUPE");				# ...sigh
+			}
 		}
-##		attron($wmain, COLOR_PAIR(3));
-##		addstr($wmain,23,0,"Edit QSO $editnr. QSY: F1/2, Mode: F3") if $editnr;					# ...sigh
-###		addstr($wmain,23,0,"                                         ") if !$editnr;  	# NEEDED if addstr NOT added in $ch up (or down)
 		refresh($wmain);;
 
 
-}									# end main logging loop
+}											# end main logging loop
 
 endwin();
 
@@ -582,9 +583,9 @@ sub load_subs {
 
 sub find_file {
 	my $file = shift;
-	if (-f "$file") {						# if it's in our local path, then use that
+	if (-f "$file") {								# if it's in our local path, then use that
 		return $file;
-	} elsif (-f "/usr/local/share/yfktest/$file") {			# else use the global installed version
+	} elsif (-f "/usr/local/share/yfktest/$file") {					# else use the global installed version
 		return "/usr/local/share/yfktest/$file";
 	} else {
 		print STDERR "Failed to find the needed file: '$file'\n";
