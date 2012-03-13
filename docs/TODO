@@ -26,6 +26,17 @@ Get Fabian ready for a 0.0.10 release !!
 
 WISH-LIST (Long term ideas):
 
+Make "DEFS_HOW_TO" (plus template?) (requested by Jeff, KA1DBE)
+Consider method to add more to defs whiel still allowing current style def files.
+VA-QSO-Party rules for scoring and cabrillo submissions brings out four issues;
+..... yfktest dupes are strictly based on callsign field YET VA-QSO considers a dupe based on
+		band-mode-county. Many other logging programs suggests adding /??? for county
+		to allow for dupes logging since they are not dupes, ** yfktest does not need this
+..... Call check window will ONLY show the last band-mode dupe...yet there can be more than one
+		since this contest is structured as band-mode-county = dupe
+..... Multiple of 3 are NOT allowed for mobile station but ONLY for the contact WITH the mobile..
+..... Multiples are not scored per band-mode.
+************** Thanks to Jeff, KA1DBE (user) and Dick, W2YE ... VA-QSO Rules Comittee Member.
 DXPED logging uses different colors and info in the summary window...
 ...incorporate similar scoring window for ARRL-FD yet still have mults correctly calculated.
 Finish removing rig control & winkeyer setups 2 sub-directory/ i.e. references to TWO file
