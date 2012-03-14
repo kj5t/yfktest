@@ -13,6 +13,9 @@ Installing under Ubuntu 10.10 (or 11.04 using the "classic"(gnome) login);
 	- IF you want to use the winkeyer interface you will need to also
 		install this package;
                 	libio-socket-inet6-perl
+****	(As of 11.10 libcurses-perl MAY not be installed as default. SO;
+		- Install the libcurses-perl package, if the program complains
+			about lack of colors or ability to run.)
 	- Open up a terminal by;
                 typing Ctrl+Alt+t (the plus symbol means you press all of the
 			keys the same time)
@@ -142,3 +145,4 @@ Helpful suggestions;
 
 updated 20 June 2011 by Bob, w9ya
 updated 29 Feb  2012 by Bob, w9ya
+updated 13 Mar  2012 by Bob, w9ya
