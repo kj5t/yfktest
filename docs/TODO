@@ -3,9 +3,13 @@ YFKtest TODO list (feel free to add things!)
 
 
 As of 29 Feb. 2012 - w9ya
+(A few additions as of 22 Mar. 2012 - w9ya)
 
 TO-DO (Before next release):
 
+Refresh ALL the upper windows: specifically the wildcard window the (cty/scp/sections), i.e.
+	not being refreshed when backing/coming-out of rate or halp screens.
+		P.S.....Refresh CALL/LOG INFO window in the upper left aftr cw-message editing.
 .......... ARRL-FD seems to replace "NR" as '5?' .
 .......... Winkey set-up screen needs info on which keys to use, perhaps status (red line 23 ?)
 ..........   "      "    - Are the selections themselves properly declared ?
