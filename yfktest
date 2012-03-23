@@ -455,6 +455,7 @@ while (1) {										# begin main logging loop
 				&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2, 
 						\%s_dupes, $s_sum);
 				&rate(\$wrate, \@qsos);
+				&callinfo();
 
 			}
 			elsif ($ch eq 'keyboard') {					# Alt-k
@@ -462,9 +463,10 @@ while (1) {										# begin main logging loop
 			}
 			elsif ($ch eq 'cwmessages') {					# Alt-m
 				&editcwmessages(\$wcheck);
+				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 			}
 #			elsif ($ch eq 'log' && !$dupe) {				# enter pressed
-			elsif (($ch eq 'log' && !$dupe) || ($ch eq 'override' && $dupe)) {		# enter pressed
+			elsif (($ch eq 'log' && (!$nologdupe or !$dupe)) || ($ch eq 'override' && $dupe)){
 				&qsy(\%qso, \$curpos);	# check for: '20M', 'SSB', '21025' etc.
 
 				if ($qso{'call'} eq 'QUIT') {
@@ -564,6 +566,16 @@ while (1) {										# begin main logging loop
 			if ($dupe){
 				attron($wmain,COLOR_PAIR(6));
 				addstr($wmain,23,18,"DUPE");				# ...sigh
+			}
+			if ($qso{'mode'} eq 'CW') {
+				attron($wmain,COLOR_PAIR(3));
+#				addstr($wmain, 21, 0, "F1=CQ F2=EXC F3=TU F4=CALL F5=HIS F6=NR? F7=? F8=73 F9=SRI");
+				addstr($wmain, 21, 0, "F1=CQ F2=EXC F3=TU F4=CALL F5=HIS F6=NR? F7=?");
+			}
+			else{
+				attron($wmain,COLOR_PAIR(3));
+#				addstr($wmain, 21, 0, "                                                          ");
+				addstr($wmain, 21, 0, "                                             ");
 			}
 		}
 		refresh($wmain);;
