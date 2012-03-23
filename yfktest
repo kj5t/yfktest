@@ -451,10 +451,12 @@ while (1) {										# begin main logging loop
 				touchwin($wrate);
 				&displaylog(\$wmain, \@qsos, 0);
 				&partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
-				&checkcall(\$wcheck, \@qsos, $qso{'call'});
+#				&checkcall(\$wcheck, \@qsos, $qso{'call'});
+				&checkcall(\$wcheck, \@qsos, 'blabla');
 				&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2, 
 						\%s_dupes, $s_sum);
 				&rate(\$wrate, \@qsos);
+				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 				&callinfo();
 
 			}
@@ -463,6 +465,7 @@ while (1) {										# begin main logging loop
 			}
 			elsif ($ch eq 'cwmessages') {					# Alt-m
 				&editcwmessages(\$wcheck);
+				&checkcall(\$wcheck, \@qsos, 'blabla');
 				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 			}
 #			elsif ($ch eq 'log' && !$dupe) {				# enter pressed
@@ -568,9 +571,11 @@ while (1) {										# begin main logging loop
 				addstr($wmain,23,18,"DUPE");				# ...sigh
 			}
 			if ($qso{'mode'} eq 'CW') {
-				attron($wmain,COLOR_PAIR(3));
+				attron($wmain,COLOR_PAIR(2));
+				attron($wmain,A_BOLD);
 #				addstr($wmain, 21, 0, "F1=CQ F2=EXC F3=TU F4=CALL F5=HIS F6=NR? F7=? F8=73 F9=SRI");
 				addstr($wmain, 21, 0, "F1=CQ F2=EXC F3=TU F4=CALL F5=HIS F6=NR? F7=?");
+				attroff($wmain,A_BOLD);
 			}
 			else{
 				attron($wmain,COLOR_PAIR(3));
