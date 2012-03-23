@@ -6,7 +6,7 @@ sub dupecheck {
 	my %qso = %{$_[1]};
 	my $qsoref = $_[2];
 
-	addstr($$window, 23, 18, "    ");
+#	addstr($$window, 23, 18, "    ");
 
 	foreach (@{$qsoref}) {
 	
@@ -16,8 +16,7 @@ sub dupecheck {
 
  					attron($$window, COLOR_PAIR(6));
 					addstr($$window, 23, 18, "DUPE");
-					if ($nologdupe){
-						$dupe=1;}
+					$dupe=1;
 					last;
 			}
 			else {
