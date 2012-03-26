@@ -1,3 +1,20 @@
+0.0.10-svn /    As of 25 Mar. 2012  - Bob, w9ya <w9ya@amsat.org>
+
+CHANGES;
+
+1st (startup) screen NOW has live config file data (+ config file locations.)
+*New* CQWW files are included.
+Refreshing: ALL the upper windows: specifically the wildcard window the (cty/scp/sections), i.e.
+        was not being refreshed when backing/coming-out of rate or help screens.
+Refreshing: CALL/LOG INFO window in the upper left aftr cw-message editing.
+CW memories v/v Function keys (nature of content ala defs/log files) shown ALL the time on screen.
+        if the new config 'showmsgkeys' selected via the config file.
+Added info abt "enter" key to cycle thru & put on line 23 (ala alt-k mode) 4 alt-m mode.
+Line 21 and 23 (status lines) re-worked for consistent behavior.
+Rig-control will/should NOW not cause the program to die if selected but the rig is off-line.
+F8 and F9 now contain '73' and 'SRI WRK B4' for cw memories.
+
+
 0.0.10-svn /    As of 29 Feb. 2012  - Bob, w9ya <w9ya@amsat.org>
 
 CHANGES:
