@@ -6,10 +6,19 @@ sub rigctld {
 	my $freq='';
 	my $mode='';
 
+	if (!$main::hamlibsock) {
+		attron($wmain,COLOR_PAIR(2));
+		attron($wmain,A_BOLD);
+		addstr($wmain, 23, 32, "No Rig ATM");		# XXX maybe try to reconnect?
+#		$freq="28.000";					# code for testing placement\
+#		addstr($wmain, 23, 32, "$freq MHz");		# when no rig is connected
+		attroff($wmain,A_BOLD);
+		attroff($wmain,COLOR_PAIR(2));
+		return 0;					
+	}
+
+
 	if ($band eq 'get') {
-			if (!$main::hamlibsock) {
-				return 0;					# XXX maybe try to reconnect?
-			}
 
 		    print $main::hamlibsock "f\n";
 		    $freq = <$main::hamlibsock>;
@@ -37,7 +46,11 @@ sub rigctld {
 		
 		$freq /= 1000000;
 		
-addstr($wmain, 23, 40, "$freq MHz      ");
+		attron($wmain,COLOR_PAIR(2));
+		attron($wmain,A_BOLD);
+		addstr($wmain, 23, 32, "$freq MHz");
+		attroff($wmain,A_BOLD);
+		attroff($wmain,COLOR_PAIR(2));
 
 		$main::qso{'freq'} = $freq;
 		
@@ -60,6 +73,7 @@ addstr($wmain, 23, 40, "$freq MHz      ");
 		$main::qso{'mode'} = $mode;# unless ($main::qso{'mode'} eq 'RTTY');
 	} #get
 	else {	# set band or mode
+
 		if ($band =~ /SSB|FM|CW|RTTY/) {
 
 			$mode = '';
