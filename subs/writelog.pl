@@ -279,10 +279,13 @@ sub writelog {
 		close SUM;
 
 	curs_set(0);
-	addstr($main::wmain, 23,18, "Files written...");
+	attron($main::wmain, COLOR_PAIR(6));
+	addstr($main::wmain, 23,18, "Files written");
 	refresh($main::wmain);
-	sleep 1;
-	addstr($main::wmain, 23,18, "                ");
+#	sleep 1;
+	sleep 2;
+	attroff($main::wmain, COLOR_PAIR(6));
+	addstr($main::wmain, 23,18, "             ");
 	refresh($main::wmain);
 
 	return 1;
