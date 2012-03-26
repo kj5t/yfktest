@@ -4,7 +4,9 @@ sub keyboardmode {
 		my $ch;
 
 		curs_set(0);
-		addstr($main::wmain, 23, 5, "KEYBOARD MODE. ESC/ALT-K TO RETURN.");
+#		addstr($main::wmain, 23, 5, "KEYBOARD MODE. ESC/ALT-K TO RETURN.");
+		attron($main::wmain, COLOR_PAIR(6));
+		addstr($main::wmain, 23, 0, "  CW-Keyboard mode - ESC: Quit  ");
 		refresh($main::wmain);
 
 		while (1) {
@@ -15,7 +17,8 @@ sub keyboardmode {
 			print $main::cwsocket "\U$ch";
 		} 
 		
-		addstr($main::wmain, 23, 5, "                                   ");
+		attroff($main::wmain, COLOR_PAIR(6));
+		addstr($main::wmain, 23, 0, "                                ");
 		curs_set(1);
 }
 
