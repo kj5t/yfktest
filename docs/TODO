@@ -7,6 +7,7 @@ As of 29 Feb. 2012 - w9ya
 (And a few deletions !!! as of 25 Mar. 2012 - w9ya)
 
 TO-DO (Before next release):
+Cabrillo file write requires "3.0" instead of "3" . (As per Jeff-KA1DBE's note about robots et al)
 
 .......... ARRL-FD seems to replace "NR" as '5?' .
 .......... Winkey set-up screen needs info on which keys to use, perhaps status (red line 23 ?)
