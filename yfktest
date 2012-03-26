@@ -158,7 +158,7 @@ our @qsos;										# Array of hashes with single QSOs.
 #our @net_qsos : shared;								# Array of hashes with single QSOs received over the net
 
 our @cwmessages  = ('');
-
+our $showmsgkeys = 0;
 
 open SCP, find_file("master.scp");
 our @scp = <SCP>;
@@ -211,13 +211,12 @@ certain conditions (see the file name COPYING in the docs folder).
 
 
 ***********  FIRST - Make sure the caps lock is NOT on.
-***********  SECOND - Remember to exit immediately hit ctrl+c .
+***********  SECOND - To exit immediately press the ctrl+c keys.
 ***********  THEN - Press the ENTER key to continue this program.
 
-
-NOTE: You can add a config file named .yfktest, located in your
-home directory or here, containing any of the following lines:
-(* Include ONLY one item & its' value, per line & NOTHING else !)  
+NOTE: You can add a config file named .yfktest, located either in
+your home directory or here, containing any of the following lines:
+(* Include ONLY one item & its' value, per line, & NOTHING else !)  
 
 CONFIG         # Reserved for future usage.
 mycall=N0CALL  # Enter your actual callsign for automatic usage.
@@ -226,7 +225,8 @@ winkey=0       # Turns off usage of the winkeyer software & config.
 tabnextfield=1 # Turns off 'snap to call'. It now work = spacebar.
 cwspeed=24     # Defaults to 24 wpm. Can be set to another value.
 nologdupe=1    # Prevents default dupe logging. Alt-L will override.
-colorscheme=2  # 0 is default & 1,2,or 3 are new window colors.";
+colorscheme=2  # 0 is default & 1,2,or 3 = new window color schemes.
+showmsgkeys=1  # Enables showing what the F-key send during cw mode.";
 
 getch();
 
@@ -341,6 +341,11 @@ if ($modes eq 'SSB') {
 
 print $cwsocket chr(27)."2$cwspeed";
 
+# Add "secret" F8 and F9 CW-Messages.
+
+$cwmessages[7] = '73';
+$cwmessages[8] = 'SRI WRK B4';
+
 # Adjust scp if wanted/needed.
 
 if ($contest eq "ARRL-FD"){
@@ -358,7 +363,7 @@ if ($contest eq "ARRL-FD"){
 our $wmain = newwin(24,80,0,0);
 attron($wmain, COLOR_PAIR(3));
 addstr($wmain, 0,0, ' 'x(24*80));
-addstr($wmain, 23, 0, "     Logging Mode                         ALT-O or H: Help");
+addstr($wmain, 23, 0, "     Logging Mode                            ALT-o/h: Help ");
 refresh($wmain);
 
 our $wcheck = newwin(($contest eq 'DXPED' ? 10 : 7), 38,0,0);
@@ -465,6 +470,7 @@ while (1) {										# begin main logging loop
 			}
 			elsif ($ch eq 'cwmessages') {					# Alt-m
 				&editcwmessages(\$wcheck);
+				addstr($wmain, 23, 0, "     Logging Mode                            ALT-o/h: Help ");
 				&checkcall(\$wcheck, \@qsos, 'blabla');
 				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 			}
@@ -565,22 +571,21 @@ while (1) {										# begin main logging loop
 			addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3");
 		}else{
 			attron($wmain,COLOR_PAIR(3));
-			addstr($wmain,23,0,"     Logging Mode                         ");
+			addstr($wmain,23,0,"     Logging Mode               ");
 			if ($dupe){
 				attron($wmain,COLOR_PAIR(6));
 				addstr($wmain,23,18,"DUPE");				# ...sigh
 			}
-			if ($qso{'mode'} eq 'CW') {
+			if ($qso{'mode'} eq 'CW' && $showmsgkeys) {
 				attron($wmain,COLOR_PAIR(2));
 				attron($wmain,A_BOLD);
-#				addstr($wmain, 21, 0, "F1=CQ F2=EXC F3=TU F4=CALL F5=HIS F6=NR? F7=? F8=73 F9=SRI");
-				addstr($wmain, 21, 0, "F1=CQ F2=EXC F3=TU F4=CALL F5=HIS F6=NR? F7=?");
+				addstr($wmain, 21, 0, "F1=CQ F2=EXC F3=TU F4=CALL F5=HIS F6=NR? F7=? F8=73s F9=SRI");
 				attroff($wmain,A_BOLD);
+				attroff($wmain,COLOR_PAIR(2));
 			}
 			else{
 				attron($wmain,COLOR_PAIR(3));
-#				addstr($wmain, 21, 0, "                                                          ");
-				addstr($wmain, 21, 0, "                                             ");
+				addstr($wmain, 21, 0, "                                                           ");
 			}
 		}
 		refresh($wmain);;
