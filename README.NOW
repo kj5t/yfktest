@@ -45,9 +45,10 @@ OOPS - :
 
 	- Did you not type step 4 EXACTLY ?
 
-	- You might need to installed the perl INET module. See the
-		ARRL-FD-HOW-TO.txt file located in the docs/ folder
-		for more info.
+	- You might need to installed the perl INET module, curses, and possibly
+		the strict PERL modules. If you are running Ubuntu-linux please
+		see the ARRL-FD-HOW-TO.txt file located in the docs/ folder
+		for more specific info.
 
 *** yfktest starts but acts strangely, shows an error message &/or quits.
 
@@ -56,3 +57,5 @@ OOPS - :
 
 Created: 06-Mar.-12 - Bob, w9ya
 Updated: 22-Mar.-12 - Bob, w9ya
+Updated: 25-Mar.-12 - Bob, w9ya
+
