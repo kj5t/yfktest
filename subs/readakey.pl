@@ -130,6 +130,12 @@ sub readakey {
 	elsif ($ch eq KEY_F(7)) {
 		return 'f7';
 	}
+	elsif ($ch eq KEY_F(8)) {
+		return 'f8';
+	}
+	elsif ($ch eq KEY_F(9)) {
+		return 'f9';
+	}
 	elsif ($ch eq KEY_IC) {
 		return 'ins';
 	}
