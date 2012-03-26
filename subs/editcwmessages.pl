@@ -34,7 +34,7 @@ sub editcwmessages {
 	} until (($ch =~ /\s+/) || (ord ($ch) == 27));
 
 	if (ord ($ch) == 27){
-		addstr($main::wmain, 23, 0, "     Logging Mode                         Alt-O or H: Help ");
+#		addstr($main::wmain, 23, 0, "     Logging Mode                         Alt-O or H: Help ");
 		curs_set(1);
 		return;
 	}
@@ -90,7 +90,7 @@ sub editcwmessages {
 	} until (($ch =~ /\n/) || (ord ($ch) == 27));
 
 	if (ord ($ch) == 27){
-		addstr($main::wmain, 23, 0, "     Logging Mode                         Alt-O or H: Help ");
+#		addstr($main::wmain, 23, 0, "     Logging Mode                         Alt-O or H: Help ");
 		curs_set(1);
 		return;
 	}
@@ -109,7 +109,7 @@ sub editcwmessages {
 
 	$main::cwmessages[$aline] = $message;
 
-	addstr($main::wmain, 23, 0, "     Logging Mode                         Alt-O or H: Help ");
+#	addstr($main::wmain, 23, 0, "     Logging Mode                         Alt-O or H: Help ");
 	curs_set(1);
 
 }
