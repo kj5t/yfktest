@@ -32,6 +32,9 @@ sub readconfigfile {
 		elsif ($line =~ /colorscheme=(.+)/) {
 			$main::colorscheme = $1;
 		}
+		elsif ($line =~ /showmsgkeys=(.+)/) {
+			$main::showmsgkeys = $1;
+		}
 	}
 
 	close CONF;
