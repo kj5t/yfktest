@@ -48,6 +48,11 @@ Finish removing rig control & winkeyer setups 2 sub-directory/ i.e. references t
 Show qso-in-log blacked-out /t same aftr. as b4 going into rate or help screens from EDIT mode.
 Consider having section info in ARRL-FD (for instance) color in sections worked.
 
+QSO # in Edit mode line 23 info is not anchored. (Should this be 3 or 4 positions ?) and this
+	will cause problems both in last logged qso and earlier qso edits. Issue shows up with
+	refreshing to remove 'INVALID!' and possibly other stuff (like the rig's communicated
+	freq. display).
+
 (Fix file select screens to kill working screen before asking for exit on bad file selection.)
 ... and/OR (& IF POSSIBLE) move all the log files into a separate directory for cleaner selection.
 ** IF POSSIBLE; get working atl-H & O (uppercase) in case caps lock is on & help screen is needed.
