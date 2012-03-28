@@ -14,7 +14,8 @@ sub logqso {
 
 	# check validity of this QSO
 	if (
-			($qso{'call'} =~ /[A-Z0-9][A-Z0-9][A-Z]/) &&
+#			($qso{'call'} =~ /[A-Z0-9][A-Z0-9][A-Z]/) &&			# Not so good
+			($qso{'call'} =~ /[A-Z0-9][0-9][A-Z]/) &&			# Better (not "best")
 			($qso{'exc1'} =~ /^$validentry[0]$/) &&
 			($qso{'exc2'} =~ /^$validentry[1]$/) &&
 			($qso{'exc3'} =~ /^$validentry[2]$/) &&
@@ -59,9 +60,15 @@ sub logqso {
 #			print $main::netsocket "YFK:$logline";
 #		}
 
+#		$invalid = 0;
 		return 1;
 	}
+	elsif ($qso{'call'} eq '') {
+		$invalid = 0;
+		return 0;
+	}	
 	else {
+		$invalid = 1;
 		return 0;
 	}
 
@@ -75,14 +82,15 @@ sub logeditqso {
 		my @validentry = @main::validentry;
 
 		unless (
-				($qso{'call'} =~ /[A-Z0-9][A-Z0-9][A-Z]/) &&
+#				($qso{'call'} =~ /[A-Z0-9][A-Z0-9][A-Z]/) &&		# Not so good
+				($qso{'call'} =~ /[A-Z0-9][0-9][A-Z]/) &&		# Better (not "best")
 				($qso{'exc1'} =~ /^$validentry[0]$/) &&
 				($qso{'exc2'} =~ /^$validentry[1]$/) &&
 				($qso{'exc3'} =~ /^$validentry[2]$/) &&
 				($qso{'exc4'} =~ /^$validentry[3]$/)
 		) {
 			attron($main::wmain, COLOR_PAIR(6));
-			addstr($main::wmain,23,32, " Invalid! ");
+			addstr($main::wmain,23,35, " Invalid! ");
 			attroff($main::wmain, COLOR_PAIR(6));
 			return 0;
 		}
