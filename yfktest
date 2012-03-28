@@ -130,6 +130,7 @@ my $oldeditnr = 0;									# we have to check if it changes now and then
 
 our $nologdupe=0;
 our $dupe=0;
+our $invalid=0;										# callsign validation variable
 
 our $colorscheme=0;
 
@@ -363,7 +364,7 @@ if ($contest eq "ARRL-FD"){
 our $wmain = newwin(24,80,0,0);
 attron($wmain, COLOR_PAIR(3));
 addstr($wmain, 0,0, ' 'x(24*80));
-addstr($wmain, 23, 0, "     Logging Mode                            ALT-o/h: Help ");
+addstr($wmain, 23, 0, "     Logging Mode                             ALT-o/h: Help");
 refresh($wmain);
 
 our $wcheck = newwin(($contest eq 'DXPED' ? 10 : 7), 38,0,0);
@@ -454,7 +455,11 @@ while (1) {										# begin main logging loop
 
 				touchwin($wmain);					# Restore Screen etc.
 				touchwin($wrate);
+				if ($editnr){
+				&displaylog(\$wmain, \@qsos, $editnr);
+				}else{
 				&displaylog(\$wmain, \@qsos, 0);
+				}
 				&partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
 #				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 				&checkcall(\$wcheck, \@qsos, 'blabla');
@@ -470,14 +475,15 @@ while (1) {										# begin main logging loop
 			}
 			elsif ($ch eq 'cwmessages') {					# Alt-m
 				&editcwmessages(\$wcheck);
-				addstr($wmain, 23, 0, "     Logging Mode                            ALT-o/h: Help ");
+				addstr($wmain, 23, 0, "     Logging Mode                             ALT-o/h: Help");
 				&checkcall(\$wcheck, \@qsos, 'blabla');
 				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 			}
 #			elsif ($ch eq 'log' && !$dupe) {				# enter pressed
 			elsif (($ch eq 'log' && (!$nologdupe or !$dupe)) || ($ch eq 'override' && $dupe)){
-				&qsy(\%qso, \$curpos);	# check for: '20M', 'SSB', '21025' etc.
-
+				if (!$editnr){
+					&qsy(\%qso, \$curpos);				# check for: '20M', 'SSB', '21025' etc.
+				}
 				if ($qso{'call'} eq 'QUIT') {
 					endwin;
 					system ("killall -9 rigctld");
@@ -512,7 +518,7 @@ while (1) {										# begin main logging loop
 					%qso = %tmpqso;
 					delete $tmpqso{'call'};
 #					addstr($wmain,23,0,"                                          ");
-					addstr($wmain,23,0,"     Logging Mode                         ");
+					addstr($wmain,23,0,"     Logging Mode                            ");
 					&wipeqso(\%qso, \$curpos, \$activefield);
 				}
 				&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2,
@@ -528,7 +534,9 @@ while (1) {										# begin main logging loop
 					attron($wmain,COLOR_PAIR(6));
 					addstr($wmain,23,0,"Edit");			# ...sigh
 					attron($wmain,COLOR_PAIR(3));
-					addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
+#					addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
+					addstr($wmain,23,4," QSO#    ");
+					addstr($wmain,23,13-(length($editnr))," $editnr QSY: F1/2, Mode: F3           ");
 					$editnr-- unless $editnr == 1;
 				}
 				else {
@@ -544,7 +552,9 @@ while (1) {										# begin main logging loop
 						attron($wmain,COLOR_PAIR(6));
 						addstr($wmain,23,0,"Edit");		# ...sigh
 						attron($wmain,COLOR_PAIR(3));
-						addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
+#						addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
+						addstr($wmain,23,4," QSO#    ");
+						addstr($wmain,23,13-(length($editnr))," $editnr QSY: F1/2, Mode: F3           ");
 						$editnr++;
 				}
 				else {							# at last QSO
@@ -553,7 +563,7 @@ while (1) {										# begin main logging loop
 						delete $tmpqso{'call'};
 						attron($wmain, COLOR_PAIR(3));
 #						addstr($wmain,23,0,"                                          ");
-						addstr($wmain,23,0,"     Logging Mode                         ");
+						addstr($wmain,23,0,"     Logging Mode                            ");
 						&wipeqso(\%qso, \$curpos, \$activefield);
 				}
 			}
@@ -568,13 +578,29 @@ while (1) {										# begin main logging loop
 			attron($wmain,COLOR_PAIR(6));
 			addstr($wmain,23,0,"Edit");					# ...sigh
 			attron($wmain,COLOR_PAIR(3));
-			addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3");
+#			addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3");	# not anchored to lsd of $editnr
+#			my $editnr = "5000";						# for testing $editnr formatting
+			addstr($wmain,23,4," QSO#    ");
+			addstr($wmain,23,13-(length($editnr))," $editnr QSY: F1/2, Mode: F3");
 		}else{
 			attron($wmain,COLOR_PAIR(3));
 			addstr($wmain,23,0,"     Logging Mode               ");
 			if ($dupe){
 				attron($wmain,COLOR_PAIR(6));
 				addstr($wmain,23,18,"DUPE");				# ...sigh
+			}
+			if ($qso{'call'} =~ /[A-Z0-9][0-9][A-Z]/) {
+				$invalid = 0;
+			}
+			if ($qso{'call'} =~ /^(CW|FM|SSB|RTTY|P31|P63)$/) {
+				$invalid = 0;
+			}
+			if ($invalid){
+				attron($wmain,COLOR_PAIR(6));
+				addstr($wmain,23,18,"Invalid!");
+			}
+			unless($qso{'call'} ne ''){
+				$invalid=0;
 			}
 			if ($qso{'mode'} eq 'CW' && $showmsgkeys) {
 				attron($wmain,COLOR_PAIR(2));
