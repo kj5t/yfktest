@@ -9,9 +9,9 @@ sub rigctld {
 	if (!$main::hamlibsock) {
 		attron($wmain,COLOR_PAIR(2));
 		attron($wmain,A_BOLD);
-		addstr($wmain, 23, 32, "No Rig ATM");		# XXX maybe try to reconnect?
+		addstr($wmain, 23, 35, "No Rig ATM");		# XXX maybe try to reconnect?
 #		$freq="28.000";					# code for testing placement\
-#		addstr($wmain, 23, 32, "$freq MHz");		# when no rig is connected
+#		addstr($wmain, 23, 35, "$freq MHz");		# when no rig is connected
 		attroff($wmain,A_BOLD);
 		attroff($wmain,COLOR_PAIR(2));
 		return 0;					
@@ -48,7 +48,7 @@ sub rigctld {
 		
 		attron($wmain,COLOR_PAIR(2));
 		attron($wmain,A_BOLD);
-		addstr($wmain, 23, 32, "$freq MHz");
+		addstr($wmain, 23, 35, "$freq MHz");
 		attroff($wmain,A_BOLD);
 		attroff($wmain,COLOR_PAIR(2));
 
