@@ -426,7 +426,9 @@ while (1) {										# begin main logging loop
 #		}
 
 		if (($qso{'call'} ne $oldcall) or ($oldeditnr != $editnr)) {
-			&displaylog(\$wmain, \@qsos, $editnr);
+			if (@qsos ne 0){
+				&displaylog(\$wmain, \@qsos, $editnr);
+			}
 			&partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
 			&checkcall(\$wcheck, \@qsos, $qso{'call'});
 			&dupecheck(\$wmain, \%qso, \@qsos) unless $editnr;
