@@ -63,28 +63,28 @@ WRITELOG    Escribe el log en formatos Cabrillo y ADIF- para enviar para el
 	}
 	else {
 		$help1 = 'YFKtest Quick Reference - Press **ENTER** to return to logging window.';
-		$help2 = "Alt-r           Rate Graph Window.
+		$help2 = "Alt+r           Rate Graph Window.
+Alt+c           (Re-)set configuration settings - Window.
 
-F1..7           Play CW messages. - INS, ESC work during sending.
-Alt-k           Send CW direct from the keyboard.
-Alt-x, ESC      Stops sending CW immediately.
+F1..9           Play CW messages. - INS, ESC work during sending.
+Alt+k           Send CW direct from the keyboard.
+Alt+x, ESC      Stops sending CW immediately.
 PGUP, PGDN      Change CW speed in 2wpm steps.
 
-Alt-m           Edit CW messages. - Changes are written to the log file.
+Alt+m           Edit CW messages. - Changes are written to the log file.
 UP, DOWN        Edit log. DUPECHECKING and WIPEING do not work in edit mode.
-Alt-w, F11      Wipe entire QSO.
+Alt+w, F11      Wipe entire QSO.
 
 TAB, SPACEBAR   Move between fields. - TAB can be set to snap to call field.
 DEL, BACKSPACE  @ ANY field  - Edit/remove individual characters.
 LEFT, RIGHT     @ ANY field  - Move to specific character.
 ENTER           @ ANY field  - Log QSO as long as ALL FIELDS are entered.
-Alt-l		@ ANY field  - Over-ride protection (if set) & log a DUPE !!
+Alt+l		@ ANY field  - Over-ride protection (if set) & log a DUPE !!
 
 10M..160M       @ Call field - You can directly enter the freq too !!
 SSB, CW         @ Call field - RTTY and FM also work.
 
 WRITELOG        @ Call field - Writes Cabrillo, ADIF, & ASCII Summary files.
-
 QUIT, EXIT      @ Call field - Ends program.
 ";
 	}
