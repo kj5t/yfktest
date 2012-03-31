@@ -407,7 +407,7 @@ my $ch='';
 &partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
 &checkcall(\$wcheck, \@qsos, 'blabla');
 
-addstr($wmain, 22, 62, "Op: $ops");
+if ($ops) {addstr($wmain, 22, 62, "Op: $ops");}
 
 # net_receiveqso will write received network QSOs to @net_qsos, which is a data
 # structure like @qsos, and can be pushed into @qsos
