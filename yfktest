@@ -77,6 +77,7 @@ load_subs("rategraph.pl");
 load_subs("hamrigctrl.pl");
 load_subs("winkeyer.pl");
 load_subs("colorinfo.pl");
+load_subs("setconfigs.pl");
 
 
 our $version = "0.0.10";
@@ -131,6 +132,7 @@ my $oldeditnr = 0;									# we have to check if it changes now and then
 our $nologdupe=0;
 our $dupe=0;
 our $invalid=0;										# callsign validation variable
+our $ops ='';
 
 our $colorscheme=0;
 
@@ -206,28 +208,26 @@ start_color();
 curs_set(0);
 
 printw "YFKtest v$version - Copyright (C) 2008 Fabian Kurz, DJ1YFK
-Copyright (c) 2012 Bob Finch, W9YA & David Quental, CT1DRB & Others.
-This is free software, and you are welcome to redistribute it under
-certain conditions (see the file name COPYING in the docs folder).
+Copyright (C) 2012 Bob Finch, W9YA & David Quental, CT1DRB & Others.
+Licensing information is in the \"COPYING\" file in the docs folder.
 
+*  FIRST - Make sure the caps lock is NOT on.
 
-***********  FIRST - Make sure the caps lock is NOT on.
-***********  SECOND - To exit immediately press the ctrl+c keys.
-***********  THEN - Press the ENTER key to continue this program.
+**  SECOND - Use: ALT+o (or on some computers ALT+h) for help, ALT+c
+for configuration, and ALT+m to edit the cw messages.
 
-NOTE: You can add a config file named .yfktest, located either in
-your home directory or here, containing any of the following lines:
-(* Include ONLY one item & its' value, per line, & NOTHING else !)  
+***  THIRD - Most contests have more than one part to the exchange.
+EACH part of the exchange is in a separate entry field & you use the
+spacebar to move to each one. For cw xmit you can add a space between
+the parts so one key (usually the <F2> key) xmits the full exchange.
 
-CONFIG         # Reserved for future usage.
-mycall=N0CALL  # Enter your actual callsign for automatic usage.
-rigctl=0       # Turns off usage of rig-control software & config.
-winkey=0       # Turns off usage of the winkeyer software & config.
-tabnextfield=1 # Turns off 'snap to call'. It now work = spacebar.
-cwspeed=24     # Defaults to 24 wpm. Can be set to another value.
-nologdupe=1    # Prevents default dupe logging. Alt-L will override.
-colorscheme=2  # 0 is default & 1,2,or 3 = new window color schemes.
-showmsgkeys=1  # Enables showing what the F-key send during cw mode.";
+****  FOURTH - Turn off the rig-control & winkeyer via the ALT+c
+screen & the program will stop asking about this when you start it !
+
+***** FIFTH - Here's an example of how to start yfktest & auto-load an
+existing log (FD for instance); yfktest ARRL-FD.yfk (& press <enter>.)
+
+***********  That's it ! - Press the ENTER key & begin using yfktest.";
 
 getch();
 
@@ -364,7 +364,7 @@ if ($contest eq "ARRL-FD"){
 our $wmain = newwin(24,80,0,0);
 attron($wmain, COLOR_PAIR(3));
 addstr($wmain, 0,0, ' 'x(24*80));
-addstr($wmain, 23, 0, "     Logging Mode                             ALT-o/h: Help");
+addstr($wmain, 23, 0, "     Logging Mode                             ALT+o/h:Help ");
 refresh($wmain);
 
 our $wcheck = newwin(($contest eq 'DXPED' ? 10 : 7), 38,0,0);
@@ -450,10 +450,11 @@ while (1) {										# begin main logging loop
 			elsif ($ch eq 'wipe') {						# Alt-w, F11
 				&wipeqso(\%qso, \$curpos, \$activefield);
 			}
-			elsif ($ch eq 'help' || $ch eq 'rate') {			# alt-h alt-r
+			elsif ($ch eq 'help' || $ch eq 'rate' || $ch eq 'config') {	# alt-h or alt-r or alt-c
 
 				if ($ch eq 'help') { &showhelp(); }
-				else { &rategraph(); }
+				elsif ($ch eq 'rate') { &rategraph(); }
+				else { &setconfigs();}	
 
 				touchwin($wmain);					# Restore Screen etc.
 				touchwin($wrate);
@@ -477,7 +478,7 @@ while (1) {										# begin main logging loop
 			}
 			elsif ($ch eq 'cwmessages') {					# Alt-m
 				&editcwmessages(\$wcheck);
-				addstr($wmain, 23, 0, "     Logging Mode                             ALT-o/h: Help");
+				addstr($wmain, 23, 0, "     Logging Mode                             ALT+o/h:Help ");
 				&checkcall(\$wcheck, \@qsos, 'blabla');
 				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 			}
