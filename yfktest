@@ -227,7 +227,7 @@ the parts so one key (usually the <F2> key) xmits the full exchange.
 screen & the program will stop asking about this when you start it !
 
 ***** FIFTH - Here's an example of how to start yfktest & auto-load an
-existing log (FD for instance); yfktest ARRL-FD.yfk (& press <enter>.)
+existing log (FD for instance); ./yfktest ARRL-FD.yfk (& press <enter>.)
 
 ***********  That's it ! - Press the ENTER key & begin using yfktest.";
 
