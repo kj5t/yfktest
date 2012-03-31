@@ -132,7 +132,6 @@ my $oldeditnr = 0;									# we have to check if it changes now and then
 our $nologdupe=0;
 our $dupe=0;
 our $invalid=0;										# callsign validation variable
-our $ops ='';
 
 our $colorscheme=0;
 
@@ -186,6 +185,9 @@ our %qso = (										# The current QSO
 );
 
 # our %net_qso : shared = ();
+
+our $ops ='';										# handle (or call) of the station op(s)
+our $tmpops = $ops;									# 4 checking a change in ops' handle, SHUD be $oldops ? 
 
 our %tmpqso;										# current Q will be saved here while editing prev QSOs
 
@@ -405,6 +407,7 @@ my $ch='';
 &partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
 &checkcall(\$wcheck, \@qsos, 'blabla');
 
+addstr($wmain, 22, 62, "Op: $ops");
 
 # net_receiveqso will write received network QSOs to @net_qsos, which is a data
 # structure like @qsos, and can be pushed into @qsos
@@ -471,7 +474,12 @@ while (1) {										# begin main logging loop
 				&rate(\$wrate, \@qsos);
 				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 				&callinfo();
-
+				if ($ops) {
+					addstr($wmain, 22, 62, "                  ");
+					addstr($wmain, 22, 62, "Op: $ops");
+				}else{
+					addstr($wmain, 22, 62, "                  ");
+				}
 			}
 			elsif ($ch eq 'keyboard') {					# Alt-k
 				&keyboardmode() if ($qso{'mode'} eq 'CW');
