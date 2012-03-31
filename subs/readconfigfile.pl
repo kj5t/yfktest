@@ -35,6 +35,9 @@ sub readconfigfile {
 		elsif ($line =~ /showmsgkeys=(.+)/) {
 			$main::showmsgkeys = $1;
 		}
+		elsif ($line =~ /ops=(.+)/) {
+			$main::ops = uc($1);
+		}
 	}
 
 	close CONF;
