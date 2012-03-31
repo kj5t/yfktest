@@ -196,7 +196,7 @@ if (-e $filename) {
 				"\nTo use an existing contest log you CAN give the".
 				" log's filename as command line argument.\n".
 				"Here's an example of what to enter on the command line:\n".
-				" yfktest ARRL-FD.yfk\n".
+				" ./yfktest ARRL-FD.yfk\n".
 				"(Substitute your contest file name for \"ARRL-FD\" in the example above.)\n". 
 				"\nIf you want to start a new log for this contest you will".
 				" need to either:\n MOVE or RENAME the existing/older file.\n\n";
