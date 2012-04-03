@@ -18,6 +18,8 @@ sub partialcheck {
 
 	my %partials;					# value = 1 means needed, 2 means dupe
 
+	unless (($call =~ m/^DE/) && ($call !~ m/^DE[0-9]/)) {
+
 	if (length($call) > 1) {
 		foreach (@{$scpref}) {
 			chomp $_;
@@ -59,6 +61,8 @@ sub partialcheck {
 
 
 	refresh($$window);
+
+	}
 
 
 
