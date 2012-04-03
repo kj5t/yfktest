@@ -19,6 +19,8 @@ sub checkcall {
 
 	foreach my $i (0 .. $#qsos) {
 		
+		if ($qsos[$i]{'call'} =~ /^DEL/) { next; }
+
 		if ($qsos[$i]{'call'} =~ /^$call/) {
 
 			my $band = $qsos[$i]{'band'};
