@@ -81,18 +81,26 @@ sub logeditqso {
 		my %qso = %main::qso;		# less typing
 		my @validentry = @main::validentry;
 
-		unless (
-#				($qso{'call'} =~ /[A-Z0-9][A-Z0-9][A-Z]/) &&		# Not so good
-				($qso{'call'} =~ /[A-Z0-9][0-9][A-Z]/) &&		# Better (not "best")
-				($qso{'exc1'} =~ /^$validentry[0]$/) &&
-				($qso{'exc2'} =~ /^$validentry[1]$/) &&
-				($qso{'exc3'} =~ /^$validentry[2]$/) &&
-				($qso{'exc4'} =~ /^$validentry[3]$/)
-		) {
-			attron($main::wmain, COLOR_PAIR(6));
-			addstr($main::wmain,23,35, " Invalid! ");
-			attroff($main::wmain, COLOR_PAIR(6));
-			return 0;
+		if ($qso{'call'} =~ /^DEL/) {
+			$qso{'exc1'} = '';
+			$qso{'exc2'} = '';
+			$qso{'exc3'} = '';
+			$qso{'exc4'} = '';
+		}
+		else {
+			unless (
+#					($qso{'call'} =~ /[A-Z0-9][A-Z0-9][A-Z]/) &&		# Not so good
+					($qso{'call'} =~ /[A-Z0-9][0-9][A-Z]/) &&		# Better (not "best")
+					($qso{'exc1'} =~ /^$validentry[0]$/) &&
+					($qso{'exc2'} =~ /^$validentry[1]$/) &&
+					($qso{'exc3'} =~ /^$validentry[2]$/) &&
+					($qso{'exc4'} =~ /^$validentry[3]$/)
+			) {
+				attron($main::wmain, COLOR_PAIR(6));
+				addstr($main::wmain,23,35, " Invalid! ");
+				attroff($main::wmain, COLOR_PAIR(6));
+				return 0;
+			}
 		}
 
 
