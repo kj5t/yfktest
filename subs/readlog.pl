@@ -68,6 +68,7 @@ sub readlog {
 				$qso{'exc4'} = $a[10] if defined($a[10]);
 				
 				$qso{stn} = $a[11] if defined($a[11]);
+				$qso{'ops'} = $a[12] if defined($a[12]);
 
 
 				if ($qso{'mode'}  eq 'SSB') {
