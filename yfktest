@@ -168,6 +168,9 @@ our @scp = <SCP>;
 $scp[1] = $scp[2] = '';
 close SCP;
 
+our $ops ='';										# handle (or call) of the station op(s)
+our $tmpops = $ops;									# 4 checking a change in ops' handle, SHUD be $oldops ? 
+
 our %qso = (										# The current QSO
 		'nr' => 1,
 		'utc' => '',
@@ -182,13 +185,11 @@ our %qso = (										# The current QSO
 		'band' => '20',
 		'freq' => '',
 		'mode' => 'CW',
-		'stn' => $netname
+		'stn' => $netname ,
+		'ops' => ''
 );
 
 # our %net_qso : shared = ();
-
-our $ops ='';										# handle (or call) of the station op(s)
-our $tmpops = $ops;									# 4 checking a change in ops' handle, SHUD be $oldops ? 
 
 our %tmpqso;										# current Q will be saved here while editing prev QSOs
 
@@ -335,7 +336,8 @@ my $ch='';
 &partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
 &checkcall(\$wcheck, \@qsos, 'blabla');
 
-if ($ops) {addstr($wmain, 22, 68, "Op: $ops");}
+if (length ($ops) > 13) {$ops = substr $ops, 0, 13;}
+if ($ops) {addstr($wmain, 22, 62, "Op: $ops");}
 
 # net_receiveqso will write received network QSOs to @net_qsos, which is a data
 # structure like @qsos, and can be pushed into @qsos
@@ -385,7 +387,7 @@ while (1) {										# begin main logging loop
 
 				if ($ch eq 'help') { &showhelp(); }
 				elsif ($ch eq 'rate') { &rategraph(); }
-				else { &setconfigs();}	
+				else { &setconfigs(); }	
 
 				touchwin($wmain);					# Restore Screen etc.
 				touchwin($wrate);
@@ -403,10 +405,13 @@ while (1) {										# begin main logging loop
 				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 				&callinfo();
 				if ($ops) {
-					addstr($wmain, 22, 68, "            ");
-					addstr($wmain, 22, 68, "Op: $ops");
+					addstr($wmain, 22, 62, "                 ");
+					if (length ($ops) > 13) {
+						$ops = substr $ops, 0, 13;
+					}
+					addstr($wmain, 22, 62, "Op: $ops");
 				}else{
-					addstr($wmain, 22, 68, "            ");
+					addstr($wmain, 22, 62, "                 ");
 				}
 			}
 			elsif ($ch eq 'keyboard') {					# Alt-k
