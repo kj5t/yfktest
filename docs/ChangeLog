@@ -1,3 +1,17 @@
+0.0.10-svn /    As of 09 Apr. 2012  - Bob, w9ya <w9ya@amsat.org>
+
+CHANGES;
+
+QSO # in Edit mode line 23 info is now anchored.
+Deletion of logged qso's now possible by replacing the callsign w/ "DEL" at the
+	beginning of this entry field. *** Scoring does NOT count these deletions.
+ADDED alt+c configuration menu/full screen window.
+ADDED "ops" field to qso-hash to allow clubs and multi-op setups to follow ops'
+	contributions. INCLUDES on screen info AND on-the-fly setup and changes.
+Changed editing subsroutine to take into account the new field INCLUDING having
+	an empty "ops" field.
+
+
 0.0.10-svn /    As of 25 Mar. 2012  - Bob, w9ya <w9ya@amsat.org>
 
 CHANGES;
