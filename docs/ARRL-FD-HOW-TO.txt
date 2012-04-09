@@ -4,7 +4,7 @@ Simple HOW-TO for using YFKTEST for logging the ARRL Field Day Contest:
 **** UPDATED: 29-FEB-12 - Where you see asterisks !! (Bob F., w9ya)
 
 
-Installing under Ubuntu 10.10 (or 11.04 using the "classic"(gnome) login);
+Installing under Ubuntu 10.10 (or later) using the "classic"(gnome) login;
 	- Make sure you have “subversion” installed, via the (Alt+F1, System,
 		Administration,) Synaptic Package Manager.
 **** 	(Synaptic is no longer installed as default in v. 11.10. You can either;
@@ -29,19 +29,9 @@ Installing under Ubuntu 10.10 (or 11.04 using the "classic"(gnome) login);
           svn checkout svn://dl0tud.tu-dresden.de/yfk/yfktest/trunk <enter>
         
 
+
 Preparing for use;
-	- Initialize your config file;
-                cat << EOF >> /~/.yfktest
-                        at the ‘>’ prompt type; (substituting your call for
-					NB0ZOS)
-                                mycall=NB0ZOS <enter>
-                                EOF <enter>
-****	( With the latest versions of yfktest you can also:
-		- OPTIONALLY Place this file in the same directory/folder
-		  where yfktest is located.
-		- You can even have TWO files, one in the old location
-		  and one in the new location. The new location will
-		  automagically over-ride the old location !)
+
 ****	NOTE: There are many new configurable options. See the startup screen
 		for more info.
         - Open up the terminal again (Ctrl+Alt+t) and configure it;
@@ -93,24 +83,25 @@ Running yfktest;
 			then type;
                                 cd /~/logging/yfktest/ <enter>
 
-****      OLD INFO WHICH NO LONGER APPLIES  *******************************
-*	- The invocation to run the program is;				***
-*                ./yfktest-ARRL-FD <enter>				***
-***************************************************************************
-
 	- Type: ./yfktest <enter>
                 - The first time through you will have to select the
 				ARRL-FD template from the window and fill it
 				out using the arrow keys and the <enter> key.
             	- Next time through invoke this to select the contest file;
-                	./yfktest-ARRL-FD ARRL-FD.yfk <enter>
+                	./yfktest ARRL-FD.yfk <enter>
+
 	- Play around a bit. Logging is simple with these 6 simple rules;
 		- The <tab> key will bring you to the callsign entry “window”
-****	NOTE: With an option in the (.yfktest) config file you can change this
-	      		behavior so the <tab> key works like the <space> key.
+****	NOTE: This can be changed by using the configuration panel whiel the
+			yfktest program is running by pressing the alt+c keys.
+	      		The behavior can be either:
+				a) -  the <tab> key works like the <space> key.
+				b) -  the <tab> key snaps you back to the call
+					entry field.
 		- The <space> bar/key will toggle through the 3 input “windows”
 		- The <enter> key will log the completed contact.
 		- Alt+o or Alt+h brings up the help screen.
+		- Alt+c brings up the configuration screen.
 		- If things jam up (like trying to use Alt+k/keyboard CW mode;
 			use Alt+w or F11 to erase the exchange/callsign info.
 		- If things jam up badly, you can always hit Ctrl+c to force
@@ -118,19 +109,6 @@ Running yfktest;
 
 
 Helpful suggestions;
-****	NOTE: The dummy file suggestion immediately below is no longer necessary
-		IF you are using the rigctl and winkey options set to ZERO in the
-		config file(s).
-        - To streamline things, you can avoid repeating ALL of the starting
-		questions concerning the rig-control and keyer interface by
-		creating “dummy” files like this example; 
-			touch rigctld.sh <enter> 
-				AND/OR 
-			touch winkeydaemon.sh <enter>
-                (These two files -fools- the program into using no
-			rig control and/or winkeyer interface without
-                        having to declare that you are not using these
-			interface(s) each time you run the program !)
 	- To re-invoke the program after using QUIT or EXIT (in the callsign entry
 		field of the contact logging line), you can use the <up-arrow>
 		key to scroll back through your previous terminal commands.
@@ -146,3 +124,4 @@ Helpful suggestions;
 updated 20 June 2011 by Bob, w9ya
 updated 29 Feb  2012 by Bob, w9ya
 updated 13 Mar  2012 by Bob, w9ya
+updated 09 Apr  2012 by Bob, w9ya
