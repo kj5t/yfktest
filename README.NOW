@@ -45,12 +45,14 @@ OOPS - :
 
 	- Did you not type step 4 EXACTLY ?
 
-	- You might need to installed the perl INET module, curses, and possibly
-		the strict PERL modules. If you are running Ubuntu-linux please
+	- You might need to install the perl INET, curses, and possibly the
+		strict PERL modules. If you are running Ubuntu-linux please
 		see the ARRL-FD-HOW-TO.txt file located in the docs/ folder
-		for more specific info.
+		for more specific info. (Every linux distro should offer
+		these modules as well as the hamlib package which is needed
+		if you want to use the rig-control built into yfktest.)
 
-*** yfktest starts but acts strangely, shows an error message &/or quits.
+*** yfktest starts but acts strangely, shows an error message, &/or quits.
 
 	- Did you begin your testing without doing step 3 ?
 
@@ -58,4 +60,5 @@ OOPS - :
 Created: 06-Mar.-12 - Bob, w9ya
 Updated: 22-Mar.-12 - Bob, w9ya
 Updated: 25-Mar.-12 - Bob, w9ya
+Updated: 09-Apr.-12 - Bob, w9ya
 
