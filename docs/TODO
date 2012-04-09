@@ -5,9 +5,15 @@ YFKtest TODO list (feel free to add things!)
 As of 29 Feb. 2012 - w9ya
 (PLUS A few additions as of 22 Mar. 2012 - w9ya)
 (And a few deletions !!! as of 25 Mar. 2012 - w9ya)
+(And even more adds/moves/changes as of 09 Apr. 2012 - w9ya)
+
 
 TO-DO (Before next release):
 Cabrillo file write requires "3.0" instead of "3" . (As per Jeff-KA1DBE's note about robots et al)
+Lengthen cw message fields to more than the current EDITING limit of 25 characters & spaces.
+Add repeat to outgoing cw messages to allow "running stations".
+Finish adding in QRP-ARCI-QSO-PARTY.def **INCLUDING triple stage mults AND different power questions
+	in newcontest.pl
 
 .......... ARRL-FD seems to replace "NR" as '5?' .
 .......... Winkey set-up screen needs info on which keys to use, perhaps status (red line 23 ?)
@@ -25,6 +31,7 @@ Check for any more adds/move/changes that are on paper.
 DOUBLE-check older to-do files for anything not yet done.
 DOUBLE CHECK "supposedly fixes" with third party testing !
 Get Fabian ready for a 0.0.10 release !!
+
 
 WISH-LIST (Long term ideas):
 
@@ -49,11 +56,6 @@ Finish removing rig control & winkeyer setups 2 sub-directory/ i.e. references t
 Show qso-in-log blacked-out /t same aftr. as b4 going into rate or help screens from EDIT mode.
 Consider having section info in ARRL-FD (for instance) color in sections worked.
 
-QSO # in Edit mode line 23 info is not anchored. (Should this be 3 or 4 positions ?) and this
-	will cause problems both in last logged qso and earlier qso edits. Issue shows up with
-	refreshing to remove 'INVALID!' and possibly other stuff (like the rig's communicated
-	freq. display).
-
 (Fix file select screens to kill working screen before asking for exit on bad file selection.)
 ... and/OR (& IF POSSIBLE) move all the log files into a separate directory for cleaner selection.
 ** IF POSSIBLE; get working atl-H & O (uppercase) in case caps lock is on & help screen is needed.
@@ -61,8 +63,8 @@ Scroll horiz. does not work to select new contest (only pre-existing log) ?
 Add a way to load various "database" (de: third parties) files.
 Correct the ALt-k (and Alt-o) remanant (sp?) character in call field.
 Trap or otherwise avoid "baudrate" error message when winkey selected but not connected.
-Add DUPECHECKING and RE-SCORING and WIPE-QSO to editing function.
-......... the above (most likely) *will* creat new problems with qso numbering.
+Add DUPECHECKING and RE-SCORING to/immmediately after editing function.
+......... the above (most likely) *will*(/could ?) create new problems with qso numbering.
 See if ANY routines are better moved from "main".pl to subs/ .
 
 
