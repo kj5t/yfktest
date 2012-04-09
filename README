@@ -1,4 +1,6 @@
-YFKtest Version 0.0.10 - Ham Radio Contest logger by Fabian Kurz, DJ1YFK
+YFKtest Version 0.0.10 - Ham Radio Contest logger by Fabian Kurz, DJ1YFK ,
+				Bob Finch, W9YA , David Quental, CT1DRB ,
+				and Wes Hardaker, WS6Z
 -----------------------------------------------------------------------------
 
 
@@ -26,11 +28,11 @@ programmed in Perl 5 and requires the following modules:
 - Curses
 - IO::Socket::INET
 
-Optional: cwdaemon or winkeydaemon.pl, Hamlib
+Optional: winkeydaemon.pl, Hamlib (Currently cwdaemon is not supported.)
 
-IO::Socket::Inet, and possibly Curses, might not be a part of your standard
-distribution of Perl. These should be available through your system's package
-manager (Ubuntu install info is in the docs/ARRL-FD-HOW-TO.txt file.)
+IO::Socket::Inet, (and possibly Curses & strict,) might not be a part of your
+standard distribution of Perl. These should be available through your system's
+package manager (Ubuntu install info is in the docs/ARRL-FD-HOW-TO.txt file.)
 
 (*** Note that IF you are running SuSe-Linux you might also need
 Working::Daemon. A special version of winkeydaemon.pl has been modified for
@@ -47,7 +49,7 @@ you downloaded to.
 
 See docs/ARRL-FD-HOW-TO.txt for instructions on setting up and using yfktest
 with Ubuntu Linux. Version 10.10 and 11.10 have been tested. Later versions
-should work as well and mostly earlier versions that are not too old.
+should work as well and possibly earlier versions that are not too old.
 
 NOTE: *** Installation with the makefile in misc/ is not needed and certainly
 not recommended for personal use. (i.e. None of the contributors are running
@@ -82,3 +84,4 @@ Further contact details can be found at: http://fkurz.net/
 *changed/updated 20 June 2011, w9ya
 *changed/updated 09 July 2011, w9ya
 *changed/updated 29 Feb  2012, w9ya
+*changed/updated 09 Apr  2012, w9ya
