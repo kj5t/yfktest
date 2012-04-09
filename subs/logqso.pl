@@ -31,16 +31,17 @@ sub logqso {
 
 		$qso{'utc'} = &gettime();
 		$qso{'date'} = &getdate();
+		$qso{'ops'} = $main::ops;
 
 		push @{$_[1]}, { %qso };
 
 		open LOG, ">>$filename";
 
 		my $logline = sprintf(
-				"%-4s;%-3s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s\n",
+				"%-4s;%-3s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s;%-15s\n",
 				$qso{'nr'}, $qso{'band'}, $qso{'freq'}, $qso{'mode'}, $qso{'utc'},
 				$qso{'date'}, $qso{'call'}, $qso{'exc1'}, $qso{'exc2'},
-				$qso{'exc3'}, $qso{'exc4'}, $qso{stn});
+				$qso{'exc3'}, $qso{'exc4'}, $qso{stn}, $qso{'ops'});
 
 		print LOG $logline;
 		close LOG;
@@ -50,10 +51,10 @@ sub logqso {
 #		print STDERR "$qso{stn} == $main::netname ?\n";
 
 		$logline = sprintf(
-				"%-4s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s\n",
+				"%-4s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s;%-15s\n",
 				0, $qso{'band'}, $qso{'freq'}, $qso{'mode'}, $qso{'utc'},
 				$qso{'date'}, $qso{'call'}, $qso{'exc1'}, $qso{'exc2'},
-				$qso{'exc3'}, $qso{'exc4'}, $qso{stn});
+				$qso{'exc3'}, $qso{'exc4'}, $qso{stn}, $qso{'ops'});
 
 
 #		if ($qso{stn} eq $main::netname) {
@@ -118,12 +119,30 @@ sub logeditqso {
 
 		for (my $i=0 ; $i <= $#log; $i++) {
 			next while ($i < 17);						# HEADER
-			if ($log[$i] =~ /^$qso{'nr'}.+$main::netname\s*$/) {
+			if ($log[$i] =~ /^$qso{'nr'}.+$main::netname\s*$/) {		# for old logs w/o ops
 				$log[$i] =  sprintf(
 				"%-4s;%-3s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s\n",
 				$qso{'nr'}, $qso{'band'}, $qso{'freq'}, $qso{'mode'}, $qso{'utc'},
 				$qso{'date'}, $qso{'call'}, $qso{'exc1'}, $qso{'exc2'},
 				$qso{'exc3'}, $qso{'exc4'}, $qso{stn});
+				$success = 1;
+				last;
+			}
+			elsif ($log[$i] =~ /^$qso{'nr'}.+$main::netname\s*;\s*$/) {	# allows blank ops field
+				$log[$i] =  sprintf(
+				"%-4s;%-3s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s;%-15s\n",
+				$qso{'nr'}, $qso{'band'}, $qso{'freq'}, $qso{'mode'}, $qso{'utc'},
+				$qso{'date'}, $qso{'call'}, $qso{'exc1'}, $qso{'exc2'},
+				$qso{'exc3'}, $qso{'exc4'}, $qso{stn}, '');
+				$success = 1;
+				last;
+			}
+			elsif ($log[$i] =~ /^$qso{'nr'}.+$main::netname/) {# allows ops to follow and ????/other/further stuff
+				$log[$i] =  sprintf(
+				"%-4s;%-3s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s;%-15s\n",
+				$qso{'nr'}, $qso{'band'}, $qso{'freq'}, $qso{'mode'}, $qso{'utc'},
+				$qso{'date'}, $qso{'call'}, $qso{'exc1'}, $qso{'exc2'},
+				$qso{'exc3'}, $qso{'exc4'}, $qso{stn}, $qso{'ops'});
 				$success = 1;
 				last;
 			}
