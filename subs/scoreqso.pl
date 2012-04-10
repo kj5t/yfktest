@@ -523,6 +523,20 @@ sub scoreqso {
 			$s_qsopts->{$qso{band}} += 1 * $scoremult;
 		}
 	}
+	elsif ($main::defqsopts eq 'qrparci') {
+		my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
+		if ($qso{'exc3'} =~ /^\d+$/) {		# ARCI Member number
+			$s_qsopts->{$qso{'band'}} += 5;
+		}
+		else {
+			if ($cont eq $main::mycont) {	# same continent
+			$s_qsopts->{$qso{'band'}} += 2;
+			}
+			else {				# dx !!
+			$s_qsopts->{$qso{'band'}} += 4;
+			}
+		}
+	}
 
 
 	#############################################
@@ -981,6 +995,21 @@ sub scoreqso {
 		}
 	}	
 
+	#######################################################
+	# Other stuff - could be used for the following:      #
+	#  * to change $multall - a SIMPLE overall multiplier #
+	#######################################################
+
+	my $multall = 1;					# a SIMPLE overall multiplier
+
+	if ($main::defqsopts =~ /qrparci/) {
+		if ($main::power eq '>5W') { $multall = 1; }
+		elsif ($main::power eq '>1W') { $multall = 7; }
+		elsif ($main::power eq '>250mW') { $multall = 10; }
+		elsif ($main::power eq '>55mW') { $multall = 15; }
+		else { $multall = 20; }
+	}
+
 	# Total points
 
 	my	$multsum =
@@ -1006,7 +1035,7 @@ sub scoreqso {
 		${$_[7]} = $qsoptsum;
 	}
 	else {
-		${$_[7]} = $qsoptsum * $multsum;
+		${$_[7]} = $qsoptsum * $multsum * $multall;
 	}
 
 }
