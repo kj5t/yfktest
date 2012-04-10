@@ -1,0 +1,29 @@
+QRP-ARCI-QSO-PARTY							# contest name
+exc2-band-mode								# multiplier 1 -> exchange 2 by band and by mode
+qrparci									# score
+-									# multiplier 2
+3									# # of exchange fields
+3									# length of exchange field 1
+6									# length of exchange field 2
+5									# length of exchange field 3
+1									# length of exchange field 4
+[0-9A-Za-z]								# regex for every single character in exchange field 1
+[0-9][0-9A-Za-z]+							# regex for complete valid exchange field 1
+[A-Za-z]								# regex for every single character in exchange field 2
+[A-Za-z]+								# regex for complete valid exchange field 2
+[0-9Ww]									# regex for every single character in exchange field 3
+[0-9]+[0-9Ww]								# regex for complete valid exchange field 3
+[M-Nm-n]								# regex for every single character in exchange field 4
+									# regex for complete valid exchange field 4
+QSO: %s %s %s %s %4s %13s %3s %-12s %-13s %3s %-6s %5s %14s		# cabrillo definition - how to format the info
+freq mode date utc nr mycall rsts exc1s call exc1 exc2 exc3 ops		# cabrillo definition - what info is included
+QRP-ARCI SPRINT								# CBR (cabrillo) name - "title" for cabrillo file
+exc1s									# which fixed exchange is selected (variable assignment)
+ARCI# or POWER								# what fixed exchange info is asked for (prompted)
+CQ QRP TEST MYCALL MYCALL TEST						# F1
+EXC1S									# F2
+TU MYCALL								# F3
+MYCALL									# F4
+HISCALL									# F5
+5NN									# F6
+?									# F7
