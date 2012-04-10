@@ -10,6 +10,8 @@ ADDED "ops" field to qso-hash to allow clubs and multi-op setups to follow ops'
 	contributions. INCLUDES on screen info AND on-the-fly setup and changes.
 Changed editing subsroutine to take into account the new field INCLUDING having
 	an empty "ops" field.
+ADDED qrp-arci-qso-party contest template (def) file and mods for same in newcontest.pl .
+ADDED new overall multiplier ($multall) to the scoreqso.pl .
 
 
 0.0.10-svn /    As of 25 Mar. 2012  - Bob, w9ya <w9ya@amsat.org>
