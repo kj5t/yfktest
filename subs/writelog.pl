@@ -22,7 +22,7 @@ sub writelog {
 		# for stuff like CQ-WPX-CW ...
 		$cn =~ s/!MODE!/$main::modes/;
 
-		print CBR "START-OF-LOG: 3\r\n";
+		print CBR "START-OF-LOG: 3.0\r\n";
 		print CBR "CALLSIGN: $main::mycall\r\n";
 		print CBR "CATEGORY-ASSISTED: $main::assisted\r\n";
 		print CBR "CATEGORY-BAND: $main::bands\r\n";
