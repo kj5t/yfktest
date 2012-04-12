@@ -67,8 +67,9 @@ WRITELOG    Escribe el log en formatos Cabrillo y ADIF- para enviar para el
 Alt+c           (Re-)set configuration settings - Window.
 
 F1..9           Play CW messages. - INS, ESC work during sending.
-Alt+k           Send CW direct from the keyboard.
+F1              Toggles CQ AUTO-REPEAT when WANTCQREPEAT is set. (use Alt+c) 
 Alt+x, ESC      Stops sending CW immediately.
+Alt+k           Send CW direct from the keyboard.
 PGUP, PGDN      Change CW speed in 2wpm steps.
 
 Alt+m           Edit CW messages. - Changes are written to the log file.
@@ -80,7 +81,6 @@ DEL, BACKSPACE  @ ANY field  - Edit/remove individual characters.
 LEFT, RIGHT     @ ANY field  - Move to specific character.
 ENTER           @ ANY field  - Log QSO as long as ALL FIELDS are entered.
 Alt+l		@ ANY field  - Over-ride protection (if set) & log a DUPE !!
-
 10M..160M       @ Call field - You can directly enter the freq too !!
 SSB, CW         @ Call field - RTTY and FM also work.
 
