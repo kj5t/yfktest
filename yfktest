@@ -185,6 +185,7 @@ our %qso = (										# The current QSO
 		'band' => '20',
 		'freq' => '',
 		'mode' => 'CW',
+#		'mode' => 'SSB',							# for testing $cqrepeat stuff
 		'stn' => $netname ,
 		'ops' => ''
 );
@@ -195,6 +196,10 @@ our %tmpqso;										# current Q will be saved here while editing prev QSOs
 
 our $mycont='EU';									# Will change these two variables later as needed.
 our $mydxcc='DL';
+
+our $cqinterval='10';									# from the start of cq to the start of the next cq
+our $cqrepeat=0;									# set/unset (a toggle) to repeat
+our $wantcqrepeat=0;									# configuration option
 
 ###############################################################################
 #  Stuff starts happening here !!
@@ -339,6 +344,10 @@ my $ch='';
 if (length ($ops) > 13) {$ops = substr $ops, 0, 13;}
 if ($ops) {addstr($wmain, 22, 62, "Op: $ops");}
 
+my $oldband = $qso{'band'};								# used to insure cqrepeats are requested anew
+my $oldmode = $qso{'mode'};                                                             #    after band or mode changes
+my $oldtime = (time + $cqinterval);							# timer i.e. oldtime = (time + $cqinterval)
+
 # net_receiveqso will write received network QSOs to @net_qsos, which is a data
 # structure like @qsos, and can be pushed into @qsos
 # my $net_thread = threads->new(\&net_receiveqso);
@@ -373,15 +382,40 @@ while (1) {										# begin main logging loop
 		&rigctld('get') unless ($editnr || ($counter % 20) || (!$rigctld));
 		$counter++;
 
+		if ($wantcqrepeat && $cqrepeat && !$editnr && ($qso{'mode'} eq 'CW') && ($activefield eq 'call') && ($curpos eq 0)) {
+			if (($qso{'band'} ne $oldband) or ($qso{'mode'} ne $oldmode)) {
+				$cqrepeat = 0;
+				&sendcw('esc');
+			}
+			elsif (time > $oldtime) {
+				&sendcw('f1');
+				$oldtime = (time + $cqinterval);
+			}
+		}
+		$oldband = $qso{'band'};
+		$oldmode = $qso{'mode'};
+
 		my $ch = &readakey(\$wmain, \%qso, $entryfields, \$activefield,
 				\$curpos, \@validchars, \@validentry);	
 
 		if ($ch ne 'ok') {							# some special key/function pressed
 			if (!$editnr && ($ch =~ /^(f\d|ins|esc|plus|pgup|pgdwn)$/)) {
-				&sendcw($ch);
+				if ($ch eq 'f1' && $wantcqrepeat) {
+					($cqrepeat == 0) ? ($cqrepeat = 1) : ($cqrepeat = 0);
+					if (!$cqrepeat) { &sendcw('esc');}
+					$oldtime = time;
+				}
+				else{
+					if (!$wantcqrepeat){	
+						$cqrepeat = 0;
+					}
+					$oldtime = (time + 100);
+					&sendcw($ch);
+				}
 			}
 			elsif ($ch eq 'wipe') {						# Alt-w, F11
 				&wipeqso(\%qso, \$curpos, \$activefield);
+				$oldtime = (time + 2);
 			}
 			elsif ($ch eq 'help' || $ch eq 'rate' || $ch eq 'config') {	# alt-h or alt-r or alt-c
 
@@ -455,6 +489,7 @@ while (1) {										# begin main logging loop
 							\%s_mult2, \%s_dupes, \$s_sum);
 					}
 					&wipeqso(\%qso, \$curpos, \$activefield);
+					$oldtime = (time + 2);
 				}
 				elsif ($editnr && &logeditqso()) {	# edit old QSO
 					%{$qsos[$editnr-1]} = %qso;
@@ -464,6 +499,8 @@ while (1) {										# begin main logging loop
 #					addstr($wmain,23,0,"                                          ");
 					addstr($wmain,23,0,"     Logging Mode                            ");
 					&wipeqso(\%qso, \$curpos, \$activefield);
+					$oldtime = (time + 2);
+					$oldtime = (time + 2);
 				}
 				&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2,
 						\%s_dupes, $s_sum);
@@ -526,6 +563,8 @@ while (1) {										# begin main logging loop
 #			my $editnr = "5000";						# for testing $editnr formatting
 			addstr($wmain,23,4," QSO#    ");
 			addstr($wmain,23,13-(length($editnr))," $editnr QSY: F1/2, Mode: F3");
+			$cqrepeat = 0;							# dunno if this is better or....
+#			$oldtime = (time + 2);						# .....if this is better ?
 		}else{
 			attron($wmain,COLOR_PAIR(3));
 			addstr($wmain,23,0,"     Logging Mode               ");
