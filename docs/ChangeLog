@@ -1,4 +1,4 @@
-0.0.10-svn /    As of 09 Apr. 2012  - Bob, w9ya <w9ya@amsat.org>
+0.0.10-svn /    As of the week of 09-12 Apr. 2012  - Bob, w9ya <w9ya@amsat.org>
 
 CHANGES;
 
@@ -12,6 +12,10 @@ Changed editing subsroutine to take into account the new field INCLUDING having
 	an empty "ops" field.
 ADDED qrp-arci-qso-party contest template (def) file and mods for same in newcontest.pl .
 ADDED new overall multiplier ($multall) to the scoreqso.pl .
+Cabrillo file now writes required "3.0" instead of "3" .
+			 (As per Jeff-KA1DBE's note about robots et al)
+Lengthened cw message fields to 33 char. & spaces (EDITING limit) from 25.
+ADDED auto-cq-repeat, by toggling F1-keypresses, to allow "running stations".
 
 
 0.0.10-svn /    As of 25 Mar. 2012  - Bob, w9ya <w9ya@amsat.org>
