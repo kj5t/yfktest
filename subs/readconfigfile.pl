@@ -38,6 +38,12 @@ sub readconfigfile {
 		elsif ($line =~ /ops=(.+)/) {
 			$main::ops = uc($1);
 		}
+		elsif ($line =~ /wantcqrepeat=(.+)/) {
+			$main::wantcqrepeat = $1;
+		}
+		elsif ($line =~ /cqinterval=(.+)/) {
+			$main::cqinterval = $1;
+		}
 	}
 
 	close CONF;
