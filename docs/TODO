@@ -9,12 +9,10 @@ As of 29 Feb. 2012 - w9ya
 
 
 TO-DO (Before next release):
-Cabrillo file write requires "3.0" instead of "3" . (As per Jeff-KA1DBE's note about robots et al)
-Lengthen cw message fields to more than the current EDITING limit of 25 characters & spaces.
-Add repeat to outgoing cw messages to allow "running stations".
-Finish adding in QRP-ARCI-QSO-PARTY.def **INCLUDING triple stage mults AND different power questions
-	in newcontest.pl
 
+Fix esc-key i.e. allow immediate &sendcw('esc') from the esc-key as well as the alt+x keypress.
+Fix the intended (?/apparently) restoration of $tmpqso to restore (line22) fields aftr. editing.
+ 
 .......... ARRL-FD seems to replace "NR" as '5?' .
 .......... Winkey set-up screen needs info on which keys to use, perhaps status (red line 23 ?)
 ..........   "      "    - Are the selections themselves properly declared ?
