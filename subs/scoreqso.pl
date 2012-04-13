@@ -545,6 +545,21 @@ sub scoreqso {
 			$s_qsopts->{$qso{'band'}} += 2;
 		}
 	}
+	elsif ($main::defqsopts eq 'nmqso-nonnm') {		# NM QSO Party - Non-NM
+		my $qsopts=$qso{'exc2'};
+
+		if (defined($qsopts)) {
+
+			if (&isnmcounty($qsopts)) {
+				if ($qso{mode} eq 'SSB') {
+				$s_qsopts->{$qso{'band'}} += 1;
+				}
+				else { # Just a 2x "digital" contact
+				$s_qsopts->{$qso{'band'}} += 2;
+				}
+			}
+		}
+	}
 
 
 	#############################################
@@ -819,6 +834,24 @@ sub scoreqso {
 				$s_qsopts->{$qso{band}} += 5;
 		}
 	}
+	elsif ($main::defmult1 eq 'nmqso-nonnm') {		# NM QSO Party - Non-NM
+		my $mult=$qso{'exc2'};
+
+		if (defined($mult)) {
+
+			my $cty = (&dxcc($qso{'call'}, 'wae'))[7];
+
+			if ($cty =~ /^(K)$/) {				# state = mult
+				unless (&isnmcounty($mult)) {
+					$mult = '';			# Not a valid exchange!
+				}
+				if (!($s_mult1->{All} =~ / $mult /)) {
+					$s_mult1->{All} .= " $mult ";
+				}
+			}
+
+		}
+	}
 	elsif ($main::defmult1 eq 'state-prov') {	# US states, VE provs 
 			my $mult=$qso{'exc1'};
 
@@ -1069,6 +1102,18 @@ sub isveprov {
 	my $test = shift;
 	if ($test =~
 			/^(NB|NS|QC|ON|MB|SK|AB|BC|NWT|NF|LB|YT|PEI|NU)$/
+	) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+sub isnmcounty {
+	my $test = shift;
+	if ($test =~
+			/^(BER|CAT|CHA|CIB|COL|CUR|DEB|DON|EDD|GRA|GUA|HAR|HID|LEA|LIN|LOS|LUN|MCK|MOR|OTE|QUA|RIO|ROO|SJU|SMI|SAN|SFE|SIE|SOC|TAO|TOR|UNI|VAL)$/
 	) {
 		return 1;
 	}
