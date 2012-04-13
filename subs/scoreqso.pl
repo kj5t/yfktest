@@ -537,6 +537,14 @@ sub scoreqso {
 			}
 		}
 	}
+	elsif ($main::defqsopts eq 'nmqso') {
+		if ($qso{mode} eq 'SSB') {
+			$s_qsopts->{$qso{'band'}} += 1;
+		}
+		else { # Just a 2x "digital" contact
+			$s_qsopts->{$qso{'band'}} += 2;
+		}
+	}
 
 
 	#############################################
@@ -1008,6 +1016,11 @@ sub scoreqso {
 		elsif ($main::power eq '>250mW') { $multall = 10; }
 		elsif ($main::power eq '>55mW') { $multall = 15; }
 		else { $multall = 20; }
+	}
+	if ($main::defqsopts =~ /nmqso/) {
+		if ($main::power eq 'HIGH') { $multall = 1; }
+		elsif ($main::power eq 'LOW') { $multall = 2; }
+		else { $multall = 5; }
 	}
 
 	# Total points
