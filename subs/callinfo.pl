@@ -379,6 +379,25 @@ sub callinfo {
 
 	refresh($win);
 	}
+	elsif ($contest eq ('NM-QSO-PARTY' || 'NM-QSO-PARTY-NONNM')) {		# NM-QSO-PARTY: Shows Sections
+		my $mults = $main::s_mult1{'All'};
+		my @districts = qw/BER CAT CHA CIB COL CUR DEB DON EDD GRA GUA HAR HID LEA LIN LOS LUN MCK MOR OTE QUA RIO ROO SJU SMI SAN SFE SIE SOC TAO TOR UNI VAL/;
+
+		move($win, 0,0);
+		foreach my $d (@districts) {
+			if ($mults =~ / $d /) {
+				attron($win, COLOR_PAIR(2));
+			}
+			else {
+				attron($win, COLOR_PAIR(4));
+			}
+			addstr($win, $d);
+			attron($win, COLOR_PAIR(4));
+			addstr($win, " ") unless ($d =~ /EDD|MCK|SFE/);
+		}
+
+	refresh($win);
+	}
 	else {							# Show generic callsign info.
 		my @info = &dxcc($call);
 		if ($call eq '') { return 0; }
