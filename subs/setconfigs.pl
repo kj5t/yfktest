@@ -47,7 +47,7 @@ sub setconfigs {
 		addstr($wdialog3,17, 40 , "Enable the winkeyer hookup.");
 
 		$colorscheme = &chose(\$wdialog3, 7, 18, '0 1 2 3', $colorscheme);
-		$cqinterval = &chose(\$wdialog3, 8, 18, '4 6 8 10 12 14 16', $cqinterval);
+		$cqinterval = &chose(\$wdialog3, 8, 18, '4 6 8 10 12 14 16 18 20 22 24', $cqinterval);
 		$cwspeed = &chose(\$wdialog3, 9, 18, '18 20 22 24 26 28 30', $cwspeed);
 
 		attron($wdialog3,COLOR_PAIR(6));
