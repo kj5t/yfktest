@@ -1035,6 +1035,12 @@ sub scoreqso {
 				$s_mult2->{$qso{'band'}} .= " $mult ";
 		}
 	}	
+	elsif ($main::defqsopts =~ /arrlfd/) {	# ARRL-FD "wildcard" eye-candy data storage
+		my $mult = $qso{'exc2'};
+		unless ($s_mult2->{$qso{'band'}} =~ / $mult /) {
+				$s_mult2->{$qso{'band'}} .= " $mult ";
+		}
+	}
 
 	#######################################################
 	# Other stuff - could be used for the following:      #
@@ -1077,8 +1083,8 @@ sub scoreqso {
 		$s_qsopts->{20} + $s_qsopts->{15} + $s_qsopts->{10} +
 		$s_qsopts->{17} + $s_qsopts->{12} + $s_qsopts->{30}; 
 
-	if ($main::defqsopts eq 'foc') {	# no mults here, but mult hashes abused
-		${$_[7]} = $qsoptsum;
+	if (($main::defqsopts eq 'foc') || ($main::defqsopts eq 'arrlfd')) {
+		${$_[7]} = $qsoptsum;		# no mults here, but mult hashes abused
 	}
 	else {
 		${$_[7]} = $qsoptsum * $multsum * $multall;
