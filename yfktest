@@ -382,12 +382,12 @@ while (1) {										# begin main logging loop
 		&rigctld('get') unless ($editnr || ($counter % 20) || (!$rigctld));
 		$counter++;
 
-		if ($wantcqrepeat && $cqrepeat && !$editnr && ($qso{'mode'} eq 'CW') && ($activefield eq 'call') && ($curpos eq 0)) {
+		if ($wantcqrepeat && $cqrepeat && !$editnr && ($activefield eq 'call') && ($curpos eq 0)) {
 			if (($qso{'band'} ne $oldband) or ($qso{'mode'} ne $oldmode)) {
 				$cqrepeat = 0;
 				&sendcw('esc');
 			}
-			elsif (time > $oldtime) {
+			elsif (($qso{'mode'} eq 'CW') && (time > $oldtime)) {
 				&sendcw('f1');
 				$oldtime = (time + $cqinterval);
 			}
@@ -405,11 +405,10 @@ while (1) {										# begin main logging loop
 					if (!$cqrepeat) { &sendcw('esc');}
 					$oldtime = time;
 				}
-				else{
-					if (!$wantcqrepeat){	
-						$cqrepeat = 0;
-					}
-					$oldtime = (time + 100);
+				else {
+					if (!$wantcqrepeat) { $cqrepeat = 0; }
+					if ($ch eq 'esc') { $oldtime = time + ($cqinterval / 2); }
+					else { $oldtime = (time + 100); }
 					&sendcw($ch);
 				}
 			}
@@ -499,8 +498,7 @@ while (1) {										# begin main logging loop
 #					addstr($wmain,23,0,"                                          ");
 					addstr($wmain,23,0,"     Logging Mode                            ");
 					&wipeqso(\%qso, \$curpos, \$activefield);
-					$oldtime = (time + 2);
-					$oldtime = (time + 2);
+#					$oldtime = (time + 2);				# dunno if this is needed ???
 				}
 				&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2,
 						\%s_dupes, $s_sum);
@@ -568,6 +566,11 @@ while (1) {										# begin main logging loop
 		}else{
 			attron($wmain,COLOR_PAIR(3));
 			addstr($wmain,23,0,"     Logging Mode               ");
+			if ($wantcqrepeat && $cqrepeat && !$editnr && ($qso{'mode'} eq 'CW')) {
+#				addstr($wmain,23,0,"     Running Mode               ");
+				attron($wmain,COLOR_PAIR(6));
+				addstr($wmain,23,5,"Running");
+			}
 			if ($dupe){
 				attron($wmain,COLOR_PAIR(6));
 				addstr($wmain,23,18,"DUPE");				# ...sigh
