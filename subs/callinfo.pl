@@ -379,7 +379,7 @@ sub callinfo {
 
 	refresh($win);
 	}
-	elsif ($contest eq ('NM-QSO-PARTY') || ('NM-QSO-NONNM')) {		# NM-QSO-PARTY: Shows Sections
+	elsif (($contest eq 'NM-QSO-PARTY') || ($contest eq 'NM-QSO-NONNM')) {		# NM-QSO-PARTY: Shows Sections
 		my $mults = $main::s_mult1{'All'};
 		my @districts = qw/BER CAT CHA CIB COL CUR DEB DON EDD GRA GUA HAR HID LEA LIN LOS LUN MCK MOR OTE QUA RIO ROO SJU SMI SAN SFE SIE SOC TAO TOR UNI VAL/;
 
