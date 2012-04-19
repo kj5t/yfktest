@@ -265,7 +265,7 @@ sub writelog {
 		$t_mult2  += &count($main::s_mult2{'All'});
 
 		my $s_sum = $main::s_sum;
-		1 while $s_sum =~ s/^(\d+)(\d{3,3})/$1.$2/;
+		1 while $s_sum =~ s/^(\d+)(\d{3,3})/$1,$2/;
 
 		printf(SUM " ALL   %4d    %4d    %4d    %4d     %3d\r\n"
 				, $t_qso, $t_qsopts, $t_dupes, $t_mult1, $t_mult2);
