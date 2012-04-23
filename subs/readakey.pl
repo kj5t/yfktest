@@ -204,6 +204,11 @@ sub readakey {
 	}
 	elsif (($activefield eq 'exc3') && ($entryfields > 2)) {
 			my $text = $_[1]->{'exc3'};
+
+			if ($text eq '') {
+					$text = &guessexchange(3);
+			}
+
 			($curpos, $text, $nextfield) = 
 			&editfield($ch, $curpos, $validchars[2], $text, 'exc4', $exc3len);
 		
@@ -303,44 +308,74 @@ sub refreshscreen {
 	addstr($$window, 22, 9, $qso{'mode'}.'  ');
 	addstr($$window, 22, 13, &gettime());
 	addstr($$window, 22, 18, $qso{'call'}.'            ');
-	addstr($$window, 22, 31, $qso{'rst'}.'   ');
-	addstr($$window, 22, 37, $qso{'exc1'}.' 'x$exc1len);
-	addstr($$window, 22, 43, $qso{'exc2'}.' 'x$exc2len);
-	addstr($$window, 22, 49, $qso{'exc3'}.' 'x$exc3len);
-	addstr($$window, 22, 55, $qso{'exc4'}.' 'x$exc4len);
+	if ($contest eq 'QRP-TTF') {
+		addstr($$window, 22, 31, $qso{'exc1'}.' 'x$exc1len);
+		addstr($$window, 22, 37, $qso{'exc2'}.' 'x$exc2len);
+		addstr($$window, 22, 43, $qso{'exc3'}.' 'x$exc3len);
 
 
-	move($$window, 22, 0);
-	chgat($$window, -1, A_NORMAL, 1, 0);
-	if ($activefield eq 'call') {
-		move($$window, 22, 18);
-		chgat($$window, 12, A_REVERSE, 1, 0);
-		move($$window, 22, 18+$curpos);
-	}
-	elsif ($activefield eq 'rst') {
-		move($$window, 22, 31);
-		chgat($$window, 3, A_REVERSE, 1, 0);
-		move($$window, 22, 31+$curpos);
-	}
-	elsif ($activefield eq 'exc1') {
-		move($$window, 22, 37);
-		chgat($$window, $exc1len, A_REVERSE, 1, 0);
-		move($$window, 22, 37+$curpos);
-	}
-	elsif ($activefield eq 'exc2') {
-		move($$window, 22, 43);
-		chgat($$window, $exc2len, A_REVERSE, 1, 0);
-		move($$window, 22, 43+$curpos);
-	}
-	elsif ($activefield eq 'exc3') {
-		move($$window, 22, 49);
-		chgat($$window, $exc3len, A_REVERSE, 1, 0);
-		move($$window, 22, 49+$curpos);
-	}
-	elsif ($activefield eq 'exc4') {
-		move($$window, 22, 55);
-		chgat($$window, $exc4len, A_REVERSE, 1, 0);
-		move($$window, 22, 55+$curpos);
+		move($$window, 22, 0);
+		chgat($$window, -1, A_NORMAL, 1, 0);
+		if ($activefield eq 'call') {
+			move($$window, 22, 18);
+			chgat($$window, 12, A_REVERSE, 1, 0);
+			move($$window, 22, 18+$curpos);
+		}
+		elsif ($activefield eq 'exc1') {
+			move($$window, 22, 31);
+			chgat($$window, $exc1len, A_REVERSE, 1, 0);
+			move($$window, 22, 31+$curpos);
+		}
+		elsif ($activefield eq 'exc2') {
+			move($$window, 22, 37);
+			chgat($$window, $exc2len, A_REVERSE, 1, 0);
+			move($$window, 22, 37+$curpos);
+		}
+		elsif ($activefield eq 'exc3') {
+			move($$window, 22, 43);
+			chgat($$window, $exc3len, A_REVERSE, 1, 0);
+			move($$window, 22, 43+$curpos);
+		}
+	}else{
+		addstr($$window, 22, 31, $qso{'rst'}.'   ');
+		addstr($$window, 22, 37, $qso{'exc1'}.' 'x$exc1len);
+		addstr($$window, 22, 43, $qso{'exc2'}.' 'x$exc2len);
+		addstr($$window, 22, 49, $qso{'exc3'}.' 'x$exc3len);
+		addstr($$window, 22, 55, $qso{'exc4'}.' 'x$exc4len);
+
+
+		move($$window, 22, 0);
+		chgat($$window, -1, A_NORMAL, 1, 0);
+		if ($activefield eq 'call') {
+			move($$window, 22, 18);
+			chgat($$window, 12, A_REVERSE, 1, 0);
+			move($$window, 22, 18+$curpos);
+		}
+		elsif ($activefield eq 'rst') {
+			move($$window, 22, 31);
+			chgat($$window, 3, A_REVERSE, 1, 0);
+			move($$window, 22, 31+$curpos);
+		}
+		elsif ($activefield eq 'exc1') {
+			move($$window, 22, 37);
+			chgat($$window, $exc1len, A_REVERSE, 1, 0);
+			move($$window, 22, 37+$curpos);
+		}
+		elsif ($activefield eq 'exc2') {
+			move($$window, 22, 43);
+			chgat($$window, $exc2len, A_REVERSE, 1, 0);
+			move($$window, 22, 43+$curpos);
+		}
+		elsif ($activefield eq 'exc3') {
+			move($$window, 22, 49);
+			chgat($$window, $exc3len, A_REVERSE, 1, 0);
+			move($$window, 22, 49+$curpos);
+		}
+		elsif ($activefield eq 'exc4') {
+			move($$window, 22, 55);
+			chgat($$window, $exc4len, A_REVERSE, 1, 0);
+			move($$window, 22, 55+$curpos);
+		}
 	}
 	curs_set(1);
 	refresh($$window);
