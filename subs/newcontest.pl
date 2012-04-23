@@ -155,9 +155,13 @@ if ($contest eq 'QRP-ARCI-QSO-PARTY'){
 }else{	
 	$power = &chose(\$wdialog, 7, 20, 'HIGH LOW QRP QRP-BATTERY', $power);
 }
-$transmitter = &chose(\$wdialog, 8, 20, 'ONE TWO LIMITED UNLIMITED SWL',
+if ($contest eq 'QRP-TTF') {
+	$transmitter = &chose(\$wdialog, 8, 20, 'HOME HILL SUMMIT SOTA-SUMMIT',
 		$transmitter);
-
+}else{
+	$transmitter = &chose(\$wdialog, 8, 20, 'ONE TWO LIMITED UNLIMITED SWL',
+		$transmitter);
+}
 if ($main::fixexchange eq 'exc1s') {
 	$main::exc1s = &readw(\$wdialog, 9, 20, 'call', $fix);
 	$fix = $main::exc1s;
