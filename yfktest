@@ -261,6 +261,12 @@ if ($modes eq 'SSB') {
 
 ($qso{'band'} = $bands) =~ s/[MG]$// if ($bands ne 'ALL');
 
+if (($main::exc1s =~ /\//) && ($main::contest ne 'NAQP')) {
+	my $fix = $main::exc1s;
+	($main::exc1s, $main::exc2s) = split (/\//, $fix);
+}
+
+
 # Activate Hamlib if needed.
 
 &hamrigctrl();
@@ -342,7 +348,8 @@ my $ch='';
 &checkcall(\$wcheck, \@qsos, 'blabla');
 
 if (length ($ops) > 13) {$ops = substr $ops, 0, 13;}
-if ($ops) {addstr($wmain, 22, 62, "Op: $ops");}
+if ($ops) {addstr($wmain, 9, 62, "Op: $ops");}
+unless ($contest eq 'DXPED') {addstr($wmain, 9, 46, "$contest");}
 
 my $oldband = $qso{'band'};								# used to insure cqrepeats are requested anew
 my $oldmode = $qso{'mode'};                                                             #    after band or mode changes
@@ -438,13 +445,13 @@ while (1) {										# begin main logging loop
 				&checkcall(\$wcheck, \@qsos, $qso{'call'});
 				&callinfo();
 				if ($ops) {
-					addstr($wmain, 22, 62, "                 ");
+					addstr($wmain, 9, 62, "                 ");
 					if (length ($ops) > 13) {
 						$ops = substr $ops, 0, 13;
 					}
-					addstr($wmain, 22, 62, "Op: $ops");
+					addstr($wmain, 9, 62, "Op: $ops");
 				}else{
-					addstr($wmain, 22, 62, "                 ");
+					addstr($wmain, 9, 62, "                 ");
 				}
 			}
 			elsif ($ch eq 'keyboard') {					# Alt-k
