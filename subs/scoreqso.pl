@@ -561,7 +561,6 @@ sub scoreqso {
 		}
 	}
 
-
 	#############################################
 	# Mult 1 - can be one of the following:
 	#  * Prefix
@@ -901,6 +900,9 @@ sub scoreqso {
 	elsif ($main::contest =~ /ALLASIAN/) {
 		$main::guesshash{$qso{call}} = $qso{exc1};
 	}
+	elsif ($main::contest eq 'QRP-TTF') { # changed to ! becuase both / es - in field 
+		$main::guesshash{$qso{call}} = $qso{exc1}.'!'.$qso{exc2}.'!'.$qso{exc3};
+	}
 
 
 
@@ -1041,6 +1043,14 @@ sub scoreqso {
 				$s_mult2->{$qso{'band'}} .= " $mult ";
 		}
 	}
+	elsif ($main::defmult2 =~ /qrpttf/) {		# SOTA station counts as one more mult
+		if ($qso{'exc3'} =~ /\//) {
+			my $mult = $qso{'exc3'};
+#			unless ($s_mult2->{$qso{'band'}} =~ / $mult /) {
+					$s_mult2->{$qso{'band'}} .= " $mult ";
+#			}
+		}
+	}
 
 	#######################################################
 	# Other stuff - could be used for the following:      #
@@ -1061,6 +1071,12 @@ sub scoreqso {
 		elsif ($main::power eq 'LOW') { $multall = 2; }
 		else { $multall = 5; }
 	}
+	if ($main::defmult2 =~ /qrpttf/) {
+		if ($main::transmitter eq 'HOME') { $multall = 1; }
+		elsif ($main::transmitter eq 'HILL') { $multall = 2; }
+		elsif ($main::transmitter eq 'SUMMIT') { $multall = 3; }
+		else { $multall = 4; }
+	}
 
 	# Total points
 
@@ -1079,12 +1095,27 @@ sub scoreqso {
 				&count($s_mult2->{30}) +
 				&count($s_mult2->{'All'});
 
-	my $qsoptsum = $s_qsopts->{160} + $s_qsopts->{80} + $s_qsopts->{40} + 
-		$s_qsopts->{20} + $s_qsopts->{15} + $s_qsopts->{10} +
-		$s_qsopts->{17} + $s_qsopts->{12} + $s_qsopts->{30}; 
+	my $qsoptsum = 0;
+
+	if ($main::defmult2 =~ /qrpttf/) {
+		$qsoptsum = 
+			($s_qsopts->{160} * (&count($s_mult1->{160}) + &count($s_mult2->{160}))) +
+			($s_qsopts->{80} * (&count($s_mult1->{80}) + &count($s_mult2->{80}))) +
+			($s_qsopts->{40} * (&count($s_mult1->{40}) + &count($s_mult2->{40}))) +
+			($s_qsopts->{20} * (&count($s_mult1->{20}) + &count($s_mult2->{20}))) +
+			($s_qsopts->{15} * (&count($s_mult1->{15}) + &count($s_mult2->{15}))) +
+			($s_qsopts->{10} * (&count($s_mult1->{10}) + &count($s_mult2->{10})));
+	}else{
+		$qsoptsum = $s_qsopts->{160} + $s_qsopts->{80} + $s_qsopts->{40} + 
+			$s_qsopts->{20} + $s_qsopts->{15} + $s_qsopts->{10} +
+			$s_qsopts->{17} + $s_qsopts->{12} + $s_qsopts->{30};
+	}
 
 	if (($main::defqsopts eq 'foc') || ($main::defqsopts eq 'arrlfd')) {
 		${$_[7]} = $qsoptsum;		# no mults here, but mult hashes abused
+	}
+	elsif ($main::defmult2 eq 'qrpttf') {
+		${$_[7]} = $qsoptsum * $multall; # strict per band mults requirement
 	}
 	else {
 		${$_[7]} = $qsoptsum * $multsum * $multall;
