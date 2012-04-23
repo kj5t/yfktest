@@ -8,10 +8,15 @@ WHY? -  O.K....so we ALL know the docs are for sissys and real guys
 
 HOW? - :
 
-1) Open a terminal window by pressing the keys below:
+1) Open a terminal window by pressing the keys below if your using
+	Ubuntu or something similar:
 
 	Ctrl+Alt+t	(The + is not typed, it means to hold the
 				keys down at the same time.)
+
+	(**** You could even run this, and I have, from any sort of
+		terminal, including the direct tty's in your *nix
+		install !!)
 
 2) Then type the following lines, one at a time, at the prompt:
 			(be sure NOT type the "<enter>", that's the
@@ -32,6 +37,10 @@ HOW? - :
 4) Then to run the program the first time:
 
 	./yfktest <enter>
+
+5) Be sure to read the info on the first/start screen. For more info on
+	the latest features; the docs/FAQ-NEW-INFO file is where the
+	latest documentation will be found.
 
 
 OOPS - :
@@ -61,4 +70,4 @@ Created: 06-Mar.-12 - Bob, w9ya
 Updated: 22-Mar.-12 - Bob, w9ya
 Updated: 25-Mar.-12 - Bob, w9ya
 Updated: 09-Apr.-12 - Bob, w9ya
-
+Updated: 23-Apr.-12 - Bob, w9ya
