@@ -1,0 +1,40 @@
+FAQ - Info on New Stuff - YFKtest
+
+- Wazzup with the outgoing cw messages, I cannot seem to enter in the full outgoing exchange ?
+
+Good question. The short answer is that you can enter in a two part message. the very last
+question you are asked when creating a new contest log is where you enter in the outgoing
+"exchange" info. You can deal with this in one of several ways. One method is to just enter
+it in as one message and then edit the cwmessages using the Alt+m keypress to change things
+to your liking. Another way, for the advanced user is to actually edit the log file pre-amble
+area. But perhaps the best way is brand new and at this time is only fully implemented for the
+QRP-TTF contest.: First when you intially answer the outgoing question (in this case My SPC/
+Name-SOTA) you place the two parts together separated by a forward-slash. In my case I would
+answer the qeustion like this; NM/BOB . This will be auto-magically separated into TWO
+variables: exc1s & exc2s. In the case of the QRP-TTF contest the outgoing message is preset
+to 'exc1s exc2s' and will outmagically send out the two parts as two parts !! Feedback on how
+well this new feature works for you would be appreciated.
+
+- Wazzup with the 'wantcqrepeat' and 'cqinterval' stuff in the Alt+c (keypressed) configuration
+menu ?
+
+Another good question !! ..Um, it's part of the new "CW-Running Mode". The first variable,
+wantcqrepeat, is what you set to "1" to enable this capablity. The second variable sets the
+time interval from the start of the each cq to the start of the NEXT cq.
+
+The F1 keypress works *exactly* like a momentary toggle switch when this mode is enabled.
+
+If you change band, mode, it is just like *immediately* turning this switch OFF. And if you
+go into log-editing mode the current cq will finish and *then* it will be turned off.
+
+Alt-x works just like before, killing the current keyer output BUT it does not turn off the
+"running mode" like the pressing the F1 key would.
+
+Finally once you start to enter info into the contact entry fields, the running is is paused
+until you clear those fields either by entering the compolted qso into the log by pressing the
+ENTER key or by "wiping" the pending qso by the F11 or the Alt+w keypress.
+
+Oh yeah....the status of this mode is indicated in the bottom line. It'll be in RED when it is
+enabled by the configration options and activated with the F1 keypress.
+
+23-April-2012 - W9YA
