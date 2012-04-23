@@ -94,9 +94,18 @@ sub guessexchange {
 			return (split(/\//, $main::guesshash{$main::qso{call}}))[0];
 		}
 	}
+#	elsif ($main::contest =~ /QRP-TTF/) {
+#		if ($main::lastguessed eq $main::qso{call}) {
+#			return '';
+#		}
+#		if (defined($main::guesshash{$main::qso{call}})) {
+#			return (split(/!/, $main::guesshash{$main::qso{call}}))[0];
+#		}
+#	}
 
 	} # guess exchange 1
-	else { # guess exchange 2
+#	else { # guess exchange 2
+	elsif ($_[0] == 2) {
 
 		if ($main::contest =~ /ARRL-FD/) {
 			if ($main::lastguessed eq $main::qso{call}) {
@@ -104,6 +113,14 @@ sub guessexchange {
 			}
 			if (defined($main::guesshash{$main::qso{call}})) {
 				return (split(/\//, $main::guesshash{$main::qso{call}}))[1];
+			}
+		}
+		if ($main::contest =~ /QRP-TTF/) {
+			if ($main::lastguessed eq $main::qso{call}) {
+				return '';
+			}
+			if (defined($main::guesshash{$main::qso{call}})) {
+				return (split(/!/, $main::guesshash{$main::qso{call}}))[1];
 			}
 		}
 		if ($main::contest eq 'NRA') {
@@ -133,9 +150,19 @@ sub guessexchange {
 #			}
 #		}
 	}
-
-
+	elsif ($_[0] == 3) { # guess exchange 3
+		if ($main::contest =~ /QRP-TTF/) {
+			if ($main::lastguessed eq $main::qso{call}) {
+				return '';
+			}
+			if (defined($main::guesshash{$main::qso{call}})) {
+				return (split(/!/, $main::guesshash{$main::qso{call}}))[2];
+			}
+		}
 	}
+
+
+}
 
 return 1;
 
