@@ -51,6 +51,10 @@ See docs/ARRL-FD-HOW-TO.txt for instructions on setting up and using yfktest
 with Ubuntu Linux. Version 10.10 and 11.10 have been tested. Later versions
 should work as well and possibly earlier versions that are not too old.
 
+The docs/FAQ-NEW-INFO file contains info that may help you use the latest
+features. If it's brand new to the package, the documentation will in this
+file before anywhere else.
+
 NOTE: *** Installation with the makefile in misc/ is not needed and certainly
 not recommended for personal use. (i.e. None of the contributors are running
 the makefile install ! .... Using yfktest with such "packaging" has not been
@@ -85,3 +89,4 @@ Further contact details can be found at: http://fkurz.net/
 *changed/updated 09 July 2011, w9ya
 *changed/updated 29 Feb  2012, w9ya
 *changed/updated 09 Apr  2012, w9ya
+*changed/updated 23 Apr  2012, w9ya
