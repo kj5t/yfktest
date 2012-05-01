@@ -55,6 +55,8 @@
 ## Version 1.0, 13/12/2007
 ### Modified June-2011 from the original init. sequence 2 a simple open(/test).
 ### Bob - W9YA (Done for non-conflicting use with yfktest and WkDemo.)
+### Modified May-2012 to match init seq. outlined in K1EL Application Guide v.1.1
+### Bob - W9YA (Now inits both V1 and V2 Winkeyer devices
 
 use Device::SerialPort qw( :PARAM :STAT 0.07 );
 use IO::Socket;
@@ -116,10 +118,13 @@ my $timeout = 0;
  	
 ########### Initialize keyer
  
+ $keyernops = sprintf ("%c%c%c%c", 0x13, 0x13, 0x13, 0x13);		## send nops to sync wk1
+ $count = $port->write($keyernops);
+
  $keyeropen = sprintf ("%c%c", 0x00, 2);		## open keyer interface
  $count = $port->write($keyeropen);
+
 # sleep 1;
- select undef,undef,undef, 0.3;
  
 # $keyertune = sprintf ("%c%c", 0x0B, 0x01);		## key down
 # $count = $port->write($keyertune);
