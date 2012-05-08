@@ -1,0 +1,646 @@
+#!/usr/bin/perl -w
+
+# yfktest - a simple, single operator ham radio contest logbook
+# 
+# Copyright (C) 2008  Fabian Kurz, DJ1YFK
+# Copyright (C) 2012  Bob Finch, W9YA & David Quental, CT1DRB & OTHERS
+#
+# This program is free software; you can redistribute it and/or modify 
+# it under the terms of the GNU General Public License as published by 
+# the Free Software Foundation; either version 2 of the License, or 
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License 
+# along with this program; if not, write to the 
+# Free Software Foundation, Inc., 59 Temple Place - Suite 330, 
+# Boston, MA 02111-1307, USA. 
+
+use strict;
+use Curses;
+#use IO::Socket;
+#use threads;
+#use threads::shared;
+use IO::Socket::INET;
+
+our $VERSION="0.0.10";
+
+# Since Hamlib may be unavailable, 'use Hamlib' might cause the
+# program to fail to lead, so we eval a require instead to test for
+# it's existance and loadability.
+
+our $hashamlib = eval { require Hamlib };
+if ($hashamlib) {
+	import Hamlib;									# Import the needed symbols if we loaded it ok.
+}
+
+our $hamlibsock; 									# initialized later, if needed.
+our $hamlibrigd;
+our $cwsocket;
+
+our $netname = "STN1";									# will be overridden later by found path
+our $contestpath = "defs/";
+
+load_subs("newcontest.pl");
+load_subs("filebrowser.pl");
+load_subs("checkmulti1.pl");
+load_subs("checkcall.pl");
+load_subs("showscore.pl");
+load_subs("partialcheck.pl");
+load_subs("readakey.pl");
+load_subs("wipeqso.pl");
+load_subs("qsy.pl");
+load_subs("logqso.pl");
+load_subs("displaylog.pl");
+load_subs("scoreqso.pl");
+load_subs("readlog.pl");
+load_subs("dupecheck.pl");
+load_subs("rate.pl");
+load_subs("readrules.pl");
+load_subs("writelog.pl");
+load_subs("sendcw.pl");
+load_subs("dxcc.pl");
+#load_subs("iota.pl");
+load_subs("callinfo.pl");
+load_subs("rigctld.pl");
+load_subs("keyboardmode.pl");
+load_subs("editcwmessages.pl");
+load_subs("guessexchange.pl");
+load_subs("readconfigfile.pl");
+load_subs("showhelp.pl");
+load_subs("rategraph.pl");
+#load_subs("subs/net_receiveqso.pl");
+load_subs("hamrigctrl.pl");
+load_subs("winkeyer.pl");
+load_subs("colorinfo.pl");
+load_subs("setconfigs.pl");
+load_subs("whichlogfile.pl");
+load_subs("sendvoice.pl");
+
+
+our $version = "0.0.10";
+
+our ($contest,										# definition file: defs/$contest.def
+	$filename,									# of this current contest log
+	$mycall,
+	$assisted,									# for cabrillo log
+	$bands,				
+	$modes,	
+	$operator,
+	$power,
+	$transmitter);
+
+our $entryfields = 1;									# contest dependant
+our $activefield = 'call';
+
+our $tabnextfield = 0;
+
+our $cabrilloline='no cabrillo format defined!';					# printf-string for the cabrillo output
+our $cabrillovalues='band date utc ...';
+our $cabrilloname='CONTEST-NAME';
+
+our ($exc1len, $exc2len, $exc3len, $exc4len) = (4,4,4,4);
+
+our $fixexchange='';									# fixed exchange like in IOTA, ITU etc.
+											# contains which exchange will be fixed, i.e. exc1, 2..
+our $fixexchangename='';								# what to ask the user for, like "IOTA-Ref:"?
+our $exc1s = '';									# actual value of the fixed exchange value
+our $exc2s = '';
+
+our $tmp='';
+
+our $counter=0;
+our $counter1=0;
+my $curpos = 0;
+
+our $lastguessed = '';									# For guessexchange-only consider every callsign once & saved
+our %guesshash = ();									# A hash for use with guessexchange, i.e. "callsign -> State"
+
+our @validchars = ('[0-9A-Za-z]', '', '', '');						# Valid characters for the 4 entry fields-(read from def file)
+our @validentry = ('.+', '', '', '');							# Valid complete entries that can be logged 
+											# (will be read from def file)
+
+
+my $oldcall='';										# check if call was changed. otherwise no PC/SCP
+
+our $editnr=0;										# the QSO which is currently being edited (if any),
+											# 0 = no QSO being edited, normal operation
+my $oldeditnr = 0;									# we have to check if it changes now and then
+
+our $nologdupe=0;
+our $dupe=0;
+our $invalid=0;										# callsign validation variable
+
+our $colorscheme=0;
+
+our $rigmodel = ''; 
+our $rigpath = '';
+our $rigctl=0;
+our $rigctld=1;
+our $rig=1;
+
+our $winkeypath = '';
+our $winkey=1;
+our $cwspeed=20;
+
+our %s_qsos = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" => 0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0);
+our %s_qsopts = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" => 0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0);
+our %s_mult1 = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" =>0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0, "All" => 0);
+our %s_mult2 = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" =>0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0, "All" => 0);
+our %s_dupes = ("160" => 0,"80" => 0,"60" => 0,"40" => 0,"30" => 0,"20" => 0,"17" =>0,"15" => 0,"12" => 0,"10" => 0,"6" => 0,"2" => 0, "All" => 0);
+our $s_sum = 0;
+
+
+our ($defmult1, $defmult2, $defqsopts);
+
+
+our @qsos;										# Array of hashes with single QSOs.
+#our @net_qsos : shared;								# Array of hashes with single QSOs received over the net
+
+our @cwmessages  = ('');
+our $showmsgkeys = 0;
+
+open SCP, find_file("master.scp");
+our @scp = <SCP>;
+$scp[1] = $scp[2] = '';
+close SCP;
+
+our $ops ='';										# handle (or call) of the station op(s)
+our $tmpops = $ops;									# 4 checking a change in ops' handle, SHUD be $oldops ? 
+
+our %qso = (										# The current QSO
+		'nr' => 1,
+		'utc' => '',
+		'date' => '20070101',
+		'call' => '',
+		'rst' => '599',
+		'excs' => '',								# sent exchange
+		'exc1' => '',
+		'exc2' => '',
+		'exc3' => '',
+		'exc4' => '',
+		'band' => '20',
+		'freq' => '',
+		'mode' => 'CW',
+#		'mode' => 'SSB',							# for testing $cqrepeat stuff
+		'stn' => $netname ,
+		'ops' => ''
+);
+
+# our %net_qso : shared = ();
+
+our %tmpqso;										# current Q will be saved here while editing prev QSOs
+
+our $mycont='EU';									# Will change these two variables later as needed.
+our $mydxcc='DL';
+
+our $cqinterval='10';									# from the start of cq to the start of the next cq
+our $cqrepeat=0;									# set/unset (a toggle) to repeat
+our $wantcqrepeat=0;									# configuration option
+
+###############################################################################
+#  Stuff starts happening here !!
+###############################################################################
+
+initscr();
+noecho();
+keypad(1);
+
+if (!has_colors) {
+		die "Your terminal can't display colors.";
+}
+
+start_color();
+curs_set(0);
+
+printw "YFKtest v$version - Copyright (C) 2008 Fabian Kurz, DJ1YFK
+Copyright (C) 2012 Bob Finch, W9YA & David Quental, CT1DRB & Others.
+Licensing information is in the \"COPYING\" file in the docs folder.
+
+*  FIRST - Make sure the caps lock is NOT on.
+
+**  SECOND - Use: ALT+o (or on some computers ALT+h) for help, ALT+c
+for configuration, and ALT+m to edit the cw messages.
+
+***  THIRD - Most contests have more than one part to the exchange.
+EACH part of the exchange is in a separate entry field & you use the
+spacebar to move to each one. For cw xmit you can add a space between
+the parts so one key (usually the <F2> key) xmits the full exchange.
+For the latest info on this: you can read the docs/FAQ-NEW-INFO file.
+
+****  FOURTH - Turn off the rig-control & winkeyer via the ALT+c
+screen & the program will stop asking about this when you start it !
+
+***** FIFTH - Here's an example of how to start yfktest & auto-load an
+existing log (FD for instance); ./yfktest ARRL-FD.yfk (& press <enter>.)
+
+***********  That's it ! - Press the ENTER key & begin using yfktest.";
+
+getch();
+
+readconfigfile();									# Look for ~/.yfktest config file...
+
+# Select the color scheme...
+
+colorinfo();
+
+# If a file was supplied as command line argument, continue this contest,
+# otherwise start a new contest or ask for a filename...
+
+whichlogfile();
+
+my @tmp = &dxcc($mycall);
+($mydxcc, $mycont) = @tmp[7,3];
+
+if ($modes eq 'SSB') {
+	$qso{'mode'} = 'SSB';
+	$qso{'rst'} = '59';
+}
+
+($qso{'band'} = $bands) =~ s/[MG]$// if ($bands ne 'ALL');
+
+if (($main::exc1s =~ /\//) && ($main::contest ne 'NAQP')) {
+	my $fix = $main::exc1s;
+	($main::exc1s, $main::exc2s) = split (/\//, $fix);
+}
+
+
+# Activate Hamlib if needed.
+
+&hamrigctrl();
+
+	$hamlibsock = new IO::Socket::INET ( PeerAddr => 'localhost',
+		PeerPort => 4532, Proto => 'tcp');
+
+# Activate Winkey if needed.
+
+&winkeyer();
+
+	$cwsocket = IO::Socket::INET->new(PeerAddr => "localhost",
+		PeerPort => "6789", Proto    => "udp", Type     => SOCK_DGRAM,)
+		or die "Cannot open socket for CWdaemon.\n";
+
+print $cwsocket chr(27)."2$cwspeed";
+
+# Add "secret" F8 and F9 CW-Messages.
+
+$cwmessages[7] = '73';
+$cwmessages[8] = 'SRI WRK B4';
+
+# Adjust scp if wanted/needed.
+
+if ($contest eq "ARRL-FD"){
+	close SCP;
+	open SCP, find_file("dummy.scp");
+	@scp = <SCP>;
+	$scp[1] = $scp[2] = '';
+	close SCP;
+}
+
+##############################################################################
+# Actual logging starts here
+##############################################################################
+
+our $wmain = newwin(24,80,0,0);
+attron($wmain, COLOR_PAIR(3));
+addstr($wmain, 0,0, ' 'x(24*80));
+addstr($wmain, 23, 0, "     Logging Mode                             ALT+o/h:Help ");
+refresh($wmain);
+
+our $wcheck = newwin(($contest eq 'DXPED' ? 10 : 7), 38,0,0);
+attron($wcheck, COLOR_PAIR(4));
+
+our $winfo = newwin(($contest eq 'DXPED' ? 3 : 6), 35, 
+	($contest eq 'DXPED' ?  11 : 8),0);
+attron($winfo, COLOR_PAIR(4));
+addstr($winfo, 0,0, ' 'x(6*35));
+refresh($winfo); 
+	
+our $wshowscore = newwin(10,21,14,59);
+our $wpartialcheck = newwin(9,40,0,39);
+
+if ($contest eq "ARRL-FD"){
+	$winfo = newwin(6,45,8,0);
+	attron($winfo, COLOR_PAIR(4));
+	addstr($winfo, 0,0, ' 'x(6*45));
+	refresh($winfo); 
+	
+	$wshowscore = newwin(10,21,14,59);
+	$wpartialcheck = newwin(7,40,0,39);
+}
+
+our $wrate = newwin(4, 16, 10, 62);
+attron($wrate, COLOR_PAIR(4));
+addstr($wrate, 0,0, "   QSO Rates:   ");
+addstr($wrate, 1,0, " "x66);
+addstr($wrate, 3,0, "  CW-Speed: $cwspeed");
+refresh($wrate);
+
+my $ch='';
+
+# initial display
+&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2, \%s_dupes, $s_sum);
+&rate(\$wrate, \@qsos);
+&displaylog(\$wmain, \@qsos, 0);
+&partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
+&checkcall(\$wcheck, \@qsos, 'blabla');
+
+if (length ($ops) > 13) {$ops = substr $ops, 0, 13;}
+if ($ops) {addstr($wmain, 9, 62, "Op: $ops");}
+unless ($contest eq 'DXPED') {addstr($wmain, 9, 46, "$contest");}
+
+my $oldband = $qso{'band'};								# used to insure cqrepeats are requested anew
+my $oldmode = $qso{'mode'};                                                             #    after band or mode changes
+my $oldtime = (time + $cqinterval);							# timer i.e. oldtime = (time + $cqinterval)
+
+# net_receiveqso will write received network QSOs to @net_qsos, which is a data
+# structure like @qsos, and can be pushed into @qsos
+# my $net_thread = threads->new(\&net_receiveqso);
+
+
+halfdelay(1);
+while (1) {										# begin main logging loop
+
+#		if (keys(%net_qso)) {
+#			&logqso(\%net_qso,\@qsos,\@validentry, $filename);
+#			&scoreqso(\%net_qso, \@qsos, \%s_qsos, \%s_qsopts, \%s_mult1,
+#						\%s_mult2, \%s_dupes, \$s_sum);
+#			&displaylog(\$wmain, \@qsos, $editnr);
+#			&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2,
+#						\%s_dupes, $s_sum);
+#			&rate(\$wrate, \@qsos);
+#			%net_qso = ();
+#		}
+
+		if (($qso{'call'} ne $oldcall) or ($oldeditnr != $editnr)) {
+			if (@qsos ne 0){
+				&displaylog(\$wmain, \@qsos, $editnr);
+			}
+			&partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
+			&checkcall(\$wcheck, \@qsos, $qso{'call'});
+			&dupecheck(\$wmain, \%qso, \@qsos) unless $editnr;
+			&callinfo();
+		}
+		$oldcall = $qso{'call'};
+		$oldeditnr = $editnr;
+
+		&rigctld('get') unless ($editnr || ($counter % 20) || (!$rigctld));
+		$counter++;
+
+		if ($wantcqrepeat && $cqrepeat && !$editnr && ($activefield eq 'call') && ($curpos eq 0)) {
+			if (($qso{'band'} ne $oldband) or ($qso{'mode'} ne $oldmode)) {
+				$cqrepeat = 0;
+				&sendcw('esc');
+			}
+			elsif (($qso{'mode'} eq 'CW') && (time > $oldtime)) {
+				&sendcw('f1');
+				$oldtime = (time + $cqinterval);
+			}
+			elsif (($qso{'mode'} eq 'SSB') && (time > $oldtime)) {
+				&sendvoice('f1');
+				$oldtime = (time + $cqinterval);
+			}
+		}
+		$oldband = $qso{'band'};
+		$oldmode = $qso{'mode'};
+
+		my $ch = &readakey(\$wmain, \%qso, $entryfields, \$activefield,
+				\$curpos, \@validchars, \@validentry);	
+
+		if ($ch ne 'ok') {							# some special key/function pressed
+			if (!$editnr && ($ch =~ /^(f\d|ins|esc|plus|pgup|pgdwn)$/)) {
+				if ($ch eq 'f1' && $wantcqrepeat) {
+					($cqrepeat == 0) ? ($cqrepeat = 1) : ($cqrepeat = 0);
+					if (!$cqrepeat) { &sendcw('esc');}
+					$oldtime = time;
+				}
+				else {
+					if (!$wantcqrepeat) { $cqrepeat = 0; }
+					if ($ch eq 'esc') { $oldtime = time + ($cqinterval / 2); }
+					else { $oldtime = (time + 100); }
+					&sendcw($ch);
+				}
+			}
+			elsif ($ch eq 'wipe') {						# Alt-w, F11
+				&wipeqso(\%qso, \$curpos, \$activefield);
+				$oldtime = (time + 2);
+			}
+			elsif ($ch eq 'help' || $ch eq 'rate' || $ch eq 'config') {	# alt-h or alt-r or alt-c
+
+				if ($ch eq 'help') { &showhelp(); }
+				elsif ($ch eq 'rate') { &rategraph(); }
+				else { &setconfigs(); }	
+
+				touchwin($wmain);					# Restore Screen etc.
+				touchwin($wrate);
+				if ($editnr){
+				&displaylog(\$wmain, \@qsos, $editnr);
+				}else{
+				&displaylog(\$wmain, \@qsos, 0);
+				}
+				&partialcheck(\$wpartialcheck, \%qso, \@qsos, \@scp);
+#				&checkcall(\$wcheck, \@qsos, $qso{'call'});
+				&checkcall(\$wcheck, \@qsos, 'blabla');
+				&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2, 
+						\%s_dupes, $s_sum);
+				&rate(\$wrate, \@qsos);
+				&checkcall(\$wcheck, \@qsos, $qso{'call'});
+				&callinfo();
+				if ($ops) {
+					addstr($wmain, 9, 62, "                 ");
+					if (length ($ops) > 13) {
+						$ops = substr $ops, 0, 13;
+					}
+					addstr($wmain, 9, 62, "Op: $ops");
+				}else{
+					addstr($wmain, 9, 62, "                 ");
+				}
+			}
+			elsif ($ch eq 'keyboard') {					# Alt-k
+				&keyboardmode() if ($qso{'mode'} eq 'CW');
+			}
+			elsif ($ch eq 'cwmessages') {					# Alt-m
+				&editcwmessages(\$wcheck);
+				addstr($wmain, 23, 0, "     Logging Mode                             ALT+o/h:Help ");
+				&checkcall(\$wcheck, \@qsos, 'blabla');
+				&checkcall(\$wcheck, \@qsos, $qso{'call'});
+			}
+#			elsif ($ch eq 'log' && !$dupe) {				# enter pressed
+			elsif (($ch eq 'log' && (!$nologdupe or !$dupe)) || ($ch eq 'override' && $dupe)){
+				if (!$editnr){
+					&qsy(\%qso, \$curpos);				# check for: '20M', 'SSB', '21025' etc.
+				}
+				if ($qso{'call'} eq 'QUIT') {
+					endwin;
+					system ("killall -9 rigctld");
+					print $cwsocket chr(27)."5";
+					system ("killall -9 winkeydaemon.pl");
+					print "Thanks for using YFKtest!\n";
+					exit;
+				}
+				if ($qso{'call'} eq 'EXIT') {
+					endwin;
+					system ("killall -9 rigctld");
+					print $cwsocket chr(27)."5";
+					system ("killall -9 winkeydaemon.pl");
+					print "Thanks for using YFKtest!\n";
+					exit;
+				}
+
+				# normal operation, not editing
+				if (!$editnr && &logqso(\%qso,\@qsos,\@validentry,$filename)) {
+					if ($qso{'call'} eq 'WRITELOG') {
+						&writelog();
+					}
+					else {
+					&scoreqso(\%qso, \@qsos, \%s_qsos, \%s_qsopts, \%s_mult1,
+							\%s_mult2, \%s_dupes, \$s_sum);
+					}
+					&wipeqso(\%qso, \$curpos, \$activefield);
+					$oldtime = (time + 2);
+				}
+				elsif ($editnr && &logeditqso()) {	# edit old QSO
+					%{$qsos[$editnr-1]} = %qso;
+					$editnr = 0;			# XXX No rescoring
+					%qso = %tmpqso;
+					delete $tmpqso{'call'};
+#					addstr($wmain,23,0,"                                          ");
+					addstr($wmain,23,0,"     Logging Mode                            ");
+					&wipeqso(\%qso, \$curpos, \$activefield);
+#					$oldtime = (time + 2);				# dunno if this is needed ???
+				}
+				&showscore(\$wshowscore, \%s_qsos, \%s_mult1, \%s_mult2,
+						\%s_dupes, $s_sum);
+				&rate(\$wrate, \@qsos);
+			}	# log
+			elsif ($ch eq 'up') {						# arrow up -> edit prev.
+				unless (defined($tmpqso{'call'})) {
+					%tmpqso = %qso;
+				}
+				
+				if ($editnr) {
+					attron($wmain,COLOR_PAIR(6));
+					addstr($wmain,23,0,"Edit");			# ...sigh
+					attron($wmain,COLOR_PAIR(3));
+#					addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
+					addstr($wmain,23,4," QSO#    ");
+					addstr($wmain,23,13-(length($editnr))," $editnr QSY: F1/2, Mode: F3           ");
+					$editnr-- unless $editnr == 1;
+				}
+				else {
+					$editnr = ($#qsos+1);
+				}
+				
+				%qso = %{$qsos[$editnr-1]} if (@qsos); 
+			}
+			elsif ($ch eq 'down') {						# arrow down -> edit prev.
+				next unless $editnr;
+				if ($editnr <= $#qsos) {
+						%qso = %{$qsos[$editnr]};
+						attron($wmain,COLOR_PAIR(6));
+						addstr($wmain,23,0,"Edit");		# ...sigh
+						attron($wmain,COLOR_PAIR(3));
+#						addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3          ");
+						addstr($wmain,23,4," QSO#    ");
+						addstr($wmain,23,13-(length($editnr))," $editnr QSY: F1/2, Mode: F3           ");
+						$editnr++;
+				}
+				else {							# at last QSO
+						$editnr = 0;
+						%qso = %tmpqso;				# restore QSO
+						delete $tmpqso{'call'};
+						attron($wmain, COLOR_PAIR(3));
+#						addstr($wmain,23,0,"                                          ");
+						addstr($wmain,23,0,"     Logging Mode                            ");
+						&wipeqso(\%qso, \$curpos, \$activefield);
+				}
+			}
+			elsif ($editnr && ($ch =~ /f([123])/)) {
+					&qsyband('up') if $1 == 1; 
+					&qsyband('down') if $1 == 2; 
+					&togglemode() if $1 == 3; 
+			}
+		}
+
+		if ($editnr){
+			attron($wmain,COLOR_PAIR(6));
+			addstr($wmain,23,0,"Edit");					# ...sigh
+			attron($wmain,COLOR_PAIR(3));
+#			addstr($wmain,23,4," QSO $editnr. QSY: F1/2, Mode: F3");	# not anchored to lsd of $editnr
+#			my $editnr = "5000";						# for testing $editnr formatting
+			addstr($wmain,23,4," QSO#    ");
+			addstr($wmain,23,13-(length($editnr))," $editnr QSY: F1/2, Mode: F3");
+			$cqrepeat = 0;							# dunno if this is better or....
+#			$oldtime = (time + 2);						# .....if this is better ?
+		}else{
+			attron($wmain,COLOR_PAIR(3));
+			addstr($wmain,23,0,"     Logging Mode               ");
+#			if ($wantcqrepeat && $cqrepeat && !$editnr && ($qso{'mode'} eq 'CW')) {
+			if ($wantcqrepeat && $cqrepeat && !$editnr && (($qso{'mode'} eq 'CW') || ($qso{'mode'} eq 'SSB'))) {
+#				addstr($wmain,23,0,"     Running Mode               ");
+				attron($wmain,COLOR_PAIR(6));
+				addstr($wmain,23,5,"Running");
+			}
+			if ($dupe){
+				attron($wmain,COLOR_PAIR(6));
+				addstr($wmain,23,18,"DUPE");				# ...sigh
+			}
+			if ($qso{'call'} =~ /[A-Z0-9][0-9][A-Z]/) {
+				$invalid = 0;
+			}
+			if ($qso{'call'} =~ /^(CW|FM|SSB|RTTY|P31|P63)$/) {
+				$invalid = 0;
+			}
+			if ($invalid){
+				attron($wmain,COLOR_PAIR(6));
+				addstr($wmain,23,18,"Invalid!");
+			}
+			unless($qso{'call'} ne ''){
+				$invalid=0;
+			}
+			if ($qso{'mode'} eq 'CW' && $showmsgkeys) {
+				attron($wmain,COLOR_PAIR(2));
+				attron($wmain,A_BOLD);
+				addstr($wmain, 21, 0, "F1=CQ F2=EXC F3=TU F4=CALL F5=HIS F6=NR? F7=? F8=73s F9=SRI");
+				attroff($wmain,A_BOLD);
+				attroff($wmain,COLOR_PAIR(2));
+			}
+			else{
+				attron($wmain,COLOR_PAIR(3));
+				addstr($wmain, 21, 0, "                                                           ");
+			}
+		}
+		refresh($wmain);;
+
+
+}											# end main logging loop
+
+endwin();
+
+
+
+sub load_subs {
+	my $file = shift;
+	$file = find_file("subs/$file");
+	require $file;
+}
+
+sub find_file {
+	my $file = shift;
+	if (-f "$file") {								# if it's in our local path, then use that
+		return $file;
+	} elsif (-f "/usr/local/share/yfktest/$file") {					# else use the global installed version
+		return "/usr/local/share/yfktest/$file";
+	} else {
+		print STDERR "Failed to find the needed file: '$file'\n";
+		exit(1);
+	}
+}
+
+# Local Variables:
+# tab-width:4
+# End: **
