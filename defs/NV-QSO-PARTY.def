@@ -1,0 +1,29 @@
+NV QSO Party
+exc2-all-all		   	# multiplier 1
+nvqso				# scoring
+-				# multiplier 2
+2				# exchange fields
+3				# length of exchange field 1
+3				# length of exchange field 2
+4				# length of exchange field 3
+4				# length of exchange field 4
+[0-9a-zA-Z]			# regex for every single character in exchange field 1
+[0-9][0-9a-zA-Z]+		# regex for complete valid exchange field 1
+[a-zA-Z]			# regex for every single character in exchange field 2
+[A-Z]{2,3}			# regex for complete valid exchange field 2
+[0-9]				# regex for every single character in exchange field 3
+				# regex for complete valid exchange field 3
+[0-9]				# regex for every single character in exchange field 4
+				# regex for complete valid exchange field 4
+QSO: %5s %s %s %s %-13s %-4s %-4s %-13s %-4s %-4s
+freq mode date utc mycall exc1s exc2s call exc1 exc2
+NV QSO Party
+exc1s
+RST/County
+CQ NV MYCALL MYCALL K               # F1
+EXC1S EXC2S                         # F3
+TU                                  # F3
+MYCALL                              # F4
+HISCALL                             # F5
+QTH ?                               # F6
+?                                   # F7
