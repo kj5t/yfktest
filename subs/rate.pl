@@ -39,7 +39,7 @@ sub timediff  {
 	$t2 = substr($t2, 0, 2) * 60 + substr($t2, 2, 2);
 
 	if ($t1 > $t2) {	# it's next day already
-		$t2 += 3600;
+		$t2 += 1440;
 	}
 
 	return ($t2 - $t1);
