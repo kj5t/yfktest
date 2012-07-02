@@ -4,7 +4,7 @@ sub rate {
 
 		$maxqsos = $#qsos;
 		$n = 0;
-		return if ($maxqsos == -1);
+		return if ($maxqsos <= 9);
 
 		if ($maxqsos > 10) {
 			$m = $maxqsos - 10;
@@ -17,19 +17,19 @@ sub rate {
 		if (!$n) { $n = 1; }
 		addstr($$window, 1,0, " Last 10: ".sprintf("%3.1f   ", 600/$n));
 
-		if ($maxqsos > 60) {
-			$m = $maxqsos - 60;
-		}
-		else {
-			$m = 0;
-		}
+		if ($maxqsos >= 59){
+			if ($maxqsos > 60) {
+				$m = $maxqsos - 60;
+			}
+			else {
+				$m = 0;
+			}
 
-		$n = &timediff($qsos[$m]{utc}, &gettime());
-		if (!$n) { $n = 1; }
-		addstr($$window, 2,0, " Last 60: ".sprintf("%3.1f   ", 60/$n));
-		
+			$n = &timediff($qsos[$m]{utc}, &gettime());
+			if (!$n) { $n = 1; }
+			addstr($$window, 2,0, " Last 60: ".sprintf("%3.1f   ", 3600/$n));
+		}
 		refresh($$window);
-
 }
 
 
