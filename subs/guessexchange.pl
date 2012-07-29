@@ -115,6 +115,14 @@ sub guessexchange {
 				return (split(/\//, $main::guesshash{$main::qso{call}}))[1];
 			}
 		}
+		if ($main::contest =~ /FOBB/) {
+			if ($main::lastguessed eq $main::qso{call}) {
+				return '';
+			}
+			if (defined($main::guesshash{$main::qso{call}})) {
+				return (split(/\//, $main::guesshash{$main::qso{call}}))[1];
+			}
+		}
 		if ($main::contest =~ /QRP-TTF/) {
 			if ($main::lastguessed eq $main::qso{call}) {
 				return '';
@@ -151,6 +159,14 @@ sub guessexchange {
 #		}
 	}
 	elsif ($_[0] == 3) { # guess exchange 3
+		if ($main::contest =~ /FOBB/) {
+			if ($main::lastguessed eq $main::qso{call}) {
+				return '';
+			}
+			if (defined($main::guesshash{$main::qso{call}})) {
+				return (split(/\//, $main::guesshash{$main::qso{call}}))[2];
+			}
+		}
 		if ($main::contest =~ /QRP-TTF/) {
 			if ($main::lastguessed eq $main::qso{call}) {
 				return '';
