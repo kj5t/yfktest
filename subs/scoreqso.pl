@@ -892,6 +892,14 @@ sub scoreqso {
 
 		}
 	}
+	elsif ($main::defmult1 =~ /fobb/) {		# Unique numbers for bumble-bees
+		if ($qso{call} =~ /\/(BB)/i) {
+			my $mult = $qso{'exc3'};
+			unless ($s_mult1->{$qso{'band'}} =~ / $mult /) {
+					$s_mult1->{$qso{'band'}} .= " $mult ";
+			}
+		}
+	}
 	elsif ($main::defmult1 eq 'state-prov') {	# US states, VE provs 
 			my $mult=$qso{'exc1'};
 
@@ -927,6 +935,9 @@ sub scoreqso {
 	}
 	elsif ($main::contest eq 'ARRL-FD') {
 		$main::guesshash{$qso{call}} = $qso{exc1}.'/'.$qso{exc2};
+	}
+	elsif ($main::contest eq 'FOBB') {
+		$main::guesshash{$qso{call}} = $qso{exc1}.'/'.$qso{exc2}.'/'.$qso{exc3};
 	}
 	elsif ($main::defmult1 =~ /hungarian/) {		# HA counties by band
 		if ($qso{'exc1'} =~ /[A-Z]{2}/) {
@@ -1118,6 +1129,7 @@ sub scoreqso {
 		elsif ($main::transmitter eq 'SUMMIT') { $multall = 3; }
 		else { $multall = 4; }
 	}
+	if ($main::defmult1 =~ /fobb/) { $multall = 3; }
 
 	# Total points
 
@@ -1157,6 +1169,9 @@ sub scoreqso {
 	}
 	elsif ($main::defmult2 eq 'qrpttf') {
 		${$_[7]} = $qsoptsum * $multall; # strict per band mults requirement
+	}
+	elsif (($main::defmult1 eq 'fobb') && ($multsum eq 0)) {
+			 ${$_[7]} = $qsoptsum;
 	}
 	else {
 		${$_[7]} = $qsoptsum * $multsum * $multall;
