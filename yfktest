@@ -79,6 +79,7 @@ load_subs("winkeyer.pl");
 load_subs("colorinfo.pl");
 load_subs("setconfigs.pl");
 load_subs("whichlogfile.pl");
+load_subs("sendvoice.pl");
 
 
 our $version = "0.0.10";
@@ -229,6 +230,7 @@ for configuration, and ALT+m to edit the cw messages.
 EACH part of the exchange is in a separate entry field & you use the
 spacebar to move to each one. For cw xmit you can add a space between
 the parts so one key (usually the <F2> key) xmits the full exchange.
+For the latest info on this: you can read the docs/FAQ-NEW-INFO file.
 
 ****  FOURTH - Turn off the rig-control & winkeyer via the ALT+c
 screen & the program will stop asking about this when you start it !
@@ -261,7 +263,8 @@ if ($modes eq 'SSB') {
 
 ($qso{'band'} = $bands) =~ s/[MG]$// if ($bands ne 'ALL');
 
-if (($main::exc1s =~ /\//) && ($main::contest ne 'NAQP')) {
+#if (($main::exc1s =~ /\//) && ($main::contest ne 'NAQP')) {
+if ($main::exc1s =~ /\//) {
 	my $fix = $main::exc1s;
 	($main::exc1s, $main::exc2s) = split (/\//, $fix);
 }
@@ -396,6 +399,10 @@ while (1) {										# begin main logging loop
 			}
 			elsif (($qso{'mode'} eq 'CW') && (time > $oldtime)) {
 				&sendcw('f1');
+				$oldtime = (time + $cqinterval);
+			}
+			elsif (($qso{'mode'} eq 'SSB') && (time > $oldtime)) {
+				&sendvoice('f1');
 				$oldtime = (time + $cqinterval);
 			}
 		}
@@ -573,7 +580,8 @@ while (1) {										# begin main logging loop
 		}else{
 			attron($wmain,COLOR_PAIR(3));
 			addstr($wmain,23,0,"     Logging Mode               ");
-			if ($wantcqrepeat && $cqrepeat && !$editnr && ($qso{'mode'} eq 'CW')) {
+#			if ($wantcqrepeat && $cqrepeat && !$editnr && ($qso{'mode'} eq 'CW')) {
+			if ($wantcqrepeat && $cqrepeat && !$editnr && (($qso{'mode'} eq 'CW') || ($qso{'mode'} eq 'SSB'))) {
 #				addstr($wmain,23,0,"     Running Mode               ");
 				attron($wmain,COLOR_PAIR(6));
 				addstr($wmain,23,5,"Running");
