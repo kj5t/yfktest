@@ -1,0 +1,36 @@
+UBA-FD									# contest name
+dxcc-band-mode								# multiplier 1 -> dxcc by band and by mode
+-									# score
+-									# multiplier 2
+1									# # of exchange fields
+4									# length of exchange field 1
+3									# length of exchange field 2
+3									# length of exchange field 3
+3									# length of exchange field 4
+[0-9]									# regex for every single character in exchange field 1
+[0-9]{3,4}								# regex for complete valid exchange field 1
+[A-Za-z]								# regex for every single character in exchange field 2
+									# regex for complete valid exchange field 2
+[0-9Ww]									# regex for every single character in exchange field 3
+									# regex for complete valid exchange field 3
+[M-Nm-n]								# regex for every single character in exchange field 4
+									# regex for complete valid exchange field 4
+QSO: %5s %s %s %s %4s %13s %3s %-12s %-13s %3s %6s %14s			# cabrillo definition - how to format the info
+freq mode date utc nr mycall rsts exc1s call rst exc1 ops		# cabrillo definition - what info is included
+UBA FIELD DAY								# CBR (cabrillo) name - "title" for cabrillo file
+exc1s									# which fixed exchange is selected (variable assignment)
+Limited/All								# what fixed exchange info is asked for (prompted)
+CQ UBA TEST MYCALL MYCALL TEST						# F1 Key - What will be sent in CW mode
+5NN NR									# F2		"
+TU MYCALL								# F3		"
+MYCALL									# F4		"
+HISCALL									# F5		"
+NR									# F6		"
+?									# F7		"
+BEGIN SCORE
+if ($call =~ 
+	/^(ON4ABL\/P|ON4ANL\/P|ON4AOW\/P|ON4ATO\/P|ON4AXW\/M|ON4CDZ\/P|ON4CHD\/P|ON4CP\/P|ON4EZ\/M|ON4KSD\/P|ON4MCL\/P|ON4MNS\/P|ON4OS\/P|ON4OSA\/P|ON4RAT\/P|ON4RCN\/P|ON4TRC\/P|ON4TWS\/P|ON4WRC\/P|ON5CLR\/P|ON6BR\/P|ON6BS\/P|ON6CK\/P|ON6LL\/P|ON6NB\/P|ON6UJ\/P|ON6WL\/P|ON7LU\/P|ON7ON\/M|ONL3937\/M|OO6P\/P|OR4D\/P)$/
+		) { $score = 10 }
+elsif (($call =~ /\/(P|M|MM|AM)/) && ($dxcc ne 'ON')) { $score = 4 }
+elsif ($dxcc ne 'ON') { $score = 2 }
+else { $score = 1 }
