@@ -325,13 +325,15 @@ our $wshowscore = newwin(10,21,14,59);
 our $wpartialcheck = newwin(9,40,0,39);
 
 if ($contest eq "ARRL-FD"){
-	$winfo = newwin(6,45,8,0);
+	$winfo = newwin(6,47,8,0);
 	attron($winfo, COLOR_PAIR(4));
-	addstr($winfo, 0,0, ' 'x(6*45));
+	addstr($winfo, 0,0, ' 'x(6*47));
 	refresh($winfo); 
 	
 	$wshowscore = newwin(10,21,14,59);
 	$wpartialcheck = newwin(7,40,0,39);
+
+	addstr($wmain, 9, 48, "$contest");
 }
 
 our $wrate = newwin(4, 16, 10, 62);
@@ -352,7 +354,7 @@ my $ch='';
 
 if (length ($ops) > 13) {$ops = substr $ops, 0, 13;}
 if ($ops) {addstr($wmain, 9, 62, "Op: $ops");}
-unless ($contest eq 'DXPED') {addstr($wmain, 9, 46, "$contest");}
+unless (($contest eq 'DXPED') || ($contest eq 'ARRL-FD')) {addstr($wmain, 9, 46, "$contest");}
 
 my $oldband = $qso{'band'};								# used to insure cqrepeats are requested anew
 my $oldmode = $qso{'mode'};                                                             #    after band or mode changes
