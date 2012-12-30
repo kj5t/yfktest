@@ -15,11 +15,11 @@ fixed=1									# score
 									# regex for complete valid exchange field 3
 [0-9]									# regex for every single character in exchange field 4
 									# regex for complete valid exchange field 4
-QSO: %9g %s %s %s %-7s %4s %-6s %-7s %4s 				# cabrillo definition - how to format the info
-freq mode date utc mycall nr exc1s call exc1				# cabrillo definition - what info is included
+QSO: %5s %s %s %s %-13s %-3s %-6s %-13s %-3s %s				# cabrillo definition - how to format the info
+freq mode date utc mycall rsts nr call rst exc1				# cabrillo definition - what info is included
 DARC-XMAS								# CBR (cabrillo) name - "title" for cabrillo file
 exc1s									# which fixed exchange is selected (variable assignment)
-DOK/NM if DL		(e.g. FAB)					# what fixed exchange info is asked for (prompted)
+DOK/NM if DL		(I36)						# what fixed exchange info is asked for (prompted)
 CQ TEST MYCALL MYCALL							# F1 Key - What will be sent in CW mode
 RST EXC1S								# F2		"
 TU MYCALL								# F3		"
