@@ -308,7 +308,35 @@ sub refreshscreen {
 	addstr($$window, 22, 9, $qso{'mode'}.'  ');
 	addstr($$window, 22, 13, &gettime());
 	addstr($$window, 22, 18, $qso{'call'}.'            ');
-	if ($contest eq 'QRP-TTF') {
+	if ($contest eq 'AGCW-HNY') {
+		addstr($$window, 22, 31, $qso{'rst'}.'   ');
+		addstr($$window, 22, 37, $qso{'exc1'}.' 'x$exc1len);
+		addstr($$window, 22, 49, $qso{'exc2'}.' 'x$exc2len);
+
+
+		move($$window, 22, 0);
+		chgat($$window, -1, A_NORMAL, 1, 0);
+		if ($activefield eq 'call') {
+			move($$window, 22, 18);
+			chgat($$window, 12, A_REVERSE, 1, 0);
+			move($$window, 22, 18+$curpos);
+		}
+		elsif ($activefield eq 'rst') {
+			move($$window, 22, 31);
+			chgat($$window, 3, A_REVERSE, 1, 0);
+			move($$window, 22, 31+$curpos);
+		}
+		elsif ($activefield eq 'exc1') {
+			move($$window, 22, 37);
+			chgat($$window, $exc1len, A_REVERSE, 1, 0);
+			move($$window, 22, 37+$curpos);
+		}
+		elsif ($activefield eq 'exc2') {
+			move($$window, 22, 49);
+			chgat($$window, $exc2len, A_REVERSE, 1, 0);
+			move($$window, 22, 49+$curpos);
+		}
+	}elsif ($contest eq 'QRP-TTF') {
 		addstr($$window, 22, 31, $qso{'exc1'}.' 'x$exc1len);
 		addstr($$window, 22, 37, $qso{'exc2'}.' 'x$exc2len);
 		addstr($$window, 22, 43, $qso{'exc3'}.' 'x$exc3len);
