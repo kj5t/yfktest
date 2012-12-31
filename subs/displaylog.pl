@@ -29,7 +29,19 @@ addstr($$window, $y, 0, ' 'x59);
 #move($$window, 22, 18);
 #				        move($$window, 22, 18+$curpos);
 
-if ($contest eq 'QRP-TTF') {
+if ($contest eq 'AGCW-HNY') {
+	addstr($$window, $y, 0, $qsos[$i]{'nr'});
+	addstr($$window, $y, 5, $qsos[$i]{'band'}.'  ');
+	addstr($$window, $y, 9, $qsos[$i]{'mode'}.'  ');
+	addstr($$window, $y, 13, $qsos[$i]{'utc'}.'  ');
+	addstr($$window, $y, 18, $qsos[$i]{'call'}.'            ');
+	addstr($$window, $y, 31, $qsos[$i]{'rst'}.'   ');
+	addstr($$window, $y, 37, $qsos[$i]{'exc1'}.''x$exc1len);
+	addstr($$window, $y, 49, $qsos[$i]{'exc2'}.''x$exc2len);
+
+	move($$window, $y, 0);
+	chgat($$window, 58, A_REVERSE, 1, 0) if ($editnr == ($i+1));
+}elsif ($contest eq 'QRP-TTF') {
 	addstr($$window, $y, 0, $qsos[$i]{'nr'});
 	addstr($$window, $y, 5, $qsos[$i]{'band'}.'  ');
 	addstr($$window, $y, 9, $qsos[$i]{'mode'}.'  ');
