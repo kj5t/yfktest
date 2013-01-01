@@ -30,5 +30,5 @@ EXC1S									# F6		"
 BEGIN MULT1
 unless ($exc1 !~ /\//) {
 my ($multa, $multb) = split (/\//, $exc1); 
-unless ($s_mult1->{$qso{'band'}} =~ / $multa /) {
- $s_mult1->{$qso{'band'}} .= " $multa " }}
+unless ($s_mult1->{$qso{'band'}} =~ / $multb /) {
+ $s_mult1->{$qso{'band'}} .= " $multb " }}
