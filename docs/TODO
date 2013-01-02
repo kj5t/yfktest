@@ -2,6 +2,21 @@ YFKtest TODO list (feel free to add things!)
 --------------------------------------------
 
 
+Some quick thoughts - 01 Jan. 2013 - w9ya:
+
+
+- Consider adding "rst-manual" for those that want to fill out the incoming rst field.
+This would allow some of the effects of those qrp contests def files that do allow
+for this on a per-contest basis.
+
+- Consider modifying the code so that field length (& masking) is handled auto-magically instead of 
+on a case-by-case basis as it is done now. (See the displaylog.pl and readakey.pl files.)
+
+****** ^^^^ - This might be a good time to consider adding new variables to the def file structure.
+
+
+
+
 As of 29 Feb. 2012 - w9ya
 (PLUS A few additions as of 22 Mar. 2012 - w9ya)
 (And a few deletions !!! as of 25 Mar. 2012 - w9ya)
