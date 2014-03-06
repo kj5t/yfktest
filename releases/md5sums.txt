@@ -1,9 +1,0 @@
-c8565235e62c334e27e257ffdecad850  releases/yfktest-0.0.1.tar.gz
-55c730c2f3cb8236b8f6eb6fcf51e0de  releases/yfktest-0.0.2.tar.gz
-e09b5ac331d7b419dfa7887b6ed3e4c8  releases/yfktest-0.0.3.tar.gz
-88c1288562eaaf9c15ec045d8a3f1dd6  releases/yfktest-0.0.4.tar.gz
-f1b9b2f06cdf0576fe4d5ce658821a92  releases/yfktest-0.0.5.tar.gz
-5d6b62f0703dd10540f3b2a86f855dea  releases/yfktest-0.0.6.tar.gz
-65033bf9a20b4c46d9e7e4cebfc070a7  releases/yfktest-0.0.7.tar.gz
-5d5abc47cc0836675decde3e9ab404c5  releases/yfktest-0.0.8.tar.gz
-1905c5013b1f6a8ddfe10c7a5ed513d9  releases/yfktest-0.0.9.tar.gz
