@@ -359,6 +359,7 @@ unless (($contest eq 'DXPED') || ($contest eq 'ARRL-FD')) {addstr($wmain, 9, 46,
 my $oldband = $qso{'band'};								# used to insure cqrepeats are requested anew
 my $oldmode = $qso{'mode'};                                                             #    after band or mode changes
 my $oldtime = (time + $cqinterval);							# timer i.e. oldtime = (time + $cqinterval)
+$qso{'freq'} = '';									# cleanup/allows rigctrl failures during test
 
 # net_receiveqso will write received network QSOs to @net_qsos, which is a data
 # structure like @qsos, and can be pushed into @qsos
