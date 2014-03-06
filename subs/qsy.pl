@@ -69,10 +69,12 @@ sub qsyband {
 	}
 
 	if ($direction eq 'up') {
-		$main::qso{'band'} = $bands[($pos+1) % ($#bands+1)];		
+		$main::qso{'band'} = $bands[($pos+1) % ($#bands+1)];
+		$main::qso{'freq'} = '';		
 	}
 	else {
-		$main::qso{'band'} = $bands[($pos-1) % ($#bands+1)];		
+		$main::qso{'band'} = $bands[($pos-1) % ($#bands+1)];
+		$main::qso['freq'} = '';		
 	}
 }
 
