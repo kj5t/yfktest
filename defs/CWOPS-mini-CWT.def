@@ -1,0 +1,31 @@
+CWOPS-Mini-CWT								# contest name
+-									# multiplier 1
+fixed=1									# score
+-									# multiplier 2
+2									# # of exchange fields
+6									# length of exchange field 1
+4									# length of exchange field 2
+6									# length of exchange field 3
+4									# length of exchange field 4
+[A-Za-z]								# regex for every single character in exchange field 1
+[A-Z]+									# regex for complete valid exchange field 1
+[0-9A-Za-z]								# regex for every single character in exchange field 2
+[0-9A-Z]+								# regex for complete valid exchange field 2
+[0-9A-Za-z]								# regex for every single character in exchange field 3
+									# regex for complete valid exchange field 3
+[0-9]									# regex for every single character in exchange field 4
+									# regex for complete valid exchange field 4
+QSO: %9g %s %s %s %-7s %4s %-7s %-6s %4s 				# cabrillo definition - how to format the info
+freq mode date utc mycall nr call exc1 exc2				# cabrillo definition - what info is included
+CWOPS-Mini-CWT								# CBR (cabrillo) name - "title" for cabrillo file
+exc1s									# which fixed exchange is selected (variable assignment)
+Name/CWOPS#			(e.g. FAB/0123)				# what fixed exchange info is asked for (prompted)
+CQ CWT MYCALL MYCALL							# F1 Key - What will be sent in CW mode
+EXC1S									# F2		"
+TU MYCALL								# F3		"
+MYCALL									# F4		"
+HISCALL									# F5		"
+EXC1S									# F6		"
+?									# F7		"
+BEGIN MULT1
+unless ($s_mult1->{'All'} =~ / $call /) { $s_mult1->{'All'} .= " $call " }
