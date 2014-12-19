@@ -8,7 +8,23 @@ sub dupecheck {
 
 #	addstr($$window, 23, 18, "    ");
 
-	foreach (@{$qsoref}) {
+	if ($main::contest eq 'ARRL-SS') {
+		foreach (@{$qsoref}) {
+	
+			if ($_->{'call'} eq $qso{'call'}) {
+ 					attron($$window, COLOR_PAIR(6));
+					addstr($$window, 23, 18, "DUPE");
+					$dupe=1;
+					last;
+			}
+			else {
+				$dupe=0
+			}
+		}
+	}
+
+	else {
+		foreach (@{$qsoref}) {
 	
 			if (($_->{'call'} eq $qso{'call'}) &&
 				($_->{'band'} eq $qso{'band'}) &&
@@ -22,6 +38,7 @@ sub dupecheck {
 			else {
 				$dupe=0
 			}
+		}
 	}
 
 	refresh($$window);
