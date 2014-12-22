@@ -110,6 +110,7 @@ our $fixexchange='';									# fixed exchange like in IOTA, ITU etc.
 our $fixexchangename='';								# what to ask the user for, like "IOTA-Ref:"?
 our $exc1s = '';									# actual value of the fixed exchange value
 our $exc2s = '';
+our $exc3s = '';
 
 our $tmp='';
 
@@ -263,12 +264,10 @@ if ($modes eq 'SSB') {
 
 ($qso{'band'} = $bands) =~ s/[MG]$// if ($bands ne 'ALL');
 
-#if (($main::exc1s =~ /\//) && ($main::contest ne 'NAQP')) {
-if ($main::exc1s =~ /\//) {
-	my $fix = $main::exc1s;
-	($main::exc1s, $main::exc2s) = split (/\//, $fix);
+if ($exc1s =~ /\//) {
+	my $fix = $exc1s;
+	($exc1s, $exc2s, $exc3s) = split (/\//, $fix);
 }
-
 
 # Activate Hamlib if needed.
 
