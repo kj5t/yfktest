@@ -23,7 +23,6 @@ sub showscore {
 	addstr($$window, 1, 0, "                     ");
 	addstr($$window, 1, (11-length($main::mycall)/2), $main::mycall);
 	addstr($$window, 9, 0, " Total QSOs: ".($#main::qsos+1)."          ");
-#	4
 	}
 	else { # Normal contest, 6 Bands 
 	my $y = 2;
@@ -44,13 +43,13 @@ sub showscore {
 
 	1 while $s_sum =~ s/^(\d+)(\d{3,3})/$1,$2/;
 
+	addstr($$window, 0, 0, " Total Score:     $s_sum ");
 	attron($$window, A_BOLD);	
-	addstr($$window, 0, 0, "    Score Summary    ");
-	attroff($$window, A_BOLD);	
 	addstr($$window, 1, 0, " B     Qs  M1  M2  D ");
-	addstr($$window, $y, 0, sprintf(" ALL %4d %3d %3d          ", $t_qso, 
+	attroff($$window, A_BOLD);	
+#	addstr($$window, $y, 0, sprintf(" ALL %4d %3d %3d          ", $t_qso, 
+	addstr($$window, 9, 0, sprintf(" ALL %5d %3d %3d          ", $t_qso, 
 				$t_mult1, $t_mult2));
-	addstr($$window, 9, 0, " Total: $s_sum                ");
 
 	} # normal contest
 
