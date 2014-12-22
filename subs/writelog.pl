@@ -9,13 +9,6 @@ sub writelog {
 				20 => 14000, 17 => 18068, 15=>21000, 12 => 24890, 
 				10 => 28000, 6 => 50000, 2 => 144000);
 
-		if ($main::contest eq 'NAQP') {
-			if ($main::exc1s =~ /\//) {
-				my ($name, $state) = split(/\//, $main::exc1s);
-				$main::exc1s = sprintf("%-10s %2s", $name, $state);
-			}
-		}
-
 		# cabrillo first
 		open CBR, ">$main::filename.cbr";
 
@@ -112,6 +105,9 @@ sub writelog {
 					}
 					elsif ($_ eq 'exc2s') {
 							push @values, $main::exc2s;
+					}
+					elsif ($_ eq 'exc3s') {
+							push @values, $main::exc3s;
 					}
 					elsif ($_ eq 'stn') {
 							$main::qsos[$i]{stn} =~ /(\d)$/;
