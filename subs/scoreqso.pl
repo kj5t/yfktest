@@ -16,7 +16,19 @@ sub scoreqso {
 
 # Check for dupe
 
-	unless ($main::contest eq 'NCCC-SPRINT') {
+	if ($main::contest eq 'ARRL-SS') {
+		foreach (@{$qsoref}) {
+			if (($_->{'call'} eq $qso{'call'}) &&
+				($_->{'mode'} eq $qso{'mode'}) &&
+#				($_->{'nr'} < $qso{'nr'}-1)) {
+				($_->{'nr'} < $qso{'nr'})) {
+					$s_dupes->{$qso{'band'}}++;
+					return 1;
+			}
+		}	
+	}
+
+	elsif ($main::contest ne 'NCCC-SPRINT') {
 		foreach (@{$qsoref}) {
 			if (($_->{'call'} eq $qso{'call'}) &&
 				($_->{'band'} eq $qso{'band'}) &&
