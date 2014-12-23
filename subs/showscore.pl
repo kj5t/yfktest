@@ -43,7 +43,7 @@ sub showscore {
 
 	1 while $s_sum =~ s/^(\d+)(\d{3,3})/$1,$2/;
 
-	addstr($$window, 0, 0, " Total Score:     $s_sum ");
+	addstr($$window, 0, 0, " Score:  $s_sum           ");
 	attron($$window, A_BOLD);	
 	addstr($$window, 1, 0, " B     Qs  M1  M2  D ");
 	attroff($$window, A_BOLD);	
