@@ -15,13 +15,13 @@ fixed=1									# score
 									# regex for complete valid exchange field 3
 [0-9]									# regex for every single character in exchange field 4
 									# regex for complete valid exchange field 4
-QSO: %9g %s %s %s %-7s %4s %-7s %-6s %4s 				# cabrillo definition - how to format the info
-freq mode date utc mycall nr call exc1 exc2				# cabrillo definition - what info is included
+QSO: %9g %s %s %s %-7s %s %s %4s %-7s %-6s %4s 				# cabrillo definition - how to format the info
+freq mode date utc mycall exc1s exc2s nr call exc1 exc2				# cabrillo definition - what info is included
 CWOPS-Mini-CWT								# CBR (cabrillo) name - "title" for cabrillo file
 exc1s									# which fixed exchange is selected (variable assignment)
 Name/CWOPS#			(e.g. FAB/0123)				# what fixed exchange info is asked for (prompted)
 CQ CWT MYCALL MYCALL							# F1 Key - What will be sent in CW mode
-EXC1S									# F2		"
+EXC1S EXC2S								# F2		"
 TU MYCALL								# F3		"
 MYCALL									# F4		"
 HISCALL									# F5		"
