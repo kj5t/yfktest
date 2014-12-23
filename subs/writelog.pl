@@ -235,7 +235,15 @@ sub writelog {
 		print SUM "Transmitter         : $main::transmitter \r\n";
 		print SUM "Assisted            : $main::assisted \r\n";
 		print SUM "Power               : $main::power \r\n";
-		print SUM "Sent Exchange       : $main::exc1s"."$main::exc2s \r\n";
+			if ($main::exc3s) {
+		print SUM "Sent Exchange       : $main::exc1s"." $main::exc2s"." $main::exc3s \r\n";
+			}
+			elsif ($main::exc2s) {
+		print SUM "Sent Exchange       : $main::exc1s"." $main::exc2s \r\n";
+			}
+			else {
+		print SUM "Sent Exchange       : $main::exc1s \r\n";
+			}
 		print SUM "\r\n";
 		print SUM "Band    QSO    Qpts   Dupes   Mult1   Mult2\r\n";
 		print SUM "-------------------------------------------\r\n";
