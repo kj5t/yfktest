@@ -22,8 +22,8 @@ open CWT, find_file('cwops.txt');
 my $line;
 while (my $line = <CWT>) {
 		chomp($line);
-	my @a = split(/;/, $line);
-	$cwt{$a[0]} = $a[1];
+	my @a = split(/\,/, $line);
+	$cwt{$a[0]} = "$a[0] $a[1] $a[2]";
 }
 close CWT;
 }
@@ -294,26 +294,16 @@ sub callinfo {
 		addstr($win, 3, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
 		refresh($win);
 	}
-	elsif ($contest eq 'CWT-MEMBERS') {	# CWT
+	elsif (($contest eq 'CWOPS-mini-CWT') || ($contest eq 'CWOPS-OPEN')) {
+					# Uses VE2FK's CWT history file, w/ comments removed & renamed '2' cwops.txt
 		my @info = &dxcc($call);
 		if ($call eq '') { return 0; }
 
 
 		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
 		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
-		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
-		addstr($win, 3, 0, "CWops-member: $cwt{$call}".' 'x80) if defined ($cwt{$call});
-		refresh($win);
-	}
-	elsif ($contest eq 'CWOPS') {	# CWops
-		my @info = &dxcc($call);
-		if ($call eq '') { return 0; }
-
-
-		addstr($win, 0, 0, "$info[7] - $info[0]".' 'x80);
-		addstr($win, 1, 0, "CQZ: $info[1], ITU: $info[2]".' 'x80);
-		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
-		addstr($win, 3, 0, "CWops-member: $cwt{$call}".' 'x80) if defined ($cwt{$call});
+#		addstr($win, 2, 0, "Name: $friends{$call}".' 'x80) if defined ($friends{$call});
+		addstr($win, 3, 0, "CWOPS Info: $cwt{$call}".' 'x80) if defined ($cwt{$call});
 		refresh($win);
 	}
 	elsif ($contest eq 'SMREY-DX') {	# His Majesty King of Spain: Show provinces
