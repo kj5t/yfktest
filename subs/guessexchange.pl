@@ -138,6 +138,14 @@ sub guessexchange {
 				return (split(/\//, $cwt{$main::qso{call}}))[1];
 			}
 		}
+		if ($main::contest eq 'CWOPS-OPEN') {
+			if ($main::lastguessed eq $main::qso{call}) {
+			return '';
+			}
+			if (defined($cwt{$main::qso{call}})) {
+				return (split(/\//, $cwt{$main::qso{call}}))[0];
+			}
+		}
 		if ($main::contest =~ /ARRL-FD/) {
 			if ($main::lastguessed eq $main::qso{call}) {
 				return '';
