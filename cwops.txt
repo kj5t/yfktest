@@ -1,4 +1,4 @@
-2EODCW,Gerald,,London England
+2E0DCW,Gerald,,London England
 3B9FR,Robert,,Rodriguez Island
 4X1DF,Karl,599,T.-A. Zahala Israel
 4X1FC,Dani,49,Natanya israel
@@ -56,7 +56,7 @@ AC7T,Doug,822,Redmond WA
 AC8LJ,Eric,1372,Chrleston WV 
 AC8W,Stan,695,Marysville MI
 AD0DX,Ron,1019,Kansas city MO
-AD1C,Jim,131,Brighton CO 
+AD1C,Jim,131,Brighton CO
 AD4EB,Jim,867,Thompsons Stn TN 
 AD4J,Jim,1144,Norcross GA
 AD6E,Alan,217,San Jose CA
@@ -584,7 +584,7 @@ K9IR,Paula,600,Barrington IL
 K9JM,Jim,909,Grass Valley CA
 K9JWV,Jim,202,St-George UT
 K9LA,Carl,920,Fort Wayne IN
-K9MA,Scott,WI,Madison WI
+K9MA,Scott,1385,Madison WI
 K9MM,John,120,Prospect Heights IL
 K9MMS,Gary,277,St-Charles IL
 K9NR,Don,1072,Kankakee IL
@@ -779,6 +779,7 @@ N0TA,John,885,Louisville CO
 N0UA/0,Vince,CO,Littleton CO  
 N0UR,Jim,MN,Ellendale MN 
 N0XC,Steve,WI,Osceola WI
+N1U,Jim,131,Brighton CO (AD1C Celebrating 40 yrs on the air) 
 N1BG,Fred,1030,Gibsonville NC
 N1CC,Jim,1335,Frankston TX 
 N1DC,Rick,1257,Braintree MA
@@ -1319,7 +1320,7 @@ W2LB,Larry,906,Farmington NY
 W2LCQ,Ed,701,New York NY
 W2LJ,Larry,1005,South Plainfield NJ
 W2LK,Les,726,Ulster Park NY
-W2OR,Mark,FL,St-Augustine Beach FL 
+W2OR,Mark,1384,St-Augustine Beach FL 
 W2PL,Phil,570,Jensen Beach FL
 W2PTT,Prasad,615,Topanga CA
 W2RFN,Jeff,NY,New York NY
