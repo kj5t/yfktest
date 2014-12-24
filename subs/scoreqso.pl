@@ -33,7 +33,8 @@ sub scoreqso {
 			if (($_->{'call'} eq $qso{'call'}) &&
 				($_->{'band'} eq $qso{'band'}) &&
 				($_->{'mode'} eq $qso{'mode'}) &&	
-				($_->{'nr'} < $qso{'nr'}-1)) {
+#				($_->{'nr'} < $qso{'nr'}-1)) {
+				($_->{'nr'} < $qso{'nr'})) {
 					$s_dupes->{$qso{'band'}}++;
 					return 1;
 			}
