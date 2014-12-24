@@ -16,6 +16,21 @@ close FOC;
 
 }
 
+my %cwt = ();
+if (-e 'cwops.txt') {
+
+open CWT, find_file('cwops.txt');
+my $line;
+while (my $line = <CWT>) {
+	chomp($line);
+        my @a = split(/\,/, $line);
+	my $fix = uc($a[1]);
+	$a[1] = $fix;
+        $cwt{$a[0]} = $a[1].'/'. $a[2];
+	}
+close CWT;
+
+}
 
 
 sub guessexchange {
@@ -70,6 +85,14 @@ sub guessexchange {
 			return $foc{$main::qso{call}}
 		}
 	}
+	elsif ($main::contest eq 'CWOPS-mini-CWT') {
+		if ($main::lastguessed eq $main::qso{call}) {
+			return '';
+		}
+		if (defined($cwt{$main::qso{call}})) {
+			return (split(/\//, $cwt{$main::qso{call}}))[0];
+		}
+	}
 	elsif ($main::contest =~ /ARRLDX/) {	# Guess States/Power
 		if ($main::lastguessed eq $main::qso{call}) {
 			return '';
@@ -107,6 +130,14 @@ sub guessexchange {
 #	else { # guess exchange 2
 	elsif ($_[0] == 2) {
 
+		if ($main::contest eq 'CWOPS-mini-CWT') {
+			if ($main::lastguessed eq $main::qso{call}) {
+			return '';
+			}
+			if (defined($cwt{$main::qso{call}})) {
+				return (split(/\//, $cwt{$main::qso{call}}))[1];
+			}
+		}
 		if ($main::contest =~ /ARRL-FD/) {
 			if ($main::lastguessed eq $main::qso{call}) {
 				return '';
