@@ -51,7 +51,7 @@ sub editcwmessages {
 	chgat($$window, 35, A_REVERSE, 1, 0);
 
 	addstr($$window, 4, 1, 'Values which will be replaced: ');
-	addstr($$window, 5, 1, 'MYCALL HISCALL NR EXC1S EXC2S');
+	addstr($$window, 5, 1, 'MYCALL HISCALL NR EXC1S EXC2S EXC3S');
 
 	curs_set(1);
 	addstr($$window, 2, 1, $message);
