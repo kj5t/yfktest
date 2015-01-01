@@ -40,6 +40,7 @@ sub cwmsg {
 	$string =~ s/\bNR\b/$main::qso{'nr'}/g;
 	$string =~ s/\bEXC1S\b/$main::exc1s/g;
 	$string =~ s/\bEXC2S\b/$main::exc2s/g;
+	$string =~ s/\bEXC3S\b/$main::exc3s/g;
 
 	return $string;
 
