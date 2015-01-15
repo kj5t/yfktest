@@ -4,7 +4,7 @@ YFKtest Version 0.0.10 Manual
 If you have not yet downloaded the program please read this link first:
 <http://svn.fkurz.net/yfktest/trunk/README.NOW?revision=605&view=markup>
 for installation and initial setup information.
-
+	^^^ This is already done in the archlinux package !!
 
 1. Getting started
 ------------------
@@ -19,6 +19,7 @@ the working directory (where you downloaded yfktest to). It can contain any or
 all of the items notated on the first startup screen (the screen you see when
 you each time you start yfktest.) There is also a file called
 config.yfktest.sample that shows what this file could look like.
+	^^^ This is already done in the archlinux package !!
 
 OR you can simply use the NEW Alt+c configuration menu while running yfktest to
 set up ALL of the possible configuration possibilities.
@@ -142,3 +143,4 @@ immediately sent via cwdaemon or winkeydaemon.pl . Alt-K again or ESC stops it.
 *changed/updated 29 Feb  2012 - Bob, w9ya
 *changed/updated 09 Apr  2012 - Bob, w9ya
 *changed/updated 01 Mar  2014 - Bob, w9ya
+*changed/updated 15 Jan  2015 - Bob, w9ya
