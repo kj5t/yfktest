@@ -34,12 +34,13 @@ go into log-editing mode the current cq will finish and *then* it will be turned
 Alt-x works just like before, killing the current keyer output BUT it does not turn off the
 "running mode" like the pressing the F1 key would.
 
-Finally once you start to enter info into the contact entry fields, the running is is paused
-until you clear those fields either by entering the compolted qso into the log by pressing the
-ENTER key or by "wiping" the pending qso by the F11 or the Alt+w keypress.
+Finally once you start to enter info into the contact entry fields, the running is paused
+until you clear those fields either by entering the completed qso into the log (by pressing the
+ENTER key) or by "wiping" the pending qso by the F11 or the Alt+w keypress.
 
 Oh yeah....the status of this mode is indicated in the bottom line. It'll be in RED when it is
 enabled by the configration options and activated with the F1 keypress.
 
 23-April-2012 - W9YA
 Updated: 31-Dec-2014 - W9YA
+Updated: 15-Jan-2014 - W9YA
