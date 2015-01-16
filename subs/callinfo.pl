@@ -295,7 +295,12 @@ sub callinfo {
 		refresh($win);
 	}
 	elsif (($contest eq 'CWOPS-mini-CWT') || ($contest eq 'CWOPS-OPEN')) {
-					# Uses VE2FK's CWT history file, w/ comments removed & renamed '2' cwops.txt
+					# Uses VE2FK's CWT history file, (de cwops yahoo file section),
+					#    w/ comments removed & renamed '2' cwops.txt;
+					# mv <whatever_the_download_file_is_called> cwops.txt
+					# sed -i '/#/d' cwops.txt
+					# sed -i '/!/d' cwops.txt
+					# Place the file in the same hierarchy as the main runtime (yfktest) 
 		my @info = &dxcc($call);
 		if ($call eq '') { return 0; }
 
