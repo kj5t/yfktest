@@ -34,11 +34,11 @@ sub writelog {
 		elsif ($main::contest eq 'ARRLDX-US') {
 			print CBR "LOCATION: $main::exc1s\r\n";
 		}
-		print CBR "NAME: \r\n";
-		print CBR "ADDRESS: \r\n";
-		print CBR "ADDRESS: \r\n";
-		print CBR "ADDRESS: \r\n";
-		print CBR "ADDRESS: \r\n";
+		print CBR "NAME: $main::submitname \r\n";
+		print CBR "ADDRESS: $main::address1 \r\n";
+		print CBR "ADDRESS: $main::address2 \r\n";
+		print CBR "ADDRESS: $main::address3 \r\n";
+		print CBR "ADDRESS: $main::address4 \r\n";
 		print CBR "OPERATORS: $main::mycall \r\n";
 		print CBR "SOAPBOX: \r\n";
 
