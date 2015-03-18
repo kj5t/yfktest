@@ -103,6 +103,12 @@ our $cabrilloline='no cabrillo format defined!';					# printf-string for the cab
 our $cabrillovalues='band date utc ...';
 our $cabrilloname='CONTEST-NAME';
 
+our $submitname='';
+our $address1='';
+our $address2='';
+our $address3='';
+our $address4='';
+
 our ($exc1len, $exc2len, $exc3len, $exc4len) = (4,4,4,4);
 
 our $fixexchange='';									# fixed exchange like in IOTA, ITU etc.
