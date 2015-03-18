@@ -44,6 +44,21 @@ sub readconfigfile {
 		elsif ($line =~ /cqinterval=(.+)/) {
 			$main::cqinterval = $1;
 		}
+		elsif ($line =~ /submitname=(.+)/) {
+			$main::submitname = $1;
+		}
+		elsif ($line =~ /address1=(.+)/) {
+			$main::address1 = $1;
+		}
+		elsif ($line =~ /address2=(.+)/) {
+			$main::address2 = $1;
+		}
+		elsif ($line =~ /address3=(.+)/) {
+			$main::address3 = $1;
+		}
+		elsif ($line =~ /address4=(.+)/) {
+			$main::address4 = $1;
+		}
 	}
 
 	close CONF;
