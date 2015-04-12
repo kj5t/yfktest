@@ -1,0 +1,29 @@
+ARRL Rookie Roundup							# contest name
+exc3-all-all								# multiplier 1
+rookie									# scoring
+-									# multiplier 2
+3									# # of exchange fields
+7									# length of exchange field 1
+2									# length of exchange field 2
+3									# length of exchange field 3
+4									# length of exchange field 4
+[a-zA-Z]								# regex for every single character in exchange field 1
+[A-Z]+									# regex for complete valid exchange field 1
+[0-9]									# regex for every single character in exchange field 2
+[0-9]+									# regex for complete valid exchange field 2
+[0-9a-zA-Z]								# regex for every single character in exchange field 3
+[0-9A-Z]{2,3}									# regex for complete valid exchange field 3
+[0-9]									# regex for every single character in exchange field 4
+									# regex for complete valid exchange field 4
+QSO: %s %s %s %s %-13s %-3s %-7s %-3s %-4s %-13s %-7s %-3s %-4s		# cabrillo definition - how to format the info
+freq mode date utc mycall nr exc1s exc2s exc3s call exc1 exc2 exc3	# cabrillo definition - what info is included
+ARRL-Rookie-Roundup-!MODE!						# CBR (cabrillo) name - "title" for cabrillo file
+exc1s									# which fixed exchange is selected (variable assignment)
+MY EXCHANGE        (e.g.Name/Yr/State,Prov,Mex)				# what fixed exchange info is asked for (prompted)
+CQ FD MYCALL MYCALL K							# F1
+EXC1S EXC2S EXC3S							# F2
+TU									# F3
+MYCALL									# F4
+HISCALL									# F5
+NR?									# F6
+?									# F7
