@@ -595,6 +595,41 @@ sub scoreqso {
 			}
 		}
 	}
+	elsif ($main::defqsopts eq 'rookie') {		# ARRL Rookie Roundup
+		my $date = &getdate();
+		my ($full,$month,$day) = split (/-/, $date);
+		my ($blah, $year) = split (/20/, $full);
+
+		my $qsopts=$qso{'exc2'};
+		
+		if (defined($qsopts)) {
+
+			if (($qsopts eq $year) || ($qsopts eq ($year - 1)) || ($qsopts eq ($year - 2))) {
+				$s_qsopts->{$qso{'band'}} += 2;
+			}
+			else {
+				$s_qsopts->{$qso{'band'}} += 1;
+			}
+		}
+	}
+	elsif ($main::defqsopts eq 'roundup') {		# ARRL Rookie Roundup - NON Rookie
+		my $date = &getdate();
+		my ($full,$month,$day) = split (/-/, $date);
+		my ($blah, $year) = split (/20/, $full);
+
+		my $qsopts = $qso{'exc2'};
+		my $qsoexc3 = $qso{'exc3'};
+		
+		if (defined($qsopts)) {
+
+			if (($qsopts eq $year) || ($qsopts eq ($year - 1)) || ($qsopts eq ($year - 2))) {
+				$s_qsopts->{$qso{'band'}} += 1;
+				unless ($s_mult1->{'All'} =~ / $qsoexc3 /) {
+						$s_mult1->{'All'} .= " $qsoexc3 ";
+				}
+			}
+		}
+	}
 
 	#############################################
 	# Mult 1 - can be one of the following:
