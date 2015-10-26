@@ -196,7 +196,7 @@ sub writelog {
 
 			if ($main::qsos[$i]{'exc1'} =~ /^\d+$/) {	
 				print ADIF "<srx:".length($main::qsos[$i]{'exc1'}).'>'.
-					($main::qsos[$i]{'exc1'}+1).' ';
+					($main::qsos[$i]{'exc1'}).' ';
 			}
 
 			print ADIF "\r\n";
