@@ -691,6 +691,17 @@ sub scoreqso {
 					$s_mult1->{$qso{'band'}} .= " $prefix ";
 			}
 		}
+
+		elsif ($bands eq 'sa') {
+			my ($cont, $dxcc) = (&dxcc($qso{'call'}))[3,7];
+
+			if ($cont eq SA) {		# mults just for SA prefixes
+				if (index($s_mult1->{'All'}, " $prefix ") == -1) {
+						$s_mult1->{'All'} .= " $prefix ";
+				}
+			}	
+		}
+
 		else {					# mults over all bands
 			if (index($s_mult1->{'All'}, " $prefix ") == -1) {
 					$s_mult1->{'All'} .= " $prefix ";
