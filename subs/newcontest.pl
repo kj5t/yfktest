@@ -147,17 +147,29 @@ $filename = &readw(\$wdialog, 1, 20, '[\-\w]', "$filename");
 $mycall = &readw(\$wdialog, 2, 20, 'call', $mycall);
 
 $assisted = &chose(\$wdialog, 3, 20, 'ASSISTED NON-ASSISTED', $assisted);
-$bands = &chose(\$wdialog, 4, 20, 'ALL 160M 80M 40M 20M 15M 10M 6M 2M 222 432 902 1.2G', $bands);
-$modes = &chose(\$wdialog, 5, 20, 'CW MIXED PSK SSB RTTY', $modes);
+if ($contest eq 'SA-SPRINT'){
+	$bands = &chose(\$wdialog, 4, 20, 'ALL 40M 20M', $bands);
+}else{
+	$bands = &chose(\$wdialog, 4, 20, 'ALL 160M 80M 40M 20M 15M 10M 6M 2M 222 432 902 1.2G', $bands);
+}
+if ($contest eq 'SA-SPRINT'){
+	$modes = &chose(\$wdialog, 5, 20, 'CW SSB MIXED', $modes);
+}else{
+	$modes = &chose(\$wdialog, 5, 20, 'CW MIXED PSK SSB RTTY', $modes);
+}
 $operator = &chose(\$wdialog, 6, 20, 'SINGLE-OP MULTI-OP CHECKLOG', $operator);
 if ($contest eq 'QRP-ARCI-QSO-PARTY'){
 	$power = &chose(\$wdialog, 7, 20, '>5W >1W >250mW >55mW 55mW', $power);
+}elsif ($contest eq 'SA-SPRINT'){
+	$power = &chose(\$wdialog, 7, 20, 'LOW', $power);	
 }else{	
 	$power = &chose(\$wdialog, 7, 20, 'HIGH LOW QRP QRP-BATTERY', $power);
 }
 if ($contest eq 'QRP-TTF') {
 	$transmitter = &chose(\$wdialog, 8, 20, 'HOME HILL SUMMIT SOTA-SUMMIT',
 		$transmitter);
+}elsif ($contest eq 'SA-SPRINT'){
+	$transmitter = &chose(\$wdialog, 8, 20, 'ONE', $transmitter);
 }else{
 	$transmitter = &chose(\$wdialog, 8, 20, 'ONE TWO LIMITED UNLIMITED SWL',
 		$transmitter);
