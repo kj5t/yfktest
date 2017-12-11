@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w -I ./
 
 # yfktest - a simple, single operator ham radio contest logbook
 # 
@@ -509,6 +509,7 @@ while (1) {										# begin main logging loop
 					&scoreqso(\%qso, \@qsos, \%s_qsos, \%s_qsopts, \%s_mult1,
 							\%s_mult2, \%s_dupes, \$s_sum);
 					}
+					addstr($wmain,22,35,"                                  ");
 					&wipeqso(\%qso, \$curpos, \$activefield);
 					$oldtime = (time + 2);
 				}
