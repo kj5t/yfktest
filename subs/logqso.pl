@@ -51,7 +51,7 @@ sub logqso {
 #		print STDERR "$qso{stn} == $main::netname ?\n";
 
 		$logline = sprintf(
-				"%-4s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s;%-15s\n",
+				"%-4s;%-3s;%-9s;%3s;%-4s;%-8s;%-12s;%-6s;%-6s;%-6s;%-6s;%-6s;%-15s\n",
 				0, $qso{'band'}, $qso{'freq'}, $qso{'mode'}, $qso{'utc'},
 				$qso{'date'}, $qso{'call'}, $qso{'exc1'}, $qso{'exc2'},
 				$qso{'exc3'}, $qso{'exc4'}, $qso{stn}, $qso{'ops'});
