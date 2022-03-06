@@ -394,6 +394,25 @@ sub callinfo {
 
 	refresh($win);
 	}
+	elsif (($contest eq 'WI-QSO-PARTY') || ($contest eq 'WI-QSO-NONWI')) {		# WI-QSO-PARTY: Shows Sections
+		my $mults = $main::s_mult1{'All'};
+		my @districts = qw/ADA ASH BAR BAY BRO BUF BUR CAL CHI CLA COL CRA DAN DOD DOO DOU DUN EAU FLO FON FOR GRA GRE GRL IOW IRO JAC JEF JUN KEN KEW LAC LAF LAN LIN MAN MAR MRN MRQ MEN MIL MON OCO ONE OUT OZA PEP PIE POL POR PRI RAC RIC ROC RUS SAI SAU SAW SHA SHE TAY TRE VER VIL WAL WSB WAS WAU WAP WSR WIN WOO /;
+
+		move($win, 0,0);
+		foreach my $d (@districts) {
+			if ($mults =~ / $d /) {
+				attron($win, COLOR_PAIR(2));
+			}
+			else {
+				attron($win, COLOR_PAIR(4));
+			}
+			addstr($win, $d);
+			attron($win, COLOR_PAIR(4));
+			addstr($win, " ") unless ($d =~ /CRA|GRL|MAN|PIE|SHE|WOO/);
+		}
+
+	refresh($win);
+	}
 	else {							# Show generic callsign info.
 		my @info = &dxcc($call);
 		if ($call eq '') { return 0; }

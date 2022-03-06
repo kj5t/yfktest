@@ -630,6 +630,29 @@ sub scoreqso {
 			}
 		}
 	}
+	elsif ($main::defqsopts eq 'wiqso') {
+		if ($qso{mode} eq 'SSB') {
+			$s_qsopts->{$qso{'band'}} += 1;
+		}
+		else { # Just a 2x "digital" contact
+			$s_qsopts->{$qso{'band'}} += 2;
+		}
+	}
+	elsif ($main::defqsopts eq 'wiqso-nonwi') {		# WI QSO Party - Non-WI
+		my $qsopts=$qso{'exc2'};
+
+		if (defined($qsopts)) {
+
+			if (&iswicounty($qsopts)) {
+				if ($qso{mode} eq 'SSB') {
+				$s_qsopts->{$qso{'band'}} += 1;
+				}
+				else { # Just a 2x "digital" contact
+				$s_qsopts->{$qso{'band'}} += 2;
+				}
+			}
+		}
+	}
 
 	#############################################
 	# Mult 1 - can be one of the following:
@@ -950,6 +973,24 @@ sub scoreqso {
 
 		}
 	}
+	elsif ($main::defmult1 eq 'wiqso-nonwi') {		# WI QSO Party - Non-WI
+		my $mult=$qso{'exc2'};
+
+		if (defined($mult)) {
+
+			my $cty = (&dxcc($qso{'call'}, 'wae'))[7];
+
+			if ($cty =~ /^(K)$/) {				# state = mult
+				unless (&iswicounty($mult)) {
+					$mult = '';			# Not a valid exchange!
+				}
+				if (!($s_mult1->{All} =~ / $mult /)) {
+					$s_mult1->{All} .= " $mult ";
+				}
+			}
+
+		}
+	}
 	elsif ($main::defmult1 =~ /fobb/) {		# Unique numbers for bumble-bees
 		if ($qso{call} =~ /\/(BB)/i) {
 			my $mult = $qso{'exc3'};
@@ -1181,6 +1222,11 @@ sub scoreqso {
 		elsif ($main::power eq 'LOW') { $multall = 2; }
 		else { $multall = 5; }
 	}
+	if ($main::defqsopts =~ /wiqso/) {
+		if ($main::power eq 'HIGH') { $multall = 1; }
+		elsif ($main::power eq 'LOW') { $multall = 1.5; }
+		else { $multall = 2; }
+	}
 	if ($main::defmult2 =~ /qrpttf/) {
 		if ($main::transmitter eq 'HOME') { $multall = 1; }
 		elsif ($main::transmitter eq 'HILL') { $multall = 2; }
@@ -1277,6 +1323,18 @@ sub isnvcounty {
 	my $test = shift;
 	if ($test =~
 			/^(CAR|CHU|CLA|DOU|ELK|ESM|EUR|HUM|LAN|LIN|LYO|MIN|NYE|PER|STO|WAS|WHI)$/
+	) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+sub iswicounty {
+	my $test = shift;
+	if ($test =~
+			/^(ADA|ASH|BAR|BAY|BRO|BUF|BUR|CAL|CHI|CLA|COL|CRA|DAN|DOD|DOO|DOU|DUN|EAU|FLO|FON|FOR|GRA|GRE|GRL|IOW|IRO|JAC|JEF|JUN|KEN|KEW|LAC|LAF|LAN|LIN|MAN|MAR|MRN|MRQ|MEN|MIL|MON|OCO|ONE|OUT|OZA|PEP|PIE|POL|POR|PRI|RAC|RIC|ROC|RUS|SAI|SAU|SAW|SHA|SHE|TAY|TRE|VER|VIL|WAL|WSB|WAS|WAU|WAP|WSR|WIN|WOO)$/
 	) {
 		return 1;
 	}
