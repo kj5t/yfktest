@@ -356,7 +356,7 @@ sub callinfo {
 	elsif ($contest eq 'ARRL-FD') {		# ARRL-FD: Shows Sections
 		my $band = $main::qso{'band'};
 		my $mults = $main::s_mult2{$band};
-		my @districts = qw/AB AK AL AR AZ BC CO CT DE EB EMA ENY EPA EWA GA GTA IA ID IL IN KS KY LA LAX MAR MB MDC ME MI MN MO MS MT NC ND NE NFL NH NL NLI NM NNJ NNY NTX NV NWT OH OK ONE ONN ONS OR ORG PAC PR QC RI SB SC SCV SD SDG SF SFL SNJ SJV SK STX SV TN UT VA VI VT WCF WI WMA WNY WPA WTX WV WWA WY/;
+		my @districts = qw/AB AK AL AR AZ BC CO CT DE EB EMA ENY EPA EWA GA GH IA ID IL IN KS KY LA LAX MAR MB MDC ME MI MN MO MS MT NB NC ND NE NFL NH NL NLI NM NNJ NS NNY NTX NV OH OK ONE ONN ONS OR ORG PAC PE PR QC RI SB SC SCV SD SDG SF SFL SNJ SJV SK STX SV TN TER UT VA VI VT WCF WI WMA WNY WPA WTX WV WWA WY/;
 
 		move($win, 0,0);
 		foreach my $d (@districts) {
@@ -368,9 +368,9 @@ sub callinfo {
 			}
 			addstr($win, $d);
 			attron($win, COLOR_PAIR(4));
-			addstr($win, " ") unless ($d =~ /SV|WY/);
-			addstr($win, " ") if ($d =~ /EWA|ME/);
-			addstr($win, "  ") if ($d =~ /NNJ/);
+			addstr($win, " ") unless ($d =~ /MI|NS|QC|TN/);
+			addstr($win, " ") if ($d =~ /EWA/);
+#			addstr($win, "  ") if ($d =~ /NNJ/);
 		}
 
 	refresh($win);
