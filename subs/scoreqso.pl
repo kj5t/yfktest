@@ -1023,6 +1023,39 @@ sub scoreqso {
 
 			}
 	}
+	elsif ($main::defmult1 =~ /(prov)-(\w+)-(\w+)/) {	# VE provs
+			my $mult = $qso{'exc1'};
+
+			if (&isveprov($mult)) {
+				# $2 can be 'band' or 'all', $3 can be 'mode' or 'all'.
+
+				if ($2 eq 'band') {
+					if ($3 eq 'all') {		# regardless of mode
+						unless ($s_mult1->{$qso{'band'}} =~ / $mult /) {
+							$s_mult1->{$qso{'band'}} .= " $mult ";
+						}
+					}
+					elsif ($3 eq 'mode') {
+						unless ($s_mult1->{$qso{'band'}} =~ / $mult$qso{'mode'} /) {
+							$s_mult1->{$qso{'band'}} .= " $mult$qso{'mode'} ";
+						}
+					}
+				}
+				else {	# mults over all bands
+					if ($3 eq 'all') {
+						unless ($s_mult1->{'All'} =~ / $mult /) {
+							$s_mult1->{'All'} .= " $mult ";
+						}
+					}
+					elsif ($3 eq 'mode') {
+						unless ($s_mult1->{'All'} =~ / $mult$qso{'mode'} /) {
+							$s_mult1->{'All'} .= " $mult$qso{'mode'} ";
+						}
+					}
+
+				}
+			}
+	}
 	elsif ($main::defmult1 eq 'none') {	
 		$s_mult1->{All} = ' 1 ';
 	}
@@ -1298,7 +1331,7 @@ sub isusstate {
 sub isveprov {
 	my $test = shift;
 	if ($test =~
-			/^(NB|NS|QC|ON|MB|SK|AB|BC|NWT|NF|LB|YT|PEI|NU)$/
+			/^(NB|NS|QC|ON|MB|SK|AB|BC|NT|NL|YT|PE|NU)$/
 	) {
 		return 1;
 	}

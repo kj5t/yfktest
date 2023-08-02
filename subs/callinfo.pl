@@ -413,6 +413,21 @@ sub callinfo {
 
 	refresh($win);
 	}
+	elsif ($contest eq 'RAC') {		# RAC: Shows Sections
+		my @districts = qw/NS QC ON MB SK AB BC NT NB NL NU YT PE/;
+
+		addstr($win, 0, 0, "RAC - Canada Day Contest");
+		addstr($win, 2, 0, "Enter Ser. # OR these Providences;");
+
+		move($win, 4,0);
+		foreach my $d (@districts) {
+			addstr($win, $d);
+			attron($win, COLOR_PAIR(4));
+			addstr($win, " ") unless ($d =~ /YT/);
+		}
+
+	refresh($win);
+	}
 	else {							# Show generic callsign info.
 		my @info = &dxcc($call);
 		if ($call eq '') { return 0; }
