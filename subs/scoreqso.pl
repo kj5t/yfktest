@@ -39,9 +39,7 @@ sub scoreqso {
 			}
 		}	
 	}
-	
-	
-	
+
 	# handy vars to use
 	#  Although there is no need to spell these out specifically, it
 	#  makes less knowledgeable perl users have an easier and simpiler
