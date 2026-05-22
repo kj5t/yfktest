@@ -580,21 +580,27 @@ sub scoreqso {
 			$s_qsopts->{$qso{'band'}} += 3;
 		}
 	}
-        elsif ($main::defqsopts eq 'txqso') {
-                if ($qso{mode} eq 'SSB') {
-                        $s_qsopts->{$qso{'band'}} += 2;
-                }
-                else { #  3 points for digital and CW contact
-                        $s_qsopts->{$qso{'band'}} += 3;
-                }
-        }
-
 	elsif ($main::defqsopts eq 'nvqso-nonnm') {		# NV QSO Party - Non-NM
 		my $qsopts=$qso{'exc2'};
 
 		if (defined($qsopts)) {
 
 			if (&isnvcounty($qsopts)) {
+				if ($qso{mode} eq 'SSB') {
+				$s_qsopts->{$qso{'band'}} += 2;
+				}
+				else { # Just a 3x "digital" contact
+				$s_qsopts->{$qso{'band'}} += 3;
+				}
+			}
+		}
+	}
+	elsif ($main::defqsopts eq 'txqso-nonnm') {		#TX QSO Party - Non-TX
+		my $qsopts=$qso{'exc2'};
+
+		if (defined($qsopts)) {
+
+			if (&istxcounty($qsopts)) {
 				if ($qso{mode} eq 'SSB') {
 				$s_qsopts->{$qso{'band'}} += 2;
 				}
@@ -973,6 +979,24 @@ sub scoreqso {
 
 			if ($cty =~ /^(K)$/) {				# state = mult
 				unless (&isnvcounty($mult)) {
+					$mult = '';			# Not a valid exchange!
+				}
+				if (!($s_mult1->{All} =~ / $mult /)) {
+					$s_mult1->{All} .= " $mult ";
+				}
+			}
+
+		}
+	}
+	elsif ($main::defmult1 eq 'txqso-nonnm') {		# TX QSO Party - Non-TX
+		my $mult=$qso{'exc2'};
+
+		if (defined($mult)) {
+
+			my $cty = (&dxcc($qso{'call'}, 'wae'))[7];
+
+			if ($cty =~ /^(K)$/) {				# state = mult
+				unless (&istxcounty($mult)) {
 					$mult = '';			# Not a valid exchange!
 				}
 				if (!($s_mult1->{All} =~ / $mult /)) {
@@ -1372,6 +1396,7 @@ sub isnvcounty {
 		return 0;
 	}
 }
+
 sub istxcounty {
         my $test = shift;
         if ($test =~
@@ -1383,8 +1408,6 @@ sub istxcounty {
                 return 0;
         }
 }
-
-
 
 sub iswicounty {
 	my $test = shift;

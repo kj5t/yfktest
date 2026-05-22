@@ -1,0 +1,146 @@
+YFKtest Version 0.0.10 Manual
+----------------------------
+
+If you have not yet downloaded the program please read this link first:
+<http://svn.fkurz.net/yfktest/trunk/README.NOW?revision=605&view=markup>
+for installation and initial setup information.
+	^^^ This is already done in the archlinux package !!
+
+1. Getting started
+------------------
+
+To start a new contest, just invoke YFKtest without any arguments on the command
+line: yfktest . You'll be asked to select a contest definition and enter
+the neccesary details, like a filename for the contest, your callsign, category
+etc. After completing this form, the contest operation starts.
+
+You may add a file ~/.yfktest (to your home directory), AND/OR you can add it to
+the working directory (where you downloaded yfktest to). It can contain any or
+all of the items notated on the first startup screen (the screen you see when
+you each time you start yfktest.) There is also a file called
+config.yfktest.sample that shows what this file could look like.
+	^^^ This is already done in the archlinux package !!
+
+OR you can simply use the NEW Alt+c configuration menu while running yfktest to
+set up ALL of the possible configuration possibilities.
+
+
+2. Loading an existing log
+--------------------------
+
+To load an existing contest log, invoke YFKtest with the filename as the
+command like argument:  yfktest CQWW07.yfk
+The contest log will be read, user settings from the last contest are restored
+and the score will be calculated. 
+
+Alternatively a file browser can be used to select a log from the file system.
+You will see this as the second screen (i.e. after you press <enter> from the
+stratup or first screen) if yfktest was started without any command line
+arguments.
+
+
+3. Keys and functions
+---------------------
+
+Alt+w, F11  Wipe QSO. Delete callsign- and exchange fields.
+
+Alt+x       Stops CW sending immediately (like ESC). 
+
+Alt+o or h  Quick help screen.
+
+Alt+k       Keyboard-Mode in CW.
+
+Alt+r       Rate Graph.
+
+Alt+m       Edit CW messages.
+
+Alt+c       Edit configuration settings. Add "ops" for multi/club outings.
+
+F1..9       CW messages like in CT. #1-7 can be modified by Alt-m, and
+INS         are written to the log file and restored when restarting the
+ESC         contest.
+
+10M..160M   Entering the desired band in the callsign-field causes YFKtest to
+            QSY. **** NOTE: You can also just enter a freq. like 21075 to
+	    switch to 15 meters...and so forth !
+
+SSB, CW     Change the mode my entering SSB/CW in the callsign field. (RTTY
+	    works too.)
+
+UP/DOWN     Edit log. Entering DEL in-place of the call will erase the qso.
+
+PG-UP/DOWN  Change the cw sending speed.
+
+WRITELOG    Writes the log in Cabrillo- and ADIF-Format for submission to the
+            log-checker and / or import to your main logbook/LOTW etc.
+            Also a summary file of the contest score is written to a file.
+
+QUIT, EXIT  Enter this int he callsign field to end the program execution.
+
+
+4. Hamlib
+---------
+
+As of version 0.0.4, CAT control of the transceiver is supported via Hamlib's
+Perl bindings.
+
+When starting a new contest, you'll be asked wheter you want to use rig
+control. If so, you can select one of the transceivers supported by hamlib and
+a device to which the RIG is connected. All available transceivers are saved in
+the file 'hamlibrigs'. You can delete all transceivers which you are not using
+from this file to reduce the number of RIGs to scroll through.
+
+During operation, YFKtest will query the rig freqency and mode every second or
+so, and update the values in the logbook. The other direction also works: If
+you change the band in YFKtest (by typing for example 15M), your radio will
+jump to the 15m band. You can also enter a frequency in the callsign field,
+like 14025, and the radio will QSY to 14025kHz.
+
+FYI: Debian's hamlib Perl package is still broken. YFKtest will crash if you
+try to use it; either compile it yourself from the source, or uncomment the
+lines which import Hamlib.pm  in yfktest.pl.
+
+
+5. CW Functions
+---------------
+
+CW is realized via the winkeydaemon.pl code. Winkeydaemon  uses the
+configuration settings dialog which can be accessed by pressing alt+c. Upon
+re-starting yfktest you will be greeted by a daemon setup menu. At each restart
+yfktest will automagically start the daemon again. The automatic daemon start
+can be de-selected using the alt+c menu. If you need to change to another port,
+(for instance,) you can erase the winkeydaemon.sh file (being careful NOT to
+erase the winkeyerdaemon.pl file) & then start the entire setup process again.
+
+(Currently PG4I's cwdaemon is "officially" NOT supported. HOWEVER you are
+welcome to test it by making sure it is running BEFORE starting yfktest. Please
+let us know how well this works for you !!)
+
+The F-keys are set similarly to CT by default: (*** NOTE: These defaults can be
+automagically changed by the entries in the various contest definition files
+that are used by yfktest to setup a contest log. They can also be changed by
+pressing the alt+m keys during logging.)
+
+F1: CQ
+F2: RST +/or Exchange
+F3: TU $MYCALL
+F4: MYCALL
+F5: HISCALL
+F6: NR?
+F7: ?
+
+
+And these are available, but permamently coded. (i.e. You cannot edit these.):
+
+F8: 73
+F9: SRI WRKED B4
+
+Alt+k activates the Keyboard-Mode, meaning everything you type in is
+immediately sent via cwdaemon or winkeydaemon.pl . Alt-K again or ESC stops it.
+
+*changed/updated 19 June 2011 - Bob, w9ya
+*changed/updated 20 June 2011 - Bob, w9ya
+*changed/updated 29 Feb  2012 - Bob, w9ya
+*changed/updated 09 Apr  2012 - Bob, w9ya
+*changed/updated 01 Mar  2014 - Bob, w9ya
+*changed/updated 15 Jan  2015 - Bob, w9ya

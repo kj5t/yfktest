@@ -1,0 +1,29 @@
+# Real Time Contest (RTC) server configuration
+# Copy to rtc-server.conf and fill in your details.
+# RTC specification: https://hamscore.com/images/RTC_Specification_3.0_XML.pdf
+
+# Set to 1 to enable RTC reporting
+enabled=1
+
+# Your station callsign (used for HTTP Basic Auth username)
+callsign=yourcall
+
+# Your HamScore profile password or 6-digit RTC PIN
+password=yourpin
+
+# Contest name as recognised by the RTC server (e.g. CW-Ops, CQWW-CW)
+contest=CW-Ops
+
+# Upload endpoint. Default is the recommended HTTP distributor.
+# Use https://hamscore.com/postxml/index.php for direct HTTPS upload.
+url=http://scoredistributor.net/
+
+# Station location (all values in CAPITAL letters)
+dxcccountry=K
+cqzone=5
+iaruzone=8
+
+# Optional — include if relevant to your contest
+#arrlsection=STX
+#stproth=TX
+#grid6=EM20QL

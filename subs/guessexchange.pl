@@ -1,4 +1,22 @@
 
+# NAQP 
+my %naqp;
+if (-e 'naqp.txt') {
+
+open NAQP, find_file('naqp.txt');
+my $line;
+while ($line = <NAQP>) {
+        map {s/\r//g;} ($line);
+        chomp($line);
+        $line =~ s/"//g;
+        my @a = split(/,/, $line);
+        $naqp{$a[0]} = $a[1];    # Call = Name, Nr
+}
+close NAQP;
+
+}
+
+
 # FOC marathon
 my %foc;
 if (-e 'call_no_name.txt') {

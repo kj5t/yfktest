@@ -1,0 +1,72 @@
+CQ-M International DX Contest
+-
+cqm
+-
+1
+4
+4
+4
+4
+[0-9]
+[0-9]+
+[0-9]
+
+[0-9]
+
+[0-9]
+
+QSO: %s %s %s %s %-13s %-3s %-6s %-13s %-3s %s
+freq mode date utc mycall rsts nr call rst exc1
+CQ-M
+
+
+CQ TEST MYCALL MYCALL TEST
+5NN NR
+TU MYCALL
+MYCALL
+HISCALL
+NR?
+?
+BEGIN SCORE
+my $mycont_norm = ($main::mycont eq 'AS') ? 'EU' : $main::mycont;
+my $cont_norm = ($cont eq 'AS') ? 'EU' : $cont;
+if ($mycont_norm eq $cont_norm) {
+    $score = 2;
+} else {
+    $score = 3;
+}
+BEGIN MULT1
+my %_ru = (
+    'R1FJ'=>'R1FJ', 'R1C'=>'R1C',  'R1N'=>'R1N',  'R1O'=>'R1O',
+    'R1P'=>'R1P',   'R1W'=>'R1W',  'R1I'=>'R1I-Komi',
+    'R2Y'=>'R2Y',   'R3Y'=>'R3Y',  'R5Y'=>'R5Y',
+    'R4P'=>'R4P-Tatarstan', 'R4R'=>'R4P-Tatarstan',
+    'R4S'=>'R4S',   'R4U'=>'R4U',  'R4W'=>'R4W',  'R4Y'=>'R4Y',
+    'R6E'=>'R6E-KarachCherk', 'R7E'=>'R6E-KarachCherk',
+    'R6I'=>'R6I-Kalmykia',   'R7I'=>'R6I-Kalmykia',
+    'R6J'=>'R6J-NorthOsetia','R7J'=>'R6J-NorthOsetia',
+    'R6K'=>'R6K-Crimea',     'R7K'=>'R6K-Crimea',
+    'R6O'=>'R6O-Donetsk',    'R7O'=>'R6O-Donetsk',
+    'R6P'=>'R6P-Chechen',    'R7P'=>'R6P-Chechen',
+    'R6Q'=>'R6Q-Ingushetia', 'R7Q'=>'R6Q-Ingushetia',
+    'R6W'=>'R6W-Dagestan',   'R7W'=>'R6W-Dagestan',
+    'R6X'=>'R6X-KabardinoBalk','R7X'=>'R6X-KabardinoBalk',
+    'R6Y'=>'R6Y-Adygeya',   'R7Y'=>'R6Y-Adygeya',
+    'R6Z'=>'R6Z-Luhansk',   'R7Z'=>'R6Z-Luhansk',
+    'R8W'=>'R8W-Bashkortostan','R9W'=>'R8W-Bashkortostan',
+    'R9X'=>'R9X-Komi',       'R9Z'=>'R9Z-AltayRep',
+    'R0B'=>'R0B', 'R0C'=>'R0C', 'R0F'=>'R0F', 'R0K'=>'R0K',
+    'R0O'=>'R0O', 'R0Q'=>'R0Q', 'R0W'=>'R0W', 'R0X'=>'R0X',
+    'R0Y'=>'R0Y', 'R0Z'=>'R0Z',
+);
+if ($call =~ /\/MM/i) {
+    $mult = '';
+} else {
+    my $base = uc((split(/\//, $call))[0]);
+    my $p4 = substr($base, 0, 4);
+    my $p3 = substr($base, 0, 3);
+    if    (exists $_ru{$p4}) { $mult = $_ru{$p4}; }
+    elsif (exists $_ru{$p3}) { $mult = $_ru{$p3}; }
+    else                     { $mult = $dxcc;      }
+}
+1;

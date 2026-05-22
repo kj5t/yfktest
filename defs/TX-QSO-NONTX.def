@@ -1,6 +1,6 @@
-TX QSO Party
-exc2-all-all		   	# multiplier 1
-nvqso				# scoring
+NM QSO Party - Non NM
+txqso-nonnm		   	# multiplier 1
+txqso-nonnm			# scoring
 -				# multiplier 2
 2				# exchange fields
 3				# length of exchange field 1
@@ -17,9 +17,9 @@ nvqso				# scoring
 				# regex for complete valid exchange field 4
 QSO: %5s %s %s %s %-13s %-4s %-4s %-13s %-4s %-4s
 freq mode date utc mycall exc1s exc2s call exc1 exc2
-TX QSO Party
+TX QSO Party - Non TX Station
 exc1s
-RST/County
+RST/Location
 CQ TQP MYCALL MYCALL K              # F1
 EXC1S EXC2S                         # F2
 TU                                  # F3
