@@ -10,7 +10,7 @@ for installation and initial setup information.
 ------------------
 
 To start a new contest, just invoke YFKtest without any arguments on the command
-line: ./yfktest . You'll be asked to select a contest definition and enter
+line: yfktest . You'll be asked to select a contest definition and enter
 the neccesary details, like a filename for the contest, your callsign, category
 etc. After completing this form, the contest operation starts.
 
@@ -29,7 +29,7 @@ set up ALL of the possible configuration possibilities.
 --------------------------
 
 To load an existing contest log, invoke YFKtest with the filename as the
-command like argument:  ./yfktest CQWW07.yfk
+command like argument:  yfktest CQWW07.yfk
 The contest log will be read, user settings from the last contest are restored
 and the score will be calculated. 
 

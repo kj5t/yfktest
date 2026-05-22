@@ -46,6 +46,8 @@ sub logqso {
 		print LOG $logline;
 		close LOG;
 
+		&rtc_queue_new_qso(\%qso) if defined(&rtc_queue_new_qso);
+
 		# Send the QSO over the net...
 
 #		print STDERR "$qso{stn} == $main::netname ?\n";
@@ -153,6 +155,12 @@ sub logeditqso {
 			open LOG, ">$main::filename";
 			print LOG @log;
 			close LOG;
+
+			if (defined(&rtc_queue_delete_qso) && $qso{'call'} =~ /^DEL/) {
+				&rtc_queue_delete_qso(\%qso);
+			} elsif (defined(&rtc_queue_replace_qso)) {
+				&rtc_queue_replace_qso(\%qso);
+			}
 		}
 
 		return $success;

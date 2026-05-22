@@ -1,0 +1,53 @@
+Real Time Contest (4h mixed, 40/20/15/10m, grid-distance pts x unique grids/band)
+-
+-
+-
+2
+3
+4
+4
+4
+[0-9]
+[0-9]+
+[A-Ra-r0-9]
+[A-Ra-r]{2}[0-9]{2}
+[0-9A-Za-z]
+
+[0-9]
+
+QSO: %9g %s %s %s %-10s %3s %-4s %-10s %-3s %-4s
+freq mode date utc mycall nr exc1s call exc1 exc2
+RTC
+exc1s
+Your 4-char grid (e.g. EM20):
+CQ TEST MYCALL MYCALL TEST
+NR EXC1S
+TU MYCALL
+MYCALL
+HISCALL
+NR EXC1S
+?
+BEGIN SCORE
+my $mygrid  = uc($main::exc1s // '');
+my $hisgrid = uc($exc2);
+if ($mygrid =~ /^[A-R]{2}\d{2}$/ && $hisgrid =~ /^[A-R]{2}\d{2}$/) {
+    my $pi = 4 * atan2(1, 1);
+    my ($lf1, $bf1, $ls1, $bs1) = split //, $mygrid;
+    my ($lf2, $bf2, $ls2, $bs2) = split //, $hisgrid;
+    my $lon1 = (ord($lf1) - 65) * 20 + $ls1 * 2 + 1 - 180;
+    my $lat1 = (ord($bf1) - 65) * 10 + $bs1     + 0.5 - 90;
+    my $lon2 = (ord($lf2) - 65) * 20 + $ls2 * 2 + 1 - 180;
+    my $lat2 = (ord($bf2) - 65) * 10 + $bs2     + 0.5 - 90;
+    $lat1 *= $pi / 180; $lat2 *= $pi / 180;
+    $lon1 *= $pi / 180; $lon2 *= $pi / 180;
+    my $a = sin(($lat2-$lat1)/2)**2 + cos($lat1)*cos($lat2)*sin(($lon2-$lon1)/2)**2;
+    my $dist = 6371 * 2 * atan2(sqrt($a), sqrt(1-$a));
+    $score = $dist >= 8000 ? 4 : $dist >= 4000 ? 3 : $dist >= 2000 ? 2 : 1;
+}
+BEGIN MULT1
+my $grid = uc($exc2);
+if ($grid =~ /^[A-R]{2}\d{2}$/) {
+    unless ($s_mult1->{$band} =~ / $grid /) {
+        $s_mult1->{$band} .= " $grid ";
+    }
+}
